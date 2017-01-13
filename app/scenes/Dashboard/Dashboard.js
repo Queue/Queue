@@ -34,7 +34,7 @@ export default class Dashboard extends Component {
     this.queuerItemsRef = Data.DB.ref('queuers');
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      queueData: []
+      queueData: this.ds.cloneWithRows([{title: 'Add an Item'}])
     };
   }
 
@@ -64,7 +64,7 @@ export default class Dashboard extends Component {
       'Add New Item',
       null,
       [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Cancel', onPress: () => Common.log('Cancel Pressed'), style: 'cancel'},
         {
           text: 'Add',
           onPress: (text) => {
@@ -117,7 +117,7 @@ export default class Dashboard extends Component {
         <Col style={styles.queueList}>
           <View style={styles.listContainer}>
             <SwipeListView
-              dataSource = {this.ds.cloneWithRows(this.state.queueData)}
+              dataSource = {this.state.queueData}
               renderRow = {this.row.bind(this)}
               renderHiddenRow = {this.hiddenRow.bind(this)}
               rightOpenValue = {-150} />
