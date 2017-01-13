@@ -18,11 +18,11 @@ export default class Queuer extends Component {
   render() {
     return (
       <TouchableHighlight
-        onPress = {() => console.log('You touched me')}
+        onPress = {this.props.onPress}
         style = {styles.rowFront}
         underlayColor = {Colors.primaryBackground}>
         <View>
-          <Text>{this.props.data} I'm in a SwipeListView'</Text>
+          <Text>{this.props.data}</Text>
         </View>
       </TouchableHighlight>
     );

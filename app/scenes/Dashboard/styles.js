@@ -4,6 +4,14 @@
 import { StyleSheet } from 'react-native';
 
 export default styles = StyleSheet.create({
+  listContainer: {
+		backgroundColor: Colors.primaryBackground,
+		flex: 1,
+    zIndex: 9999,
+    marginTop: 21,
+    borderTopColor: Colors.primaryBackground,
+    borderTopWidth: 1
+	},
   default: {
     backgroundColor: 'white'
   },

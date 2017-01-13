@@ -1,0 +1,27 @@
+exports[`test renders correctly 1`] = `
+<TextInput
+  autoCapitalize="none"
+  autoFocus={undefined}
+  keyboardType="email-address"
+  onChangeText={undefined}
+  placeholder="test"
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "borderRadius": 2,
+        "fontFamily": "Helvetica Neue",
+        "height": 40,
+        "justifyContent": "center",
+        "margin": 10,
+        "paddingLeft": 15,
+        "paddingRight": 15,
+      },
+      Object {
+        "color": "#48C948",
+      },
+    ]
+  }
+  value={undefined} />
+`;

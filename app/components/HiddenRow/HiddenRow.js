@@ -15,12 +15,12 @@ export default class HiddenRow extends Component {
       <View style={styles.rowBack}>
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnRight]}
-          onPress={() => console.log('Delete Button Pressed')}>
+          onPress={this.props.deletePress}>
           <Text style={styles.backTextWhite}>{'Delete'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnLeft]}
-          onPress={() => console.log('Text Button Pressed')}>
+          onPress={this.props.textPress}>
           <Text style={styles.backTextWhite}>{'Text'}</Text>
         </TouchableOpacity>
       </View>

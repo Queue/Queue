@@ -8,6 +8,14 @@ import EmailField from './EmailField';
 import PasswordField from './PasswordField';
 import PrimaryButton from './PrimaryButton';
 import TextButton from './TextButton';
-import QueueList from './QueueList';
+import Queuer from './Queuer';
+import HiddenRow from './HiddenRow';
 
-export { EmailField, PasswordField, PrimaryButton, TextButton, QueueList };
+export {
+  EmailField,
+  PasswordField,
+  PrimaryButton,
+  TextButton,
+  HiddenRow,
+  Queuer
+};

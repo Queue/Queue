@@ -44,6 +44,11 @@ export default Data = {
   // Database wrapper
   DB: {
 
+    // DB reference method
+    ref(dataToReference) {
+      return Firebase.database().ref(dataToReference);
+    }
+
   } // end of db methods
 
 };

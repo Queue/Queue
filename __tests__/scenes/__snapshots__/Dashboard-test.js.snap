@@ -1,0 +1,187 @@
+exports[`test renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "flexDirection": "row",
+    }
+  }>
+  <View
+    style={
+      Object {
+        "borderColor": "#eaeaea",
+        "borderRightWidth": 1,
+        "flex": 1,
+        "flexDirection": "column",
+        "maxWidth": 110,
+      }
+    }>
+    <View
+      style={
+        Object {
+          "borderTopColor": "#eaeaea",
+          "borderTopWidth": 1,
+          "marginTop": 21,
+          "padding": 15,
+        }
+      }>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hitSlop={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ]
+        }
+        testID={undefined}>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "#48C948",
+                "fontSize": 14,
+                "letterSpacing": 1,
+                "padding": 5,
+                "paddingBottom": 15,
+                "textAlign": "center",
+              },
+              Object {
+                "fontFamily": "Helvetica Neue",
+                "fontSize": 80,
+              },
+            ]
+          }>
+          Q
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "borderColor": "#eaeaea",
+        "borderRightWidth": 1,
+        "flex": 1,
+        "flexDirection": "column",
+        "minWidth": 525,
+      }
+    }>
+    <View
+      style={
+        Object {
+          "borderTopColor": "#eaeaea",
+          "borderTopWidth": 1,
+          "marginTop": 21,
+          "padding": 15,
+        }
+      } />
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "transparent",
+        "flex": 1,
+        "flexDirection": "column",
+      }
+    }>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#eaeaea",
+          "borderTopColor": "#eaeaea",
+          "borderTopWidth": 1,
+          "flex": 1,
+          "marginTop": 21,
+          "zIndex": 9999,
+        }
+      }>
+      <ScrollView
+        closeOnRowPress={true}
+        closeOnScroll={true}
+        dataSource={
+          ListViewDataSource {
+            "items": 0,
+          }
+        }
+        disableLeftSwipe={false}
+        disableRightSwipe={false}
+        initialListSize={10}
+        leftOpenValue={0}
+        onContentSizeChange={[Function]}
+        onEndReachedThreshold={1000}
+        onKeyboardDidHide={undefined}
+        onKeyboardDidShow={undefined}
+        onKeyboardWillHide={undefined}
+        onKeyboardWillShow={undefined}
+        onLayout={[Function]}
+        onScroll={[Function]}
+        pageSize={1}
+        previewFirstRow={false}
+        recalculateHiddenLayout={false}
+        removeClippedSubviews={true}
+        renderHiddenRow={[Function]}
+        renderRow={[Function]}
+        rightOpenValue={-150}
+        scrollEventThrottle={50}
+        scrollRenderAheadDistance={1000}
+        stickyHeaderIndices={Array []} />
+    </View>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#48C948",
+            "maxHeight": 60,
+          },
+        ]
+      }
+      testID={undefined}>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 55,
+            "marginTop": -5,
+          }
+        }>
+        +
+      </Text>
+    </View>
+  </View>
+</View>
+`;
