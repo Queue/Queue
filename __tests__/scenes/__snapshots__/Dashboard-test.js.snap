@@ -121,6 +121,7 @@ exports[`test renders correctly 1`] = `
         }
         disableLeftSwipe={false}
         disableRightSwipe={false}
+        enableEmptySections={true}
         initialListSize={10}
         leftOpenValue={0}
         onContentSizeChange={[Function]}

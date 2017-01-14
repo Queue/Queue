@@ -36,7 +36,7 @@ export default class Dashboard extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     this.state = {
-      queueData: this.ds.cloneWithRows([])
+      queueData: this.ds.cloneWithRows({})
     };
   }
 
@@ -73,9 +73,6 @@ export default class Dashboard extends Component {
     );
   }
 
-  removeQueuer(key) {
-  }
-
   // Individual row function
   row(data) {
     return (
@@ -87,16 +84,10 @@ export default class Dashboard extends Component {
 
   // Individual hidden row function
   hiddenRow(data, secId, rowId, rowMap) {
-    const deletePress = () => {
-      // needed to close row
-      rowMap[`${secId}${rowId}`].closeRow();
-      Data.DB.delete(`queuers/${data._key}`);
-    }
-
     return (
       <HiddenRow
-        textPress={() => {Common.log(data.title)}}
-        deletePress={deletePress} />
+        textPress={() => {Common.log(`${data.title}`)}}
+        deletePress={() => {Common.log('Delete Pressed')}} />
     );
   }
 
@@ -124,7 +115,6 @@ export default class Dashboard extends Component {
           <View style={styles.listContainer}>
             <SwipeListView
               dataSource = {this.state.queueData}
-              enableEmptySections = {true}
               renderRow = {this.row.bind(this)}
               renderHiddenRow = {this.hiddenRow.bind(this)}
               rightOpenValue = {-150} />

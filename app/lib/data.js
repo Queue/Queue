@@ -45,8 +45,13 @@ export default Data = {
   DB: {
 
     // DB reference method
-    ref(dataToReference) {
-      return Firebase.database().ref(dataToReference);
+    ref(reference) {
+      return Firebase.database().ref(reference);
+    },
+
+    // Delete data from DB
+    delete(reference) {
+      return Firebase.database().ref(reference).remove();
     }
 
   } // end of db methods
