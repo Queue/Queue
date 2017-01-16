@@ -261,5 +261,62 @@ exports[`test renders correctly 1`] = `
       </Text>
     </View>
   </View>
+  <View
+    style={
+      Object {
+        "marginTop": 22,
+      }
+    }>
+    <Modal
+      animationType="fade"
+      onRequestClose={[Function]}
+      transparent={false}
+      visible={false}>
+      <View
+        style={
+          Object {
+            "marginTop": 22,
+          }
+        }>
+        <View>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail">
+            Hello Modal!
+          </Text>
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hitSlop={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                undefined,
+              ]
+            }
+            testID={undefined}>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail">
+              Hide Modal
+            </Text>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  </View>
 </View>
 `;

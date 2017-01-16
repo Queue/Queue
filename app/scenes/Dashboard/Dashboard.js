@@ -12,15 +12,17 @@ import {
   TouchableHighlight,
   AlertIOS
 } from 'react-native';
-import { Grid, Col } from 'react-native-easy-grid';
 import {
   TextButton,
   Queuer,
-  HiddenRow
+  HiddenRow,
+  InputModal
 } from '../../components';
+import { Grid, Col } from 'react-native-easy-grid';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import Spinner from 'react-native-loading-spinner-overlay';
 
+// Lib and common funtions
 import { Actions } from 'react-native-router-flux'
 import Data from '../../lib/data';
 import Common from '../../lib/common';
@@ -38,7 +40,8 @@ export default class Dashboard extends Component {
     });
     this.state = {
       queueData: this.ds.cloneWithRows([]),
-      spinner: true
+      spinner: true,
+      modalVisible: false
     };
   }
 
@@ -65,6 +68,10 @@ export default class Dashboard extends Component {
   }
 
   addItem() {
+    this.setState({
+      modalVisible: true
+    });
+    return;
     AlertIOS.prompt('Add New Item', null, [{
       text: 'Cancel', onPress: () => Common.log('Cancel Pressed'), style: 'cancel'},
       {
@@ -141,6 +148,10 @@ export default class Dashboard extends Component {
             <Text style={styles.addButtonText}>+</Text>
           </TouchableHighlight>
         </Col>
+
+        <InputModal
+          modalVisible={this.state.modalVisible}
+          close={() => { this.setState({modalVisible: !this.state.modalVisible}) }} />
 
       </Grid>
     );

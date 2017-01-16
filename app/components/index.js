@@ -10,12 +10,14 @@ import PrimaryButton from './PrimaryButton';
 import TextButton from './TextButton';
 import Queuer from './Queuer';
 import HiddenRow from './HiddenRow';
+import InputModal from './InputModal';
 
 export {
   EmailField,
   PasswordField,
   PrimaryButton,
   TextButton,
+  InputModal,
   HiddenRow,
   Queuer
 };
