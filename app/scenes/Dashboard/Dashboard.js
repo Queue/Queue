@@ -19,6 +19,7 @@ import {
   HiddenRow
 } from '../../components';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import { Actions } from 'react-native-router-flux'
 import Data from '../../lib/data';
@@ -36,7 +37,8 @@ export default class Dashboard extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     this.state = {
-      queueData: this.ds.cloneWithRows([])
+      queueData: this.ds.cloneWithRows([]),
+      spinner: true
     };
   }
 
@@ -56,7 +58,8 @@ export default class Dashboard extends Component {
       });
 
       this.setState({
-        queueData: this.ds.cloneWithRows(queuerItems)
+        queueData: this.ds.cloneWithRows(queuerItems),
+        spinner: false
       });
     });
   }
@@ -80,7 +83,7 @@ export default class Dashboard extends Component {
   row(data) {
     return (
       <Queuer
-        data={data.title}
+        name={data.title}
         onPress={() => {Common.log(data._key)}} />
     );
   }
@@ -103,6 +106,9 @@ export default class Dashboard extends Component {
   render() {
     return (
       <Grid>
+
+        <Spinner
+          visible={this.state.spinner} />
 
         <Col style={styles.navMenu}>
           <View style={Layout.container}>

@@ -21,8 +21,11 @@ export default class Queuer extends Component {
         onPress = {this.props.onPress}
         style = {styles.rowFront}
         underlayColor = {Colors.primaryBackground}>
-        <View>
-          <Text>{this.props.data}</Text>
+        <View style={{flex: 1, alignItems: 'center'}}>
+          <Text>{this.props.place}</Text>
+          <Text>{this.props.name}</Text>
+          <Text>{this.props.waitTime}</Text>
+          <Text>{this.props.partySize}</Text>
         </View>
       </TouchableHighlight>
     );
