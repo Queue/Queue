@@ -151,6 +151,8 @@ export default class Dashboard extends Component {
 
         <InputModal
           modalVisible={this.state.modalVisible}
+          btnName={'Next'}
+          modalPress={() => { Common.log('cool') }}
           close={() => { this.setState({modalVisible: !this.state.modalVisible}) }} />
 
       </Grid>

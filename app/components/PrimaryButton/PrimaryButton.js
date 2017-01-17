@@ -21,9 +21,9 @@ export default PrimaryBtn = ({name, press, buttonColor, fontSize}) => {
 
   return (
     <Button
-      onPress = {press}
-      style = {[styles.primaryBtn, styles.buttonOverwrite]}
-      containerStyle = {[styles.btnContainer, styles.containerOverwrite]}>
+      onPress={press}
+      style={[styles.primaryBtn, styles.buttonOverwrite]}
+      containerStyle={[styles.btnContainer, styles.containerOverwrite]}>
       {name}
     </Button>
   );

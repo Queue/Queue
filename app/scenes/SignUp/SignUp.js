@@ -82,33 +82,28 @@ export default class SignUp extends Component {
         passColor = this.state.passwordColor;
 
     return (
-      <View style = {styles.container}>
-        <View style = {styles.wrapper}>
-          <Text
-            style = {styles.brand}>
+      <View style={styles.container}>
+        <View style={styles.wrapper}>
+          <Text style={styles.brand}>
             Queue
           </Text>
           <EmailField
             textColor = {emailColor}
             placeholder = {'Email'}
             change = {this.checkEmail.bind(this)}
-            val = {email}
-          />
+            val = {email} />
           <PasswordField
             textColor = {passColor}
             placeholder = {'Password'}
             change = {this.checkPass.bind(this)}
-            val = {password}
-          />
+            val = {password} />
           <PrimaryButton
             name = {'Sign Up'}
-            press = {this.createUser.bind(this)}
-          />
+            press = {this.createUser.bind(this)} />
           <TextButton
             text={'Already have an account?'}
             size = {16}
-            press={Actions.SignInRoute}
-          />
+            press={Actions.SignInRoute} />
           <KeyboardSpacer />
         </View>
       </View>
