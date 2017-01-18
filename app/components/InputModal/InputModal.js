@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 import Common from '../../lib/common';
+import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
 
 export default class ModalExample extends Component {
@@ -32,13 +33,18 @@ export default class ModalExample extends Component {
           underlayColor={'transparent'}>
 
           <View style={styles.innerWrap}>
+            <Text style={styles.label}>{this.props.label}</Text>
             <TextInput
               style={styles.inputField}
               onChangeText={this.props.onChangeText}
-              placeholder={'Name'} />
-            <PrimaryBtn
-              name={this.props.btnName}
-              press={this.props.modalPress} />
+              value={this.props.value} />
+            <TouchableHighlight
+              style={styles.button}
+              onPress={this.props.onPress}>
+              <Text style={styles.buttonText}>
+                {this.props.buttonText}
+              </Text>
+            </TouchableHighlight>
           </View>
 
         </TouchableHighlight>
@@ -58,10 +64,26 @@ const styles = StyleSheet.create({
   innerWrap: {
     width: 300
   },
+  label: {
+    marginBottom: 20,
+    color: 'white',
+    fontFamily: Fonts.content,
+    fontSize: 35
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primaryForeground,
+    height: 50
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20
+  },
   inputField: {
     fontFamily: Fonts.content,
     fontSize: 30,
-    marginBottom: 15,
+    marginBottom: 20,
     height: 80,
     paddingLeft: 15,
     paddingRight: 15,

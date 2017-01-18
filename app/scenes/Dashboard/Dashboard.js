@@ -34,10 +34,12 @@ import styles from './styles';
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
+
     this.queuerItemsRef = Data.DB.ref('queuers');
     this.ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
+
     this.state = {
       queueData: this.ds.cloneWithRows([]),
       spinner: true,
@@ -151,7 +153,8 @@ export default class Dashboard extends Component {
 
         <InputModal
           modalVisible={this.state.modalVisible}
-          btnName={'Next'}
+          label={'Enter your Name'}
+          buttonText={'Next'}
           modalPress={() => { Common.log('cool') }}
           close={() => { this.setState({modalVisible: !this.state.modalVisible}) }} />
 
