@@ -299,27 +299,41 @@ exports[`test renders correctly 1`] = `
             "width": 300,
           }
         }>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "white",
+              "fontFamily": "Helvetica Neue",
+              "fontSize": 35,
+              "marginBottom": 10,
+            }
+          }>
+          Enter your Name
+        </Text>
         <TextInput
+          autoCapitalize="words"
+          autoFocus={true}
           onChangeText={undefined}
-          placeholder="Name"
           style={
             Object {
               "alignItems": "center",
               "backgroundColor": "white",
-              "borderRadius": 2,
               "fontFamily": "Helvetica Neue",
               "fontSize": 30,
               "height": 80,
               "justifyContent": "center",
-              "marginBottom": 15,
               "paddingLeft": 15,
               "paddingRight": 15,
             }
-          } />
+          }
+          value={undefined} />
         <View
-          accessibilityComponentType="button"
+          accessibilityComponentType={undefined}
           accessibilityLabel={undefined}
-          accessibilityTraits="button"
+          accessibilityTraits={undefined}
           accessible={true}
           hitSlop={undefined}
           onLayout={undefined}
@@ -330,15 +344,17 @@ exports[`test renders correctly 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Object {
-              "borderColor": "#48C948",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "margin": 15,
-              "opacity": 1,
-              "overflow": "hidden",
-              "padding": 8,
-            }
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#369797",
+                "height": 50,
+                "justifyContent": "center",
+              },
+            ]
           }
           testID={undefined}>
           <Text
@@ -346,28 +362,236 @@ exports[`test renders correctly 1`] = `
             allowFontScaling={true}
             ellipsizeMode="tail"
             style={
-              Array [
-                Object {
-                  "color": "#007aff",
-                  "fontFamily": "HelveticaNeue-Medium",
-                  "fontSize": 17,
-                  "fontWeight": "bold",
-                  "textAlign": "center",
-                },
-                null,
-                Array [
-                  Object {
-                    "fontWeight": "500",
-                  },
-                  Object {
-                    "color": "#48C948",
-                    "fontSize": 20,
-                  },
-                ],
-                null,
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 30,
+              }
             }>
-            Next
+            →
+          </Text>
+        </View>
+      </View>
+    </View>
+  </Modal>
+  <Modal
+    animationType="fade"
+    onRequestClose={[Function]}
+    transparent={true}
+    visible={false}>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "rgba(0,0,0,.8)",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+        ]
+      }
+      testID={undefined}>
+      <View
+        style={
+          Object {
+            "width": 300,
+          }
+        }>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "white",
+              "fontFamily": "Helvetica Neue",
+              "fontSize": 35,
+              "marginBottom": 10,
+            }
+          }>
+          Enter the Party Size
+        </Text>
+        <TextInput
+          autoCapitalize="words"
+          autoFocus={true}
+          onChangeText={undefined}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "fontFamily": "Helvetica Neue",
+              "fontSize": 30,
+              "height": 80,
+              "justifyContent": "center",
+              "paddingLeft": 15,
+              "paddingRight": 15,
+            }
+          }
+          value={undefined} />
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          hitSlop={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#369797",
+                "height": 50,
+                "justifyContent": "center",
+              },
+            ]
+          }
+          testID={undefined}>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "white",
+                "fontSize": 30,
+              }
+            }>
+            →
+          </Text>
+        </View>
+      </View>
+    </View>
+  </Modal>
+  <Modal
+    animationType="fade"
+    onRequestClose={[Function]}
+    transparent={true}
+    visible={false}>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "rgba(0,0,0,.8)",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+        ]
+      }
+      testID={undefined}>
+      <View
+        style={
+          Object {
+            "width": 300,
+          }
+        }>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "white",
+              "fontFamily": "Helvetica Neue",
+              "fontSize": 35,
+              "marginBottom": 10,
+            }
+          }>
+          Enter a Phone Number (Optional)
+        </Text>
+        <TextInput
+          autoCapitalize="words"
+          autoFocus={true}
+          onChangeText={undefined}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "fontFamily": "Helvetica Neue",
+              "fontSize": 30,
+              "height": 80,
+              "justifyContent": "center",
+              "paddingLeft": 15,
+              "paddingRight": 15,
+            }
+          }
+          value={undefined} />
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          hitSlop={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#369797",
+                "height": 50,
+                "justifyContent": "center",
+              },
+            ]
+          }
+          testID={undefined}>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "white",
+                "fontSize": 30,
+              }
+            }>
+            Submit
           </Text>
         </View>
       </View>

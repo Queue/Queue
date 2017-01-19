@@ -35,6 +35,8 @@ export default class ModalExample extends Component {
           <View style={styles.innerWrap}>
             <Text style={styles.label}>{this.props.label}</Text>
             <TextInput
+              autoCapitalize={'words'}
+              autoFocus={true}
               style={styles.inputField}
               onChangeText={this.props.onChangeText}
               value={this.props.value} />
