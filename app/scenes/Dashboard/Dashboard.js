@@ -154,7 +154,8 @@ export default class Dashboard extends Component {
         <InputModal
           modalVisible={this.state.modalVisible}
           label={'Enter your Name'}
-          buttonText={'Next'}
+          buttonText={'→'}
+          width={50}
           modalPress={() => { Common.log('cool') }}
           close={() => { this.setState({modalVisible: !this.state.modalVisible}) }} />
 

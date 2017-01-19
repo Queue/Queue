@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     width: 300
   },
   label: {
-    marginBottom: 20,
+    marginBottom: 10,
     color: 'white',
     fontFamily: Fonts.content,
     fontSize: 35
@@ -73,23 +73,21 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.primaryForeground,
+    backgroundColor: Colors.blue0,
     height: 50
   },
   buttonText: {
     color: 'white',
-    fontSize: 20
+    fontSize: 30,
   },
   inputField: {
     fontFamily: Fonts.content,
     fontSize: 30,
-    marginBottom: 20,
     height: 80,
     paddingLeft: 15,
     paddingRight: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 2,
     backgroundColor: 'white'
   }
 });
