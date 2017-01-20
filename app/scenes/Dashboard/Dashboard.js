@@ -16,7 +16,8 @@ import {
   TextButton,
   Queuer,
   HiddenRow,
-  InputModal
+  InputModal,
+  ModalWrap
 } from '../../components';
 import { Grid, Col } from 'react-native-easy-grid';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
@@ -43,9 +44,7 @@ export default class Dashboard extends Component {
     this.state = {
       queueData: this.ds.cloneWithRows([]),
       spinner: true,
-      modalOneVisible: false,
-      modalTwoVisible: false,
-      modalThreeVisible: false
+      modalVisible: false
     };
   }
 
@@ -73,7 +72,7 @@ export default class Dashboard extends Component {
 
   addItem() {
     this.setState({
-      modalOneVisible: true
+      modalVisible: true
     });
     return;
     AlertIOS.prompt('Add New Item', null, [{
@@ -153,32 +152,16 @@ export default class Dashboard extends Component {
           </TouchableHighlight>
         </Col>
 
-        <InputModal
-          modalVisible={this.state.modalOneVisible}
-          label={'Enter your Name'}
-          buttonText={'→'}
-          onPress={() => {this.setState({
-              modalOneVisible: !this.state.modalOneVisible,
-              modalTwoVisible: !this.state.modalTwoVisible
-          })}}
-          close={() => { this.setState({modalOneVisible: !this.state.modalOneVisible}) }} />
-        <InputModal
-          modalVisible={this.state.modalTwoVisible}
-          label={'Enter the Party Size'}
-          buttonText={'→'}
-          onPress={() => {this.setState({
-              modalTwoVisible: !this.state.modalTwoVisible,
-              modalThreeVisible: !this.state.modalThreeVisible
-          })}}
-          close={() => { this.setState({modalTwoVisible: !this.state.modalTwoVisible}) }} />
-        <InputModal
-          modalVisible={this.state.modalThreeVisible}
-          label={'Enter a Phone Number (Optional)'}
-          buttonText={'Submit'}
-          onPress={() => {this.setState({
-              modalThreeVisible: !this.state.modalOneVisible
-          })}}
-          close={() => { this.setState({modalThreeVisible: !this.state.modalThreeVisible}) }} />
+        <ModalWrap
+          modalVisible={this.state.modalVisible}
+          close={() => { this.setState({modalOneVisible: !this.state.modalOneVisible}) }}>
+
+          <InputModal
+            label={'Enter your Name'}
+            buttonText={'→'}
+            onPress={() => {Common.log('fuck dis brah')}} />
+
+        </ModalWrap>
 
       </Grid>
     );

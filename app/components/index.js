@@ -11,6 +11,7 @@ import TextButton from './TextButton';
 import Queuer from './Queuer';
 import HiddenRow from './HiddenRow';
 import InputModal from './InputModal';
+import ModalWrap from './ModalWrap';
 
 export {
   EmailField,
@@ -18,6 +19,7 @@ export {
   PrimaryButton,
   TextButton,
   InputModal,
+  ModalWrap,
   HiddenRow,
   Queuer
 };
