@@ -123,11 +123,11 @@ export default class Dashboard extends Component {
         <Col style={styles.navMenu}>
           <View style={Layout.container}>
             <TextButton
-              styles = {styles.logOutButton}
-              font = {Fonts.content}
-              size= {80}
-              text = {'Q'}
-              press = {Actions.SignInRoute} />
+              styles={styles.logOutButton}
+              font={Fonts.content}
+              size={80}
+              text={'Q'}
+              press={Actions.SignInRoute} />
           </View>
         </Col>
 
@@ -139,11 +139,11 @@ export default class Dashboard extends Component {
         <Col style={styles.queueList}>
           <View style={styles.listContainer}>
             <SwipeListView
-              dataSource = {this.state.queueData}
-              enableEmptySections = {true}
-              renderRow = {this.row.bind(this)}
-              renderHiddenRow = {this.hiddenRow.bind(this)}
-              rightOpenValue = {-150} />
+              dataSource={this.state.queueData}
+              enableEmptySections={true}
+              renderRow={this.row.bind(this)}
+              renderHiddenRow={this.hiddenRow.bind(this)}
+              rightOpenValue={-150} />
           </View>
           <TouchableHighlight
             style={styles.addButton}
@@ -154,7 +154,7 @@ export default class Dashboard extends Component {
 
         <ModalWrap
           modalVisible={this.state.modalVisible}
-          close={() => { this.setState({modalOneVisible: !this.state.modalOneVisible}) }}>
+          close={() => { this.setState({modalVisible: !this.state.modalVisible}) }}>
 
           <InputModal
             label={'Enter your Name'}

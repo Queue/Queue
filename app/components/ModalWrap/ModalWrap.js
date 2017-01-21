@@ -17,11 +17,7 @@ import Fonts from '../../lib/fonts';
 export default class ModalExample extends Component {
   constructor(props) {
     super(props);
-  }
-
-  setNativeProps(nativeProps) {
-    this._root.setNativeProps(nativeProps);
-  }
+  } 
 
   render() {
     return (

@@ -19,9 +19,15 @@ export default class ModalExample extends Component {
     super(props);
   }
 
+  setNativeProps(nativeProps) {
+    this._root.setNativeProps(nativeProps);
+  }
+
   render() {
     return (
-      <View style={styles.innerWrap}>
+      <View
+        style={styles.innerWrap}
+        ref={component => this._root = component}>
         <Text style={styles.label}>{this.props.label}</Text>
         <TextInput
           autoCapitalize={'words'}
