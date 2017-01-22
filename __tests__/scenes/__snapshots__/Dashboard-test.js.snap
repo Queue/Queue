@@ -6,83 +6,7 @@ exports[`test renders correctly 1`] = `
       "flexDirection": "row",
     }
   }>
-  <Modal
-    onRequestClose={[Function]}
-    transparent={true}
-    visible={true}>
-    <View
-      style={
-        Array [
-          Object {
-            "backgroundColor": "transparent",
-            "bottom": 0,
-            "flex": 1,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          Object {
-            "backgroundColor": "rgba(0, 0, 0, 0.25)",
-          },
-        ]
-      }>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "bottom": 0,
-            "justifyContent": "center",
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }>
-        <ActivityIndicator
-          animating={true}
-          color="white"
-          hidesWhenStopped={true}
-          size="large"
-          style={
-            Object {
-              "flex": 1,
-            }
-          } />
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "bottom": 0,
-              "flex": 1,
-              "justifyContent": "center",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            }
-          }>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {
-                  "fontSize": 20,
-                  "fontWeight": "bold",
-                  "height": 50,
-                  "top": 80,
-                },
-                undefined,
-              ]
-            }>
-            
-          </Text>
-        </View>
-      </View>
-    </View>
-  </Modal>
+  <View />
   <View
     style={
       Object {
@@ -293,84 +217,12 @@ exports[`test renders correctly 1`] = `
         ]
       }
       testID={undefined}>
-      <View
-        style={
-          Object {
-            "width": 300,
-          }
-        }>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "color": "white",
-              "fontFamily": "Helvetica Neue",
-              "fontSize": 35,
-              "marginBottom": 10,
-            }
-          }>
-          Enter your Name
-        </Text>
-        <TextInput
-          autoCapitalize="words"
-          autoFocus={true}
-          onChangeText={undefined}
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "white",
-              "fontFamily": "Helvetica Neue",
-              "fontSize": 30,
-              "height": 80,
-              "justifyContent": "center",
-              "paddingLeft": 15,
-              "paddingRight": 15,
-            }
-          }
-          value={undefined} />
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
-          accessible={true}
-          hitSlop={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-              },
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#369797",
-                "height": 50,
-                "justifyContent": "center",
-              },
-            ]
-          }
-          testID={undefined}>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "color": "white",
-                "fontSize": 30,
-              }
-            }>
-            →
-          </Text>
-        </View>
-      </View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail">
+        Done
+      </Text>
     </View>
   </Modal>
 </View>

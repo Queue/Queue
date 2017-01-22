@@ -17,7 +17,7 @@ import Fonts from '../../lib/fonts';
 export default class ModalExample extends Component {
   constructor(props) {
     super(props);
-  } 
+  }
 
   render() {
     return (
@@ -47,34 +47,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,.8)'
-  },
-  innerWrap: {
-    width: 300
-  },
-  label: {
-    marginBottom: 10,
-    color: 'white',
-    fontFamily: Fonts.content,
-    fontSize: 35
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.blue0,
-    height: 50
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 30,
-  },
-  inputField: {
-    fontFamily: Fonts.content,
-    fontSize: 30,
-    height: 80,
-    paddingLeft: 15,
-    paddingRight: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white'
   }
 });

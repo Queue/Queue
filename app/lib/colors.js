@@ -7,7 +7,7 @@ export default Colors = {
   primaryForeground : '#48C948',
 
   text              : '#333333',
-  textOpaque        : 'rgb(51,51,51,0.77)',
+  textOpaque        : 'rgba(51,51,51,0.77)',
 
   info              : '#8FD6D6',
   success           : '#6CDA6C',

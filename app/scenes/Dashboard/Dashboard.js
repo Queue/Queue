@@ -23,7 +23,7 @@ import { Grid, Col } from 'react-native-easy-grid';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-// Lib and common funtions
+// Lib and common functions
 import { Actions } from 'react-native-router-flux'
 import Data from '../../lib/data';
 import Common from '../../lib/common';
@@ -43,8 +43,14 @@ export default class Dashboard extends Component {
 
     this.state = {
       queueData: this.ds.cloneWithRows([]),
-      spinner: true,
-      modalVisible: false
+      spinner: false,
+      nameInput: '',
+      partyInput: 1,
+      phoneInput: '',
+      modalVisible: false,
+      nameVisible: false,
+      partyVisible: false,
+      phoneVisible: false
     };
   }
 
@@ -70,23 +76,45 @@ export default class Dashboard extends Component {
     });
   }
 
-  addItem() {
+  openModal() {
     this.setState({
-      modalVisible: true
+      modalVisible: true,
+      nameVisible: true
     });
-    return;
-    AlertIOS.prompt('Add New Item', null, [{
-      text: 'Cancel', onPress: () => Common.log('Cancel Pressed'), style: 'cancel'},
-      {
-        text: 'Add',
-        onPress: (text) => this.queuerItemsRef.push({ title: text })
-      },
-    ],
-    'plain-text'
-    );
   }
 
-  removeQueuer(key) {
+  // compute when submitting a queuer
+  submitQueuer() {
+    let queuer = `Name: ${this.state.nameInput}\nSize: ${this.state.partyInput}\nNumber: ${this.state.phoneInput}`;
+    Common.log(queuer);
+  }
+
+  // Show input group based on state
+  showInput() {
+    if (this.state.nameVisible) {
+      return (
+        <InputModal
+          label={'Name'}
+          buttonText={'→'}
+          onPress={() => { this.setState({nameVisible: false, partyVisible: true}) }} />
+      );
+    } else if (this.state.partyVisible) {
+      return (
+        <InputModal
+          label={'Size Of Party'}
+          buttonText={'→'}
+          onPress={() => { this.setState({partyVisible: false, phoneVisible: true}) }} />
+      );
+    } else if (this.state.phoneVisible) {
+      return (
+        <InputModal
+          label={'Phone Number (optional)'}
+          buttonText={'Submit'}
+          onPress={() => { this.submitQueuer.bind(this) }} />
+      );
+    } else {
+      return (<Text>Done</Text>);
+    }
   }
 
   // Individual row function
@@ -147,7 +175,7 @@ export default class Dashboard extends Component {
           </View>
           <TouchableHighlight
             style={styles.addButton}
-            onPress={this.addItem.bind(this)}>
+            onPress={this.openModal.bind(this)}>
             <Text style={styles.addButtonText}>+</Text>
           </TouchableHighlight>
         </Col>
@@ -156,10 +184,7 @@ export default class Dashboard extends Component {
           modalVisible={this.state.modalVisible}
           close={() => { this.setState({modalVisible: !this.state.modalVisible}) }}>
 
-          <InputModal
-            label={'Enter your Name'}
-            buttonText={'→'}
-            onPress={() => {Common.log('fuck dis brah')}} />
+          {this.showInput()}
 
         </ModalWrap>
 
