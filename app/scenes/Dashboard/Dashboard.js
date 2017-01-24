@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react';
 
-// Components
+// RN components
 import {
   StyleSheet,
   View,
@@ -12,6 +12,8 @@ import {
   TouchableHighlight,
   AlertIOS
 } from 'react-native';
+
+// Custom components
 import {
   TextButton,
   Queuer,
@@ -19,8 +21,14 @@ import {
   InputModal,
   ModalWrap
 } from '../../components';
+
+// grid system
 import { Grid, Col } from 'react-native-easy-grid';
+
+// swipe list view
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
+
+// Spinner loader
 import Spinner from 'react-native-loading-spinner-overlay';
 
 // Lib and common functions
@@ -36,39 +44,49 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
 
+    // queuers data reference
     this.queuerItemsRef = Data.DB.ref('queuers');
+
+    // data source for the listview
     this.ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
     this.state = {
-      queueData: this.ds.cloneWithRows([]),
-      spinner: false,
-      nameInput: '',
-      partyInput: 1,
-      phoneInput: '',
-      modalVisible: false,
-      nameVisible: false,
-      partyVisible: false,
-      phoneVisible: false
+      queueData: this.ds.cloneWithRows([]), // holds the queuer data
+      spinner: true, // determines loading spinner
+      nameInput: '', // name input
+      partyInput: '', // party size input
+      phoneInput: '', // phone number input
+      modalVisible: false, // determines visibility of modal
+      nameVisible: false, // determines visibility of name field
+      partyVisible: false, // determines visibility of party size field
+      phoneVisible: false // determines visibility of phone number field
     };
   }
 
+  // listen for data when the component mounts
   componentDidMount() {
     this.listenForItems(this.queuerItemsRef);
   }
 
+  // Listen for all queuers in the database
+  // Triggers a rerender when new data is added
   listenForItems(itemsRef) {
     itemsRef.on('value', (snap) => {
-      // get children as an array
+
+      // Get children as an array
       let queuerItems = [];
+
+      // Iterate over snapshot
       snap.forEach((child) => {
         queuerItems.push({
-          title: child.val().title,
+          name: child.val().name,
           _key: child.key
         });
       });
 
+      // fill state with data and turn spinner off
       this.setState({
         queueData: this.ds.cloneWithRows(queuerItems),
         spinner: false
@@ -76,6 +94,7 @@ export default class Dashboard extends Component {
     });
   }
 
+  // open the modal
   openModal() {
     this.setState({
       modalVisible: true,
@@ -84,34 +103,51 @@ export default class Dashboard extends Component {
   }
 
   // compute when submitting a queuer
-  submitQueuer() {
+  addQueuer() {
     let queuer = `Name: ${this.state.nameInput}\nSize: ${this.state.partyInput}\nNumber: ${this.state.phoneInput}`;
-    Common.log(queuer);
+    Common.log('Success', queuer);
+    this.queuerItemsRef.push({name: this.state.nameInput});
+    this.setState({modalVisible: false});
   }
 
   // Show input group based on state
   showInput() {
     if (this.state.nameVisible) {
+
+      // return name input field
       return (
         <InputModal
           label={'Name'}
           buttonText={'→'}
+          onChangeText={(text) => {this.setState({nameInput: text})}}
+          value={this.state.nameInput}
           onPress={() => { this.setState({nameVisible: false, partyVisible: true}) }} />
       );
+
     } else if (this.state.partyVisible) {
+
+      // return party size input field
       return (
         <InputModal
           label={'Size Of Party'}
           buttonText={'→'}
+          onChangeText={(text) => {this.setState({partyInput: text})}}
+          value={this.state.partyInput}
           onPress={() => { this.setState({partyVisible: false, phoneVisible: true}) }} />
       );
+
     } else if (this.state.phoneVisible) {
+
+      // return phone number input field
       return (
         <InputModal
           label={'Phone Number (optional)'}
           buttonText={'Submit'}
-          onPress={() => { this.submitQueuer.bind(this) }} />
+          onChangeText={(text) => {this.setState({phoneInput: text})}}
+          value={this.state.phoneInput}
+          onPress={this.addQueuer.bind(this)} />
       );
+
     } else {
       return (<Text>Done</Text>);
     }
@@ -121,7 +157,7 @@ export default class Dashboard extends Component {
   row(data) {
     return (
       <Queuer
-        name={data.title}
+        name={data.name}
         onPress={() => {Common.log(data._key)}} />
     );
   }

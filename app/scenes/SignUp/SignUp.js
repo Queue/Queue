@@ -22,8 +22,7 @@ export default class SignUp extends Component {
 
     this.state = {
       emailText: '', // fields text state
-      passwordText: '',
-
+      passwordText: '', // password field
       emailColor: Colors.primaryForeground, // color states
       passwordColor: Colors.primaryForeground
     };
@@ -43,7 +42,8 @@ export default class SignUp extends Component {
           Common.error(error.code, error.message);
         });
 
-        this.setState({ // reset text
+        // reset text
+        this.setState({
           emailText: '',
           passwordText: ''
         });
