@@ -52,6 +52,7 @@ export default class Dashboard extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
+    // local state
     this.state = {
       queueData: this.ds.cloneWithRows([]), // holds the queuer data
       spinner: true, // determines loading spinner
