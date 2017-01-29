@@ -82,8 +82,10 @@ export default class Dashboard extends Component {
       // Iterate over snapshot
       snap.forEach((child) => {
         queuerItems.push({
+          _key: child.key,
           name: child.val().name,
-          _key: child.key
+          partySize: child.val().partySize,
+          phoneNumber: child.val().phoneNumber
         });
       });
 
@@ -103,12 +105,36 @@ export default class Dashboard extends Component {
     });
   }
 
-  // compute when submitting a queuer
+  // compute when submitting a queuer and check phone input
   addQueuer() {
-    let queuer = `Name: ${this.state.nameInput}\nSize: ${this.state.partyInput}\nNumber: ${this.state.phoneInput}`;
-    Common.log('Success', queuer);
-    this.queuerItemsRef.push({name: this.state.nameInput});
-    this.setState({modalVisible: false});
+    this.queuerItemsRef.push({
+      name: this.state.nameInput,
+      partySize: this.state.partyInput,
+      phoneInput: this.state.phoneInput
+    });
+
+    this.setState({
+      modalVisible: false,
+      nameInput: '',
+      partyInput: '',
+      phoneInput: ''
+    });
+  }
+
+  checkNameInput() {
+    if (this.state.nameInput !== '') {
+      this.setState({nameVisible: false, partyVisible: true});
+    } else {
+      Common.error('Error', 'Enter a Name');
+    }
+  }
+
+  checkPartyInput() {
+    if (this.state.partyInput !== '') {
+      this.setState({partyVisible: false, phoneVisible: true});
+    } else {
+      Common.error('Error', 'Enter the Party Size');
+    }
   }
 
   // Show input group based on state
@@ -122,7 +148,7 @@ export default class Dashboard extends Component {
           buttonText={'→'}
           onChangeText={(text) => {this.setState({nameInput: text})}}
           value={this.state.nameInput}
-          onPress={() => { this.setState({nameVisible: false, partyVisible: true}) }} />
+          onPress={this.checkNameInput.bind(this)} />
       );
 
     } else if (this.state.partyVisible) {
@@ -134,7 +160,7 @@ export default class Dashboard extends Component {
           buttonText={'→'}
           onChangeText={(text) => {this.setState({partyInput: text})}}
           value={this.state.partyInput}
-          onPress={() => { this.setState({partyVisible: false, phoneVisible: true}) }} />
+          onPress={this.checkPartyInput.bind(this)} />
       );
 
     } else if (this.state.phoneVisible) {
@@ -159,13 +185,14 @@ export default class Dashboard extends Component {
     return (
       <Queuer
         name={data.name}
+        partySize={data.partySize}
         onPress={() => {Common.log(data._key)}} />
     );
   }
 
   // Individual hidden row function
   hiddenRow(data, secId, rowId, rowMap) {
-    const deletePress = () => {
+    let deletePress = () => {
       // needed to close row
       rowMap[`${secId}${rowId}`].closeRow();
       Data.DB.delete(`queuers/${data._key}`);
@@ -212,6 +239,7 @@ export default class Dashboard extends Component {
           </View>
           <TouchableHighlight
             style={styles.addButton}
+            underlayColor={Colors.green4}
             onPress={this.openModal.bind(this)}>
             <Text style={styles.addButtonText}>+</Text>
           </TouchableHighlight>

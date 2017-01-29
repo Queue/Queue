@@ -11,7 +11,10 @@ export default styles = StyleSheet.create({
     paddingLeft: 20,
     marginBottom: 1,
     paddingRight: 20,
-    justifyContent: 'center',
-    height: 50,
+    height: 50
   },
+  text: {
+    height: 15,
+    flex: 1
+  }
 });

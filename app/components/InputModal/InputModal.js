@@ -38,6 +38,7 @@ export default class ModalExample extends Component {
           value={this.props.value} />
         <TouchableHighlight
           style={styles.button}
+          underlayColor={Colors.blue0}
           onPress={this.props.onPress}>
           <Text style={styles.buttonText}>
             {this.props.buttonText}

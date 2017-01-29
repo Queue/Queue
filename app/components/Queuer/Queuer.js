@@ -22,10 +22,10 @@ export default class Queuer extends Component {
         style = {styles.rowFront}
         underlayColor = {Colors.primaryBackground}>
         <View style={{flex: 1, alignItems: 'center'}}>
-          <Text>{this.props.place}</Text>
-          <Text>{this.props.name}</Text>
-          <Text>{this.props.waitTime}</Text>
-          <Text>{this.props.partySize}</Text>
+          <Text style={styles.text}>{this.props.place}</Text>
+          <Text style={styles.text}>{this.props.name}</Text>
+          <Text style={styles.text}>{this.props.waitTime}</Text>
+          <Text style={styles.text}>{this.props.partySize}</Text>
         </View>
       </TouchableHighlight>
     );
