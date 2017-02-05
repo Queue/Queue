@@ -36,6 +36,10 @@ export default Common = {
 
   log(code, message) {
     Reactotron.log(`Log\nCode: ${code}\nMessage: ${message}`);
+  },
+
+  logLess(message) {
+    Reactotron.log(message);
   }
 
 };

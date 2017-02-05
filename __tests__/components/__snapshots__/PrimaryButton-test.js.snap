@@ -5,6 +5,7 @@ exports[`test renders correctly 1`] = `
   accessibilityTraits="button"
   accessible={true}
   hitSlop={undefined}
+  isTVSelectable={true}
   onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -23,7 +24,8 @@ exports[`test renders correctly 1`] = `
       "padding": 8,
     }
   }
-  testID={undefined}>
+  testID={undefined}
+  tvParallaxProperties={undefined}>
   <Text
     accessible={true}
     allowFontScaling={true}

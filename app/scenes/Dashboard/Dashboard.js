@@ -19,7 +19,8 @@ import {
   Queuer,
   HiddenRow,
   InputModal,
-  ModalWrap
+  ModalWrap,
+  QueuerPage
 } from '../../components';
 
 // grid system
@@ -62,7 +63,8 @@ export default class Dashboard extends Component {
       modalVisible: false, // determines visibility of modal
       nameVisible: false, // determines visibility of name field
       partyVisible: false, // determines visibility of party size field
-      phoneVisible: false // determines visibility of phone number field
+      phoneVisible: false, // determines visibility of phone number field
+      selectedQueuer: {} // the selected queuer and its properties
     };
   }
 
@@ -110,7 +112,7 @@ export default class Dashboard extends Component {
     this.queuerItemsRef.push({
       name: this.state.nameInput,
       partySize: this.state.partyInput,
-      phoneInput: this.state.phoneInput
+      phoneNumber: this.state.phoneInput
     });
 
     this.setState({
@@ -183,13 +185,20 @@ export default class Dashboard extends Component {
   // Individual row function
   row(data, secID, rowID) {
     let place = Number(rowID) + 1;
+    let setSelectedQueuer = () => {
+      this.setState({
+        selectedQueuer: {
+          name: data.name
+        }
+      });
+    }
     return (
       <Queuer
         place={place}
         name={data.name}
         waitTime={'20min'}
         partySize={data.partySize}
-        onPress={() => {Common.log(data._key)}} />
+        onPress={setSelectedQueuer} />
     );
   }
 
@@ -228,6 +237,7 @@ export default class Dashboard extends Component {
 
         <Col style={styles.actionArea}>
           <View style={Layout.container}>
+            <QueuerPage queuer={this.state.selectedQueuer}/>
           </View>
         </Col>
 

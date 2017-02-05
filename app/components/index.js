@@ -12,6 +12,7 @@ import Queuer from './Queuer';
 import HiddenRow from './HiddenRow';
 import InputModal from './InputModal';
 import ModalWrap from './ModalWrap';
+import QueuerPage from './QueuerPage';
 
 export {
   EmailField,
@@ -21,5 +22,6 @@ export {
   InputModal,
   ModalWrap,
   HiddenRow,
-  Queuer
+  Queuer,
+  QueuerPage
 };
