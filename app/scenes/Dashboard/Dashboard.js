@@ -181,10 +181,13 @@ export default class Dashboard extends Component {
   }
 
   // Individual row function
-  row(data) {
+  row(data, secID, rowID) {
+    let place = Number(rowID) + 1;
     return (
       <Queuer
+        place={place}
         name={data.name}
+        waitTime={'20min'}
         partySize={data.partySize}
         onPress={() => {Common.log(data._key)}} />
     );

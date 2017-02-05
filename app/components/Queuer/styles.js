@@ -13,8 +13,12 @@ export default styles = StyleSheet.create({
     paddingRight: 20,
     height: 50
   },
+  wrap: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
   text: {
-    height: 15,
-    flex: 1
   }
 });

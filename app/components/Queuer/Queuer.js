@@ -10,6 +10,9 @@ import {
 import styles from './styles';
 import Colors from '../../lib/colors';
 
+// grid system
+import { Grid, Col } from 'react-native-easy-grid';
+
 export default class Queuer extends Component {
   constructor(props) {
     super(props);
@@ -21,11 +24,11 @@ export default class Queuer extends Component {
         onPress = {this.props.onPress}
         style = {styles.rowFront}
         underlayColor = {Colors.primaryBackground}>
-        <View style={{flex: 1, alignItems: 'center'}}>
-          <Text style={styles.text}>{this.props.place}</Text>
-          <Text style={styles.text}>{this.props.name}</Text>
-          <Text style={styles.text}>{this.props.waitTime}</Text>
-          <Text style={styles.text}>{this.props.partySize}</Text>
+        <View style={styles.wrap}>
+          <Text style={[styles.text, {paddingRight: 10}]}>{this.props.place}</Text>
+          <Text style={[styles.text, {flexGrow: 2, width: 190}]}>{this.props.name}</Text>
+          <Text style={[styles.text, {flexGrow: 1, width: 100}]}>{this.props.waitTime}</Text>
+          <Text style={[styles.text, {width: 50}]}>{this.props.partySize}</Text>
         </View>
       </TouchableHighlight>
     );
