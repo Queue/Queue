@@ -71,6 +71,9 @@ export default class Dashboard extends Component {
   // listen for data when the component mounts
   componentDidMount() {
     this.listenForItems(this.queuerItemsRef);
+    setTimeout(() => {
+      Common.logLess(JSON.stringify(this.state.queueData));
+    }, 2000);
   }
 
   // Listen for all queuers in the database
@@ -188,10 +191,12 @@ export default class Dashboard extends Component {
     let setSelectedQueuer = () => {
       this.setState({
         selectedQueuer: {
-          name: data.name
+          name: data.name,
+          rowNum: rowID
         }
       });
     }
+
     return (
       <Queuer
         place={place}
@@ -208,6 +213,9 @@ export default class Dashboard extends Component {
       // needed to close row
       rowMap[`${secId}${rowId}`].closeRow();
       Data.DB.delete(`queuers/${data._key}`);
+      if (rowId === this.state.selectedQueuer.rowNum) {
+        this.setState({selectedQueuer: {}});
+      }
     }
 
     return (

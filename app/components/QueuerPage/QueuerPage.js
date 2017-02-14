@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import Common from '../../lib/common';
+import Colors from '../../lib/colors';
 
 export default class QueuerPage extends Component {
   constructor(props) {
@@ -13,7 +14,26 @@ export default class QueuerPage extends Component {
   }
 
   componentDidMount() {
-    Common.logLess(this.props.queuer);
+    //Common.logLess(this.props.queuer);
+  }
+
+  showHelpText() {
+    let data = this.props.queuer;
+    if (!Object.keys(data).length) {
+      Common.logLess('show nothing');
+      return(
+      <View style={{
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 250,
+        maxWidth: 300}}>
+          <Text style={{fontSize: 30, color: Colors.primaryBackground}}>
+            Add a person to the list or select them to edit their values.
+          </Text>
+        </View>
+      );
+    }
   }
 
   render() {
@@ -22,6 +42,7 @@ export default class QueuerPage extends Component {
         <Text style={styles.header}>
           {this.props.queuer.name}
         </Text>
+        {this.showHelpText()}
       </View>
     );
   }
