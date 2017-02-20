@@ -8,12 +8,14 @@ import {
   TouchableHighlight,
   StyleSheet,
   TextInput,
-  View
+  View,
+  KeyboardAvoidingView
 } from 'react-native';
 import styles from './styles';
 import Common from '../../lib/common';
 import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 export default class ModalExample extends Component {
   constructor(props) {
@@ -27,6 +29,7 @@ export default class ModalExample extends Component {
   render() {
     return (
       <View
+        behavior={'padding'}
         style={styles.innerWrap}
         ref={component => this._root = component}>
         <Text style={styles.label}>{this.props.label}</Text>
@@ -44,6 +47,7 @@ export default class ModalExample extends Component {
             {this.props.buttonText}
           </Text>
         </TouchableHighlight>
+        <KeyboardSpacer />
       </View>
     );
   }

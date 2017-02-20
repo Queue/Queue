@@ -27,9 +27,9 @@ export default class QueuerPage extends Component {
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 250,
-        maxWidth: 300}}>
+        maxWidth: 400}}>
           <Text style={{fontSize: 30, color: Colors.primaryBackground}}>
-            Add a person to the list or select them to edit their values.
+            Select a person in queue to edit their values.
           </Text>
         </View>
       );

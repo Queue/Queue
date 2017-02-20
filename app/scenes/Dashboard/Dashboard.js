@@ -32,6 +32,9 @@ import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 // Spinner loader
 import Spinner from 'react-native-loading-spinner-overlay';
 
+// timers
+import Timer from 'react-native-timer';
+
 // Lib and common functions
 import { Actions } from 'react-native-router-flux'
 import Data from '../../lib/data';
@@ -64,6 +67,7 @@ export default class Dashboard extends Component {
       nameVisible: false, // determines visibility of name field
       partyVisible: false, // determines visibility of party size field
       phoneVisible: false, // determines visibility of phone number field
+      waitTime: 0,
       selectedQueuer: {} // the selected queuer and its properties
     };
   }
@@ -71,9 +75,7 @@ export default class Dashboard extends Component {
   // listen for data when the component mounts
   componentDidMount() {
     this.listenForItems(this.queuerItemsRef);
-    setTimeout(() => {
-      Common.logLess(JSON.stringify(this.state.queueData));
-    }, 2000);
+
   }
 
   // Listen for all queuers in the database
@@ -90,7 +92,8 @@ export default class Dashboard extends Component {
           _key: child.key,
           name: child.val().name,
           partySize: child.val().partySize,
-          phoneNumber: child.val().phoneNumber
+          phoneNumber: child.val().phoneNumber,
+          createdAt: child.val().createdAt
         });
       });
 
@@ -115,7 +118,8 @@ export default class Dashboard extends Component {
     this.queuerItemsRef.push({
       name: this.state.nameInput,
       partySize: this.state.partyInput,
-      phoneNumber: this.state.phoneInput
+      phoneNumber: this.state.phoneInput,
+      createdAt: Date()
     });
 
     this.setState({
@@ -186,22 +190,23 @@ export default class Dashboard extends Component {
   }
 
   // Individual row function
-  row(data, secID, rowID) {
-    let place = Number(rowID) + 1;
+  row(data, secId, rowId) {
+    let place = Number(rowId) + 1;
     let setSelectedQueuer = () => {
       this.setState({
         selectedQueuer: {
           name: data.name,
-          rowNum: rowID
+          rowNum: rowId
         }
       });
     }
 
     return (
       <Queuer
+        key={data._key}
         place={place}
         name={data.name}
-        waitTime={'20min'}
+        createdAt={data.createdAt}
         partySize={data.partySize}
         onPress={setSelectedQueuer} />
     );
@@ -220,7 +225,7 @@ export default class Dashboard extends Component {
 
     return (
       <HiddenRow
-        textPress={() => {Common.log(data.title)}}
+        textPress={() => {Common.logLess(data.createdAt)}}
         deletePress={deletePress} />
     );
   }

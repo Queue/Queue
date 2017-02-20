@@ -6,6 +6,7 @@ import Colors from '../../lib/colors';
 
 export default styles = StyleSheet.create({
 	backTextWhite: {
+    fontSize: 17,
 		color: '#FFF'
 	},
 	rowBack: {
