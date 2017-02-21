@@ -196,6 +196,8 @@ export default class Dashboard extends Component {
       this.setState({
         selectedQueuer: {
           name: data.name,
+          partySize: data.partySize,
+          phoneNumber: data.phoneNumber,
           rowNum: rowId
         }
       });

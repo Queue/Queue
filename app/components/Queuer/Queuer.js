@@ -15,7 +15,7 @@ import Common from '../../lib/common';
 // grid system
 import { Grid, Col } from 'react-native-easy-grid';
 
-// import Icon from 'react-native-vector-icons/FontAwesome.tff';
+//import Icon from 'react-native-vector-icons/Fontawesome';
 import Timer from 'react-native-timer';
 
 export default class Queuer extends Component {
@@ -27,6 +27,7 @@ export default class Queuer extends Component {
     }
   }
 
+  // calculate the wait time when the component mounts
   componentDidMount() {
     this.calculateWaitTime();
     Timer.setInterval(this, `waitTimer_${this.props.key}`, () => {
@@ -34,6 +35,12 @@ export default class Queuer extends Component {
     }, 60000);
   }
 
+  // clear the wait time
+  componentWillUnmount() {
+    Timer.clearInterval(this, `waitTimer_${this.props.key}`);
+  }
+
+  // calculate wait time
   calculateWaitTime() {
     let createdAt = new Date(this.props.createdAt),
         now = new Date();
@@ -42,10 +49,6 @@ export default class Queuer extends Component {
     Common.log(min);
 
     this.setState({waitTime: min});
-  }
-
-  componentWillUnmount() {
-    Timer.clearInterval(this, `waitTimer_${this.props.key}`);
   }
 
   render() {
