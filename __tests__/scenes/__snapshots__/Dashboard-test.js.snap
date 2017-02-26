@@ -178,17 +178,29 @@ exports[`test renders correctly 1`] = `
             "padding": 13,
           }
         }>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <View
           style={
             Object {
-              "fontSize": 55,
-              "fontWeight": "100",
-              "letterSpacing": 2,
+              "alignItems": "center",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "marginTop": 250,
+              "maxWidth": 400,
             }
-          } />
+          }>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#eaeaea",
+                "fontSize": 30,
+              }
+            }>
+            Select a person in queue to edit their values.
+          </Text>
+        </View>
       </View>
     </View>
   </View>

@@ -191,14 +191,17 @@ export default class Dashboard extends Component {
 
   // Individual row function
   row(data, secId, rowId) {
+    // place in queue
     let place = Number(rowId) + 1;
+
+    // set the selected queuer to show its page
     let setSelectedQueuer = () => {
       this.setState({
         selectedQueuer: {
+          key: data._key,
           name: data.name,
           partySize: data.partySize,
-          phoneNumber: data.phoneNumber,
-          rowNum: rowId
+          phoneNumber: data.phoneNumber
         }
       });
     }
@@ -252,7 +255,22 @@ export default class Dashboard extends Component {
 
         <Col style={styles.actionArea}>
           <View style={Layout.container}>
-            <QueuerPage queuer={this.state.selectedQueuer}/>
+            {Object.keys(this.state.selectedQueuer).length ? (
+              <View>
+                <QueuerPage queuer={this.state.selectedQueuer}/>
+              </View>
+            ) : (
+              <View style={{
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 250,
+                maxWidth: 400}}>
+                  <Text style={{fontSize: 30, color: Colors.primaryBackground}}>
+                    Select a person in queue to edit their values.
+                  </Text>
+              </View>
+            )}
           </View>
         </Col>
 
