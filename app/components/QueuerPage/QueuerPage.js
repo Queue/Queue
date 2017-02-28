@@ -7,14 +7,19 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput
+  TextInput,
+  TouchableHighlight
 } from 'react-native';
 
+// Common librarys
 import Common from '../../lib/common';
 import Colors from '../../lib/colors';
 
+// grid system
+import { Grid, Row, Col } from 'react-native-easy-grid';
+
+// keyboard scroll view
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 export default class QueuerPage extends Component {
   constructor(props) {
@@ -29,8 +34,6 @@ export default class QueuerPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    Common.logLess(nextProps.queuer);
-
     this.setState({
       nameText: nextProps.queuer.name,
       partySizeText: nextProps.queuer.partySize,
@@ -75,11 +78,51 @@ export default class QueuerPage extends Component {
               <TextInput
                 multiline={true}
                 numberOfLines={4}
-                style={{paddingTop: 7, paddingLeft: 15, fontSize: 17, height: 100, borderColor: Colors.primaryBackground, borderWidth: 1}}
+                style={{paddingTop: 7, paddingLeft: 15, fontSize: 17, height: 140, borderColor: Colors.primaryBackground, borderWidth: 1}}
                 onChangeText={(text) => {this.setState({notesText: text})}}
                 value={this.state.notesText}
               />
             </View>
+          </View>
+          <View style={{marginTop: 20}}>
+            <Grid>
+              <Row>
+                <Col style={{marginBottom: 8, marginRight: 8}}>
+                  <TouchableHighlight
+                    style={{backgroundColor: Colors.success}}
+                    underlayColor={Colors.green4}
+                    onPress={() => {Common.logLess('Cool')}}>
+                    <Text style={styles.buttonText}>Save</Text>
+                  </TouchableHighlight>
+                </Col>
+                <Col style={{marginBottom: 8, marginLeft: 8}}>
+                  <TouchableHighlight
+                    style={{backgroundColor: Colors.info}}
+                    underlayColor={Colors.blue4}
+                    onPress={() => {Common.logLess('Cool')}}>
+                    <Text style={styles.buttonText}>Text</Text>
+                  </TouchableHighlight>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={{marginTop: 8, marginRight: 8}}>
+                  <TouchableHighlight
+                    style={{backgroundColor: Colors.warning}}
+                    underlayColor={Colors.orange4}
+                    onPress={() => {Common.logLess('Cool')}}>
+                    <Text style={styles.buttonText}>Seat</Text>
+                  </TouchableHighlight>
+                </Col>
+                <Col style={{marginTop: 8, marginLeft: 8}}>
+                  <TouchableHighlight
+                    style={{backgroundColor: Colors.error}}
+                    underlayColor={Colors.red4}
+                    onPress={() => {Common.logLess('Cool')}}>
+                    <Text style={styles.buttonText}>Remove</Text>
+                  </TouchableHighlight>
+                </Col>
+              </Row>
+            </Grid>
           </View>
         </KeyboardAwareScrollView>
       </View>
@@ -95,5 +138,14 @@ const styles = StyleSheet.create({
     fontSize: 55,
     fontWeight: '100',
     letterSpacing: 2
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 20,
+    padding: 15
+  },
+  col: {
+    margin: 5
   }
 });
