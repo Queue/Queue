@@ -67,7 +67,6 @@ export default class Dashboard extends Component {
       nameVisible: false, // determines visibility of name field
       partyVisible: false, // determines visibility of party size field
       phoneVisible: false, // determines visibility of phone number field
-      waitTime: 0,
       selectedQueuer: {} // the selected queuer and its properties
     };
   }
@@ -75,7 +74,6 @@ export default class Dashboard extends Component {
   // listen for data when the component mounts
   componentDidMount() {
     this.listenForItems(this.queuerItemsRef);
-
   }
 
   // Listen for all queuers in the database
@@ -93,7 +91,8 @@ export default class Dashboard extends Component {
           name: child.val().name,
           partySize: child.val().partySize,
           phoneNumber: child.val().phoneNumber,
-          createdAt: child.val().createdAt
+          createdAt: child.val().createdAt,
+          notes: child.val().notes
         });
       });
 
@@ -119,7 +118,8 @@ export default class Dashboard extends Component {
       name: this.state.nameInput,
       partySize: this.state.partyInput,
       phoneNumber: this.state.phoneInput,
-      createdAt: Date()
+      createdAt: Date(),
+      notes: ''
     });
 
     this.setState({
@@ -201,7 +201,8 @@ export default class Dashboard extends Component {
           key: data._key,
           name: data.name,
           partySize: data.partySize,
-          phoneNumber: data.phoneNumber
+          phoneNumber: data.phoneNumber,
+          notes: data.notes
         }
       });
     }

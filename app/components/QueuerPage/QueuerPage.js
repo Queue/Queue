@@ -14,6 +14,7 @@ import {
 // Common librarys
 import Common from '../../lib/common';
 import Colors from '../../lib/colors';
+import Data from '../../lib/data';
 
 // grid system
 import { Grid, Row, Col } from 'react-native-easy-grid';
@@ -29,7 +30,7 @@ export default class QueuerPage extends Component {
       nameText: this.props.queuer.name,
       partySizeText: this.props.queuer.partySize,
       phoneNumberText: this.props.queuer.phoneNumber,
-      notesText: ''
+      notesText: this.props.queuer.notes
     }
   }
 
@@ -37,8 +38,22 @@ export default class QueuerPage extends Component {
     this.setState({
       nameText: nextProps.queuer.name,
       partySizeText: nextProps.queuer.partySize,
-      phoneNumberText: nextProps.queuer.phoneNumber
+      phoneNumberText: nextProps.queuer.phoneNumber,
+      notesText: nextProps.queuer.notes
     });
+  }
+
+  saveQueuer() {
+    if (this.state.nameText === '' && this.state.partySizeText === '') {
+      Common.error('Error', 'Please enter a name and the party size');
+    } else {
+      Data.DB.ref(`queuers/${this.props.queuer.key}`).update({
+        name: this.state.nameText,
+        partySize: this.state.partySizeText,
+        phoneNumber: this.state.phoneNumberText,
+        notes: this.state.notesText
+      });
+    }
   }
 
   render() {
@@ -46,7 +61,7 @@ export default class QueuerPage extends Component {
       <View style={styles.container}>
         <KeyboardAwareScrollView>
           <Text style={styles.header}>
-            {this.props.queuer.name}
+            {this.state.nameText}
           </Text>
           <View style={{marginTop: 20}}>
             <View style={{marginTop: 10, marginBottom: 10}}>
@@ -91,7 +106,7 @@ export default class QueuerPage extends Component {
                   <TouchableHighlight
                     style={{backgroundColor: Colors.success}}
                     underlayColor={Colors.green4}
-                    onPress={() => {Common.logLess('Cool')}}>
+                    onPress={this.saveQueuer.bind(this)}>
                     <Text style={styles.buttonText}>Save</Text>
                   </TouchableHighlight>
                 </Col>
