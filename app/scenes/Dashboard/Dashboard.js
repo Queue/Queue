@@ -58,16 +58,25 @@ export default class Dashboard extends Component {
 
     // local state
     this.state = {
+      // data
       queueData: this.ds.cloneWithRows([]), // holds the queuer data
-      spinner: true, // determines loading spinner
+      selectedKey: '', // the selected queuers key
+
+      // fields
       nameInput: '', // name input
       partyInput: '', // party size input
       phoneInput: '', // phone number input
+      editName: '', // editable name for the queuer page text field
+      editParty: '', // editable party size for the queuer page text field
+      editPhone: '', // editable phone number for the queuer page text field
+      editNotes: '', // editable notes for the queuer page text field
+
+      // visual
+      spinner: true, // determines loading spinner
       modalVisible: false, // determines visibility of modal
       nameVisible: false, // determines visibility of name field
       partyVisible: false, // determines visibility of party size field
-      phoneVisible: false, // determines visibility of phone number field
-      selectedQueuer: {} // the selected queuer and its properties
+      phoneVisible: false // determines visibility of phone number field
     };
   }
 
@@ -197,13 +206,11 @@ export default class Dashboard extends Component {
     // set the selected queuer to show its page
     let setSelectedQueuer = () => {
       this.setState({
-        selectedQueuer: {
-          key: data._key,
-          name: data.name,
-          partySize: data.partySize,
-          phoneNumber: data.phoneNumber,
-          notes: data.notes
-        }
+        selectedKey: data._key,
+        editName: data.name,
+        editParty: data.partySize,
+        editPhone: data.phoneNumber,
+        editNotes: data.notes
       });
     }
 
@@ -224,8 +231,14 @@ export default class Dashboard extends Component {
       // needed to close row
       rowMap[`${secId}${rowId}`].closeRow();
       Data.DB.delete(`queuers/${data._key}`);
-      if (rowId === this.state.selectedQueuer.rowNum) {
-        this.setState({selectedQueuer: {}});
+      if (data._key === this.state.selectedKey) {
+        this.setState({
+          selectedKey: '',
+          editName: '',
+          editParty: '',
+          editPhone: '',
+          editNotes: ''
+        });
       }
     }
 
@@ -234,6 +247,44 @@ export default class Dashboard extends Component {
         textPress={() => {Common.logLess(data.createdAt)}}
         deletePress={deletePress} />
     );
+  }
+
+  // save queuer on its edit page
+  saveQueuer() {
+    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+      name: this.state.editName,
+      partySize: this.state.editParty,
+      phoneNumber: this.state.editPhone,
+      notes: this.state.editNotes
+    });
+  }
+
+  changeAndSaveName(text) {
+    this.setState({editName: text});
+    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+      name: text
+    });
+  }
+
+  changeAndSaveParty(text) {
+    this.setState({editParty: text});
+    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+      partySize: text
+    });
+  }
+
+  changeAndSavePhone(text) {
+    this.setState({editPhone: text});
+    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+      phoneNumber: text
+    });
+  }
+
+  changeAndSaveNotes(text) {
+    this.setState({editNotes: text});
+    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+      notes: text
+    });
   }
 
   render() {
@@ -256,9 +307,23 @@ export default class Dashboard extends Component {
 
         <Col style={styles.actionArea}>
           <View style={Layout.container}>
-            {Object.keys(this.state.selectedQueuer).length ? (
+            {this.state.selectedKey !== '' ? (
               <View>
-                <QueuerPage queuer={this.state.selectedQueuer}/>
+                <QueuerPage
+                  queuer={this.state.selectedQueuer}
+                  name={this.state.editName}
+                  partySize={this.state.editParty}
+                  phoneNumber={this.state.editPhone}
+                  notes={this.state.editNotes}
+                  nameChange={this.changeAndSaveName.bind(this)}
+                  partyChange={this.changeAndSaveParty.bind(this)}
+                  phoneChange={this.changeAndSavePhone.bind(this)}
+                  notesChange={this.changeAndSaveNotes.bind(this)}
+                  save={this.saveQueuer.bind(this)}
+                  text={''}
+                  seat={''}
+                  remove={''}
+                />
               </View>
             ) : (
               <View style={{
