@@ -44,6 +44,7 @@ export default class Queuer extends Component {
   calculateWaitTime() {
     let createdAt = new Date(this.props.createdAt),
         now = new Date();
+
     let diff = Math.abs(now - createdAt);
     let min = Math.floor((diff/1000)/60);
     Common.log(min);
@@ -58,7 +59,8 @@ export default class Queuer extends Component {
         style = {styles.rowFront}
         underlayColor = {Colors.primaryBackground}>
         <Grid style={{justifyContent: 'center'}}>
-          <Col style={{
+          <Col
+            style={{
               maxWidth: 30,
               marginRight: 5,
               marginLeft: -10,

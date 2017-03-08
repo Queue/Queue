@@ -20,7 +20,8 @@ import {
   HiddenRow,
   InputModal,
   ModalWrap,
-  QueuerPage
+  QueuerPage,
+  NavButton
 } from '../../components';
 
 // grid system
@@ -82,6 +83,7 @@ export default class Dashboard extends Component {
 
   // listen for data when the component mounts
   componentDidMount() {
+    this.queuerItemsRef.orderByChild('createdAt');
     this.listenForItems(this.queuerItemsRef);
   }
 
@@ -292,7 +294,8 @@ export default class Dashboard extends Component {
       <Grid>
 
         <Spinner
-          visible={this.state.spinner} />
+          visible={this.state.spinner}
+        />
 
         <Col style={styles.navMenu}>
           <View style={Layout.container}>
@@ -301,42 +304,47 @@ export default class Dashboard extends Component {
               font={Fonts.content}
               size={80}
               text={'Q'}
-              press={Actions.SignInRoute} />
+              press={Actions.SignInRoute}
+            />
+          </View>
+          <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column'}}>
+            <NavButton
+              symbol={'H'}
+              onPress={() => {console.log('cool')}}
+            />
+            <NavButton
+              symbol={'Q'}
+              onPress={() => {console.log('cool')}}
+            />
+            <NavButton
+              symbol={'U'}
+              onPress={() => {console.log('cool')}}
+            />
+            <NavButton
+              symbol={'L'}
+              onPress={() => {console.log('cool')}}
+            />
           </View>
         </Col>
 
         <Col style={styles.actionArea}>
           <View style={Layout.container}>
-            {this.state.selectedKey !== '' ? (
-              <View>
-                <QueuerPage
-                  queuer={this.state.selectedQueuer}
-                  name={this.state.editName}
-                  partySize={this.state.editParty}
-                  phoneNumber={this.state.editPhone}
-                  notes={this.state.editNotes}
-                  nameChange={this.changeAndSaveName.bind(this)}
-                  partyChange={this.changeAndSaveParty.bind(this)}
-                  phoneChange={this.changeAndSavePhone.bind(this)}
-                  notesChange={this.changeAndSaveNotes.bind(this)}
-                  save={this.saveQueuer.bind(this)}
-                  text={''}
-                  seat={''}
-                  remove={''}
-                />
-              </View>
-            ) : (
-              <View style={{
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 250,
-                maxWidth: 400}}>
-                  <Text style={{fontSize: 30, color: Colors.primaryBackground}}>
-                    Select a person in queue to edit their values.
-                  </Text>
-              </View>
-            )}
+            <QueuerPage
+              queuerKey={this.state.selectedKey}
+              queuer={this.state.selectedQueuer}
+              name={this.state.editName}
+              partySize={this.state.editParty}
+              phoneNumber={this.state.editPhone}
+              notes={this.state.editNotes}
+              nameChange={this.changeAndSaveName.bind(this)}
+              partyChange={this.changeAndSaveParty.bind(this)}
+              phoneChange={this.changeAndSavePhone.bind(this)}
+              notesChange={this.changeAndSaveNotes.bind(this)}
+              save={this.saveQueuer.bind(this)}
+              text={''}
+              seat={''}
+              remove={''}
+            />
           </View>
         </Col>
 

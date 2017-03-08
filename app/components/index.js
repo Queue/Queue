@@ -13,6 +13,7 @@ import HiddenRow from './HiddenRow';
 import InputModal from './InputModal';
 import ModalWrap from './ModalWrap';
 import QueuerPage from './QueuerPage';
+import NavButton from './NavButton';
 
 export {
   EmailField,
@@ -23,5 +24,6 @@ export {
   ModalWrap,
   HiddenRow,
   Queuer,
-  QueuerPage
+  QueuerPage,
+  NavButton
 };
