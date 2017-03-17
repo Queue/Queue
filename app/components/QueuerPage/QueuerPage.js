@@ -11,7 +11,9 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-// Common librarys
+import styles from './styles';
+
+// Common libraries
 import Common from '../../lib/common';
 import Colors from '../../lib/colors';
 
@@ -36,36 +38,36 @@ export default class QueuerPage extends Component {
               {name}
             </Text>
             <View style={{marginTop: 20}}>
-              <View style={{marginTop: 10, marginBottom: 10}}>
+              <View style={styles.inputContainer}>
                 <Text style={styles.label}>Name</Text>
                 <TextInput
-                  style={{paddingLeft: 15, height: 45, borderColor: Colors.primaryBackground, borderWidth: 1}}
+                  style={styles.input}
                   onChangeText={this.props.nameChange}
                   value={this.props.name}
                 />
               </View>
-              <View style={{marginTop: 10, marginBottom: 10}}>
+              <View style={styles.inputContainer}>
                 <Text style={styles.label}>Party Size</Text>
                 <TextInput
-                  style={{paddingLeft: 15, height: 45, borderColor: Colors.primaryBackground, borderWidth: 1}}
+                  style={styles.input}
                   onChangeText={this.props.partyChange}
                   value={this.props.partySize}
                 />
               </View>
-              <View style={{marginTop: 10, marginBottom: 10}}>
+              <View style={styles.inputContainer}>
                 <Text style={styles.label}>Phone Number</Text>
                 <TextInput
-                  style={{paddingLeft: 15, height: 45, borderColor: Colors.primaryBackground, borderWidth: 1}}
+                  style={styles.input}
                   onChangeText={this.props.phoneChange}
                   value={this.props.phoneNumber}
                 />
               </View>
-              <View style={{marginTop: 10, marginBottom: 10}}>
+              <View style={styles.inputContainer}>
                 <Text style={styles.label}>Notes</Text>
                 <TextInput
                   multiline={true}
                   numberOfLines={4}
-                  style={{paddingTop: 7, paddingLeft: 15, fontSize: 17, height: 140, borderColor: Colors.primaryBackground, borderWidth: 1}}
+                  style={styles.textareaInput}
                   onChangeText={this.props.notesChange}
                   value={this.props.notes}
                 />
@@ -74,14 +76,6 @@ export default class QueuerPage extends Component {
             <View style={{marginTop: 20}}>
               <Grid>
                 <Row>
-                  {/*<Col style={{marginBottom: 8, marginRight: 8}}>
-                    <TouchableHighlight
-                      style={{backgroundColor: Colors.success}}
-                      underlayColor={Colors.green4}
-                      onPress={this.props.save}>
-                      <Text style={styles.buttonText}>Save</Text>
-                    </TouchableHighlight>
-                  </Col>*/}
                   <Col style={{marginBottom: 8}}>
                     <TouchableHighlight
                       style={{backgroundColor: Colors.info}}
@@ -113,13 +107,8 @@ export default class QueuerPage extends Component {
             </View>
           </KeyboardAwareScrollView>
         ) : (
-          <View style={{
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 250,
-            maxWidth: 400}}>
-              <Text style={{fontSize: 30, color: Colors.primaryBackground}}>
+          <View style={styles.unselectedContainer}>
+              <Text style={styles.unselectedText}>
                 Select a person in queue to edit their values.
               </Text>
           </View>
@@ -128,29 +117,3 @@ export default class QueuerPage extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 13
-  },
-  header: {
-    fontSize: 55,
-    fontWeight: '100',
-    letterSpacing: 2
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 20,
-    padding: 15,
-    letterSpacing: 1
-  },
-  col: {
-    margin: 5
-  },
-  label: {
-    letterSpacing: 1,
-    marginBottom: 5,
-    color: 'grey'
-  }
-});

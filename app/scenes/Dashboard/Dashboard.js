@@ -50,7 +50,7 @@ export default class Dashboard extends Component {
     super(props);
 
     // queuers data reference
-    this.queuerItemsRef = Data.DB.ref('queuers');
+    this.queuerItemsRef = Data.DB.ref(`queuers`);
 
     // data source for the listview
     this.ds = new ListView.DataSource({
@@ -62,6 +62,7 @@ export default class Dashboard extends Component {
       // data
       queueData: this.ds.cloneWithRows([]), // holds the queuer data
       selectedKey: '', // the selected queuers key
+      selectedRow: 0,
 
       // fields
       nameInput: '', // name input
@@ -83,8 +84,11 @@ export default class Dashboard extends Component {
 
   // listen for data when the component mounts
   componentDidMount() {
-    this.queuerItemsRef.orderByChild('createdAt');
-    this.listenForItems(this.queuerItemsRef);
+    setTimeout(() => {
+      this.queuerItemsRef = Data.DB.ref(`queuers/${Data.Auth.user().uid}`);
+      this.queuerItemsRef.orderByChild('createdAt');
+      this.listenForItems(this.queuerItemsRef);
+    }, 1000);
   }
 
   // Listen for all queuers in the database
@@ -125,13 +129,10 @@ export default class Dashboard extends Component {
 
   // compute when submitting a queuer and check phone input
   addQueuer() {
-    this.queuerItemsRef.push({
-      name: this.state.nameInput,
-      partySize: this.state.partyInput,
-      phoneNumber: this.state.phoneInput,
-      createdAt: Date(),
-      notes: ''
-    });
+    Data.DB.add(this.queuerItemsRef,
+      this.state.nameInput,
+      this.state.partyInput,
+      this.state.phoneInput);
 
     this.setState({
       modalVisible: false,
@@ -209,6 +210,7 @@ export default class Dashboard extends Component {
     let setSelectedQueuer = () => {
       this.setState({
         selectedKey: data._key,
+        selectedRow: rowId,
         editName: data.name,
         editParty: data.partySize,
         editPhone: data.phoneNumber,
@@ -219,8 +221,10 @@ export default class Dashboard extends Component {
     return (
       <Queuer
         key={data._key}
+        row={rowId}
         place={place}
         name={data.name}
+        selectedRow={this.state.selectedRow}
         createdAt={data.createdAt}
         partySize={data.partySize}
         onPress={setSelectedQueuer} />
@@ -304,7 +308,7 @@ export default class Dashboard extends Component {
               font={Fonts.content}
               size={80}
               text={'Q'}
-              press={Actions.SignInRoute}
+              press={() => {console.log(Data.Auth.user())}}
             />
           </View>
           <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column'}}>
@@ -312,10 +316,10 @@ export default class Dashboard extends Component {
               symbol={'H'}
               onPress={() => {console.log('cool')}}
             />
-            <NavButton
+            {/*<NavButton
               symbol={'Q'}
               onPress={() => {console.log('cool')}}
-            />
+            />*/}
             <NavButton
               symbol={'U'}
               onPress={() => {console.log('cool')}}

@@ -15,7 +15,7 @@ import Common from '../../lib/common';
 // grid system
 import { Grid, Col } from 'react-native-easy-grid';
 
-//import Icon from 'react-native-vector-icons/Fontawesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Timer from 'react-native-timer';
 
 export default class Queuer extends Component {
@@ -47,23 +47,31 @@ export default class Queuer extends Component {
 
     let diff = Math.abs(now - createdAt);
     let min = Math.floor((diff/1000)/60);
-    Common.log(min);
 
     this.setState({waitTime: min});
   }
 
   render() {
+    let isSelected = () => {
+      if (this.props.row === this.props.selectedRow) {
+        return Colors.info;
+      } else {
+        return 'white';
+      }
+    }
+
     return (
       <TouchableHighlight
         onPress = {this.props.onPress}
         style = {styles.rowFront}
-        underlayColor = {Colors.primaryBackground}>
+        underlayColor = {'white'}>
         <Grid style={{justifyContent: 'center'}}>
+          <Col style={{width: 10, backgroundColor: isSelected(), marginLeft: -20}}></Col>
           <Col
             style={{
               maxWidth: 30,
               marginRight: 5,
-              marginLeft: -10,
+              marginLeft: 5,
               alignItems: 'center'}}>
             <Text style={[styles.text, {color: 'gray'}]}>{this.props.place}</Text>
           </Col>
@@ -74,11 +82,12 @@ export default class Queuer extends Component {
             <Text style={[styles.text, {color: 'gray'}]}>{this.state.waitTime}'</Text>
           </Col>
           <Col style={{
-              maxWidth: 50,
+              maxWidth: 40,
               alignItems: 'center',
               borderLeftWidth: 1,
               borderColor: Colors.primaryBackground,
-              paddingLeft: 15}}>
+              paddingLeft: 15,
+              marginRight: -12}}>
             <Text style={[styles.text, {color: 'gray'}]}>{this.props.partySize}</Text>
           </Col>
         </Grid>

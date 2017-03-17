@@ -39,7 +39,7 @@ export default Data = {
       return Firebase.auth().sendPasswordResetEmail(emailAddress);
     }
 
-  }, // end of auth methods
+  },
 
   // Database wrapper
   DB: {
@@ -52,8 +52,20 @@ export default Data = {
     // Delete data from DB
     delete(reference) {
       return Firebase.database().ref(reference).remove();
+    },
+
+    add(reference, name, partySize, phoneNumber) {
+      let user = Firebase.auth().currentUser;
+      console.log(user.uid)
+
+      reference.push({
+        name: name,
+        partySize: partySize,
+        phoneNumber: phoneNumber,
+        notes: '',
+        createdAt: Date()
+      });
     }
 
-  } // end of db methods
-
+  }
 };
