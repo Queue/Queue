@@ -79,7 +79,7 @@ export default class Queuer extends Component {
             <Text style={styles.text}>{this.props.name}</Text>
           </Col>
           <Col style={{alignItems: 'center'}}>
-            <Text style={[styles.text, {color: 'gray'}]}>{this.state.waitTime}'</Text>
+            <Text style={[styles.text, {color: 'gray'}]}>{this.state.waitTime}<Icon name="rocket" size={30} color="#900" /></Text>
           </Col>
           <Col style={{
               maxWidth: 40,

@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -46,6 +45,7 @@
 		B5B53CCECFEA4F6F9DD9DE9D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73259A0842414CD89571653E /* Foundation.ttf */; };
 		BBC8E969D2CC46A9AA61EBF3 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505995210E9045819EC566CC /* MaterialIcons.ttf */; };
 		C866F325562B4D8385FEA9B5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABB750FF5F2143CBB0DB244D /* SimpleLineIcons.ttf */; };
+		21015A5D6E604419B65757F0 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A2277F4E56241DDAD56CD97 /* MaterialCommunityIcons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -283,6 +283,7 @@
 		8E9C941150DB4A6A8876C793 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		A7A540EFE22148ADBF16EAD0 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		ABB750FF5F2143CBB0DB244D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		6A2277F4E56241DDAD56CD97 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; name = "MaterialCommunityIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -456,6 +457,7 @@
 				A7A540EFE22148ADBF16EAD0 /* Octicons.ttf */,
 				ABB750FF5F2143CBB0DB244D /* SimpleLineIcons.ttf */,
 				7EC5F640BD374E88A6E7AD86 /* Zocial.ttf */,
+				6A2277F4E56241DDAD56CD97 /* MaterialCommunityIcons.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -919,6 +921,7 @@
 				3F32163350ED4860B092424F /* Octicons.ttf in Resources */,
 				C866F325562B4D8385FEA9B5 /* SimpleLineIcons.ttf in Resources */,
 				4F01BC8AD1084E7FBB24D3A7 /* Zocial.ttf in Resources */,
+				21015A5D6E604419B65757F0 /* MaterialCommunityIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1086,6 +1089,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 5K8EY6W754;
 				INFOPLIST_FILE = Queue/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1105,6 +1109,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5K8EY6W754;
 				INFOPLIST_FILE = Queue/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
