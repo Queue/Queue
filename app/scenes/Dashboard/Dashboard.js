@@ -127,21 +127,6 @@ export default class Dashboard extends Component {
     });
   }
 
-  // compute when submitting a queuer and check phone input
-  addQueuer() {
-    Data.DB.add(this.queuerItemsRef,
-      this.state.nameInput,
-      this.state.partyInput,
-      this.state.phoneInput);
-
-    this.setState({
-      modalVisible: false,
-      nameInput: '',
-      partyInput: '',
-      phoneInput: ''
-    });
-  }
-
   checkNameInput() {
     if (this.state.nameInput !== '') {
       this.setState({nameVisible: false, partyVisible: true});
@@ -177,7 +162,7 @@ export default class Dashboard extends Component {
       // return party size input field
       return (
         <InputModal
-          label={'Size Of Party'}
+          label={'Size of Party'}
           buttonText={'→'}
           onChangeText={(text) => {this.setState({partyInput: text})}}
           value={this.state.partyInput}
@@ -218,6 +203,8 @@ export default class Dashboard extends Component {
       });
     }
 
+    let secRowID = `${secId}${rowId}`;
+
     return (
       <Queuer
         key={data._key}
@@ -236,7 +223,7 @@ export default class Dashboard extends Component {
     let deletePress = () => {
       // needed to close row
       rowMap[`${secId}${rowId}`].closeRow();
-      Data.DB.delete(`queuers/${data._key}`);
+      Data.DB.delete(`queuers/${Data.Auth.user().uid}/${data._key}`);
       if (data._key === this.state.selectedKey) {
         this.setState({
           selectedKey: '',
@@ -255,6 +242,21 @@ export default class Dashboard extends Component {
     );
   }
 
+  // compute when submitting a queuer and check phone input
+  addQueuer() {
+    Data.DB.add(this.queuerItemsRef,
+      this.state.nameInput,
+      this.state.partyInput,
+      this.state.phoneInput);
+
+    this.setState({
+      modalVisible: false,
+      nameInput: '',
+      partyInput: '',
+      phoneInput: ''
+    });
+  }
+
   // save queuer on its edit page
   saveQueuer() {
     Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
@@ -265,30 +267,38 @@ export default class Dashboard extends Component {
     });
   }
 
+  // edits and saves to the databse as typeing for NAME
   changeAndSaveName(text) {
+    let ref = `queuers/${Data.Auth.user().uid}/${this.state.selectedKey}`;
     this.setState({editName: text});
-    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+    Data.DB.ref(ref).update({
       name: text
     });
   }
 
+  // edits and saves to the databse as typeing for PARTY SIZE
   changeAndSaveParty(text) {
+    let ref = `queuers/${Data.Auth.user().uid}/${this.state.selectedKey}`;
     this.setState({editParty: text});
-    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+    Data.DB.ref(ref).update({
       partySize: text
     });
   }
 
+  // edits and saves to the databse as typeing for PHONE NUMBER
   changeAndSavePhone(text) {
+    let ref = `queuers/${Data.Auth.user().uid}/${this.state.selectedKey}`;
     this.setState({editPhone: text});
-    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+    Data.DB.ref(ref).update({
       phoneNumber: text
     });
   }
 
+  // edits and saves to the databse as typeing for NOTES
   changeAndSaveNotes(text) {
+    let ref = `queuers/${Data.Auth.user().uid}/${this.state.selectedKey}`;
     this.setState({editNotes: text});
-    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+    Data.DB.ref(ref).update({
       notes: text
     });
   }
@@ -308,7 +318,7 @@ export default class Dashboard extends Component {
               font={Fonts.content}
               size={80}
               text={'Q'}
-              press={() => {console.log(Data.Auth.user())}}
+              press={() => {console.log(this.state.selectedRow)}}
             />
           </View>
           <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column'}}>
@@ -316,10 +326,10 @@ export default class Dashboard extends Component {
               symbol={'H'}
               onPress={() => {console.log('cool')}}
             />
-            {/*<NavButton
+            <NavButton
               symbol={'Q'}
               onPress={() => {console.log('cool')}}
-            />*/}
+            />
             <NavButton
               symbol={'U'}
               onPress={() => {console.log('cool')}}

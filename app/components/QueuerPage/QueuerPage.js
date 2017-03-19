@@ -28,8 +28,13 @@ export default class QueuerPage extends Component {
     super(props);
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.row); 
+  }
+
   render() {
-    let name = this.props.name === '' ? '<Add Name>' : this.props.name;
+    let name = this.props.name || '<Name>';
+
     return (
       <View style={styles.container}>
         {this.props.queuerKey !== '' ? (

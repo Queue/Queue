@@ -15,7 +15,7 @@ import Common from '../../lib/common';
 // grid system
 import { Grid, Col } from 'react-native-easy-grid';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/EvilIcons';
 import Timer from 'react-native-timer';
 
 export default class Queuer extends Component {
@@ -29,6 +29,7 @@ export default class Queuer extends Component {
 
   // calculate the wait time when the component mounts
   componentDidMount() {
+    console.log(this.props.row);
     this.calculateWaitTime();
     Timer.setInterval(this, `waitTimer_${this.props.key}`, () => {
       this.calculateWaitTime();
@@ -60,13 +61,17 @@ export default class Queuer extends Component {
       }
     }
 
+    let name = this.props.name || '<Name>',
+        partySize = this.props.partySize || '0',
+        selected = isSelected();
+
     return (
       <TouchableHighlight
         onPress = {this.props.onPress}
         style = {styles.rowFront}
         underlayColor = {'white'}>
         <Grid style={{justifyContent: 'center'}}>
-          <Col style={{width: 10, backgroundColor: isSelected(), marginLeft: -20}}></Col>
+          <Col style={{width: 10, backgroundColor: selected, marginLeft: -20}}></Col>
           <Col
             style={{
               maxWidth: 30,
@@ -76,10 +81,13 @@ export default class Queuer extends Component {
             <Text style={[styles.text, {color: 'gray'}]}>{this.props.place}</Text>
           </Col>
           <Col style={{width: 215, paddingLeft: 8}}>
-            <Text style={styles.text}>{this.props.name}</Text>
+            <Text style={styles.text}>{name}</Text>
           </Col>
           <Col style={{alignItems: 'center'}}>
-            <Text style={[styles.text, {color: 'gray'}]}>{this.state.waitTime}<Icon name="rocket" size={30} color="#900" /></Text>
+            <Text style={[styles.text, {color: 'gray'}]}>
+              {this.state.waitTime + ' '}
+              <Icon name="clock" size={20} color="grey" />
+            </Text>
           </Col>
           <Col style={{
               maxWidth: 40,
@@ -88,7 +96,7 @@ export default class Queuer extends Component {
               borderColor: Colors.primaryBackground,
               paddingLeft: 15,
               marginRight: -12}}>
-            <Text style={[styles.text, {color: 'gray'}]}>{this.props.partySize}</Text>
+            <Text style={[styles.text, {color: 'gray'}]}>{partySize}</Text>
           </Col>
         </Grid>
       </TouchableHighlight>
