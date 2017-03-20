@@ -323,19 +323,19 @@ export default class Dashboard extends Component {
           </View>
           <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column'}}>
             <NavButton
-              symbol={'H'}
+              symbol={'ios-home'}
               onPress={() => {console.log('cool')}}
             />
             <NavButton
-              symbol={'Q'}
+              symbol={'ios-list-box'}
               onPress={() => {console.log('cool')}}
             />
             <NavButton
-              symbol={'U'}
+              symbol={'ios-settings'}
               onPress={() => {console.log('cool')}}
             />
             <NavButton
-              symbol={'L'}
+              symbol={'ios-exit'}
               onPress={() => {console.log('cool')}}
             />
           </View>
