@@ -244,7 +244,7 @@ export default class Dashboard extends Component {
 
   // compute when submitting a queuer and check phone input
   addQueuer() {
-    Data.DB.add(this.queuerItemsRef,
+    Data.DB.addQueuer(this.queuerItemsRef,
       this.state.nameInput,
       this.state.partyInput,
       this.state.phoneInput);

@@ -54,16 +54,23 @@ export default Data = {
       return Firebase.database().ref(reference).remove();
     },
 
-    add(reference, name, partySize, phoneNumber) {
-      let user = Firebase.auth().currentUser;
-      console.log(user.uid)
-
+    // Add a queuer
+    addQueuer(reference, name, partySize, phoneNumber) {
       reference.push({
         name: name,
         partySize: partySize,
         phoneNumber: phoneNumber,
         notes: '',
-        createdAt: Date()
+        createdAt: Date(),
+        seatedAt: '',
+        waitTime: 0,
+        activity: {
+          texted: false,
+          seated: false,
+          removed: false,
+          cancelled: false,
+          old: false
+        }
       });
     }
 
