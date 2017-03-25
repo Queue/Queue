@@ -29,7 +29,7 @@ export default class Queuer extends Component {
 
   // calculate the wait time when the component mounts
   componentDidMount() {
-    console.log(this.props.row);
+    //console.log(this.props.row);
     this.calculateWaitTime();
     Timer.setInterval(this, `waitTimer_${this.props.key}`, () => {
       this.calculateWaitTime();
@@ -39,6 +39,10 @@ export default class Queuer extends Component {
   // clear the wait time
   componentWillUnmount() {
     Timer.clearInterval(this, `waitTimer_${this.props.key}`);
+  }
+
+  componentWillUpdate(nextProps) {
+    //console.log(`${nextProps.selectedRow} : ${this.props.row}`);
   }
 
   // calculate wait time
@@ -54,7 +58,7 @@ export default class Queuer extends Component {
 
   render() {
     let isSelected = () => {
-      if (this.props.row === this.props.selectedRow) {
+      if (this.props.queuerKey === this.props.selectedKey) {
         return Colors.info;
       } else {
         return 'white';

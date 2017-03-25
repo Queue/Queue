@@ -29,7 +29,7 @@ export default class QueuerPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.row); 
+    //console.log(nextProps.row); 
   }
 
   render() {

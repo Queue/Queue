@@ -21,7 +21,8 @@ import {
   InputModal,
   ModalWrap,
   QueuerPage,
-  NavButton
+  NavButton,
+  Settings
 } from '../../components';
 
 // grid system
@@ -54,7 +55,7 @@ export default class Dashboard extends Component {
 
     // data source for the listview
     this.ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
+      rowHasChanged: (r1, r2) => r2 !== r1
     });
 
     // local state
@@ -78,7 +79,9 @@ export default class Dashboard extends Component {
       modalVisible: false, // determines visibility of modal
       nameVisible: false, // determines visibility of name field
       partyVisible: false, // determines visibility of party size field
-      phoneVisible: false // determines visibility of phone number field
+      phoneVisible: false, // determines visibility of phone number field
+      homeVisible: true, // determines visibilty of home on dashboard
+      settingsVisible: false // determines visibility of settings on dashboard
     };
   }
 
@@ -186,35 +189,84 @@ export default class Dashboard extends Component {
     }
   }
 
+  showNavItems() {
+    if (this.state.homeVisible) {
+      return (
+        <QueuerPage
+          queuerKey={this.state.selectedKey}
+          queuer={this.state.selectedQueuer}
+          name={this.state.editName}
+          partySize={this.state.editParty}
+          phoneNumber={this.state.editPhone}
+          notes={this.state.editNotes}
+          nameChange={this.changeAndSaveName.bind(this)}
+          partyChange={this.changeAndSaveParty.bind(this)}
+          phoneChange={this.changeAndSavePhone.bind(this)}
+          notesChange={this.changeAndSaveNotes.bind(this)}
+          save={this.saveQueuer.bind(this)}
+          text={''}
+          seat={''}
+          remove={''}
+        />
+      );
+    } else if (this.state.settingsVisible) {
+      return (
+        <Settings />
+      );
+    } else {}
+  }
+
+  setSettingsVisible() {
+    this.setState({
+      selectedKey: '',
+      homeVisible: false,
+      settingsVisible: true
+    });
+  }
+
+  setHomeVisible() {
+    this.setState({
+      selectedKey: '',
+      homeVisible: true,
+      settingsVisible: false
+    });
+  }
+
+  setSelectedQueuer(data) {
+    this.setHomeVisible();
+    this.setState({
+      selectedKey: data._key,
+      editName: data.name,
+      editParty: data.partySize,
+      editPhone: data.phoneNumber,
+      editNotes: data.notes
+    });
+  }
+
+  signOut() {
+    Data.Auth.signOut().then(() => {
+      Actions.SignInRoute();
+    }, (error) => {
+      Common.error(error.code, error.message)
+    });
+  }
+
   // Individual row function
   row(data, secId, rowId) {
     // place in queue
     let place = Number(rowId) + 1;
 
-    // set the selected queuer to show its page
-    let setSelectedQueuer = () => {
-      this.setState({
-        selectedKey: data._key,
-        selectedRow: rowId,
-        editName: data.name,
-        editParty: data.partySize,
-        editPhone: data.phoneNumber,
-        editNotes: data.notes
-      });
-    }
-
-    let secRowID = `${secId}${rowId}`;
-
     return (
       <Queuer
         key={data._key}
-        row={rowId}
+        queuerKey={data._key}
         place={place}
         name={data.name}
-        selectedRow={this.state.selectedRow}
+        selectedKey={this.state.selectedKey}
         createdAt={data.createdAt}
         partySize={data.partySize}
-        onPress={setSelectedQueuer} />
+        onPress={this.setSelectedQueuer.bind(this, data)}
+      />
     );
   }
 
@@ -227,6 +279,7 @@ export default class Dashboard extends Component {
       if (data._key === this.state.selectedKey) {
         this.setState({
           selectedKey: '',
+          selectedRow: '',
           editName: '',
           editParty: '',
           editPhone: '',
@@ -324,41 +377,30 @@ export default class Dashboard extends Component {
           <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column'}}>
             <NavButton
               symbol={'ios-home'}
-              onPress={() => {console.log('cool')}}
+              isSelected={this.state.homeVisible}
+              onPress={this.setHomeVisible.bind(this)}
             />
             <NavButton
               symbol={'ios-list-box'}
+              isSelected={false}
               onPress={() => {console.log('cool')}}
             />
             <NavButton
               symbol={'ios-settings'}
-              onPress={() => {console.log('cool')}}
+              isSelected={this.state.settingsVisible}
+              onPress={this.setSettingsVisible.bind(this)}
             />
             <NavButton
               symbol={'ios-exit'}
-              onPress={() => {console.log('cool')}}
+              isSelected={false}
+              onPress={this.signOut.bind(this)}
             />
           </View>
         </Col>
 
         <Col style={styles.actionArea}>
           <View style={Layout.container}>
-            <QueuerPage
-              queuerKey={this.state.selectedKey}
-              queuer={this.state.selectedQueuer}
-              name={this.state.editName}
-              partySize={this.state.editParty}
-              phoneNumber={this.state.editPhone}
-              notes={this.state.editNotes}
-              nameChange={this.changeAndSaveName.bind(this)}
-              partyChange={this.changeAndSaveParty.bind(this)}
-              phoneChange={this.changeAndSavePhone.bind(this)}
-              notesChange={this.changeAndSaveNotes.bind(this)}
-              save={this.saveQueuer.bind(this)}
-              text={''}
-              seat={''}
-              remove={''}
-            />
+            {this.showNavItems()}
           </View>
         </Col>
 
@@ -366,10 +408,12 @@ export default class Dashboard extends Component {
           <View style={styles.listContainer}>
             <SwipeListView
               dataSource={this.state.queueData}
+              initialListSize={100}
               enableEmptySections={true}
               renderRow={this.row.bind(this)}
               renderHiddenRow={this.hiddenRow.bind(this)}
-              rightOpenValue={-150} />
+              rightOpenValue={-150}
+            />
           </View>
           <TouchableHighlight
             style={styles.addButton}

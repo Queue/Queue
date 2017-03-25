@@ -14,6 +14,7 @@ import InputModal from './InputModal';
 import ModalWrap from './ModalWrap';
 import QueuerPage from './QueuerPage';
 import NavButton from './NavButton';
+import Settings from './Settings';
 
 export {
   EmailField,
@@ -25,5 +26,6 @@ export {
   HiddenRow,
   Queuer,
   QueuerPage,
-  NavButton
+  NavButton,
+  Settings
 };
