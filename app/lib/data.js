@@ -19,6 +19,10 @@ export default Data = {
       return Firebase.auth().currentUser;
     },
 
+    authChange(func) {
+      Firebase.auth().onAuthStateChanged(func);
+    },
+
     // Sign in method
     signIn(email, password) {
       return Firebase.auth().signInWithEmailAndPassword(email, password);

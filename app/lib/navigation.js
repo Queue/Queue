@@ -12,11 +12,12 @@ import {
 import Data from './data'
 
 export default class Navigation extends Component {
-  render() {
+   render() {
     return (
       <Router>
         <Scene key={'Root'} animation={'fade'}>
           <Scene
+            initial = {true}
             key = {'SignInRoute'}
             component = {SignIn}
             hideNavBar = {true}
@@ -33,7 +34,6 @@ export default class Navigation extends Component {
             hideNavBar = {true}
           />
           <Scene
-            initial = {true}
             key = {'DashboardRoute'}
             component = {Dashboard}
             hideNavBar = {true}

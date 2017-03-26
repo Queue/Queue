@@ -28,6 +28,14 @@ export default class SignIn extends Component {
     };
   }
 
+  componentDidMount() {
+    Data.Auth.authChange((user) => {
+      if (user) {
+        Actions.DashboardRoute();
+      }
+    });
+  }
+
   signInUser() {
     // strictly development purposes turn off when testing auth
 //    return Actions.DashboardRoute();

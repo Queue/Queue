@@ -87,11 +87,15 @@ export default class Dashboard extends Component {
 
   // listen for data when the component mounts
   componentDidMount() {
-    setTimeout(() => {
-      this.queuerItemsRef = Data.DB.ref(`queuers/${Data.Auth.user().uid}`);
-      this.queuerItemsRef.orderByChild('createdAt');
-      this.listenForItems(this.queuerItemsRef);
-    }, 1000);
+    Data.Auth.authChange((user) => {
+      if (user) {
+        this.queuerItemsRef = Data.DB.ref(`queuers/${Data.Auth.user().uid}`);
+        this.queuerItemsRef.orderByChild('createdAt');
+        this.listenForItems(this.queuerItemsRef);
+      } else {
+        console.log('Not logged in');
+      }
+    });
   }
 
   // Listen for all queuers in the database
