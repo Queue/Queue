@@ -1,0 +1,29 @@
+exports[`test renders correctly 1`] = `
+<View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "grey",
+        "letterSpacing": 1,
+        "marginBottom": 5,
+      }
+    }>
+    Log In
+  </Text>
+  <TextInput
+    label="Log In"
+    onPress={[Function]}
+    style={
+      Object {
+        "borderColor": "#eaeaea",
+        "borderWidth": 1,
+        "height": 45,
+        "paddingLeft": 15,
+      }
+    }
+    type="text" />
+</View>
+`;

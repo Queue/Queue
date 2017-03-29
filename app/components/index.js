@@ -15,6 +15,7 @@ import ModalWrap from './ModalWrap';
 import QueuerPage from './QueuerPage';
 import NavButton from './NavButton';
 import Settings from './Settings';
+import Field from './Field';
 
 export {
   EmailField,
@@ -27,5 +28,6 @@ export {
   Queuer,
   QueuerPage,
   NavButton,
-  Settings
+  Settings,
+  Field
 };

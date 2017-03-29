@@ -384,11 +384,11 @@ export default class Dashboard extends Component {
               isSelected={this.state.homeVisible}
               onPress={this.setHomeVisible.bind(this)}
             />
-            <NavButton
+            {/*<NavButton
               symbol={'ios-list-box'}
               isSelected={false}
               onPress={() => {console.log('cool')}}
-            />
+            />*/}
             <NavButton
               symbol={'ios-settings'}
               isSelected={this.state.settingsVisible}

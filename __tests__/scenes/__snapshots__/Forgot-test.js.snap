@@ -90,9 +90,8 @@ exports[`test renders correctly 1`] = `
           Array [
             Object {
               "color": "#007aff",
-              "fontFamily": "HelveticaNeue-Medium",
               "fontSize": 17,
-              "fontWeight": "bold",
+              "fontWeight": "500",
               "textAlign": "center",
             },
             null,

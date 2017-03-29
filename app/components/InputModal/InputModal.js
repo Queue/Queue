@@ -29,7 +29,6 @@ export default class ModalExample extends Component {
   render() {
     return (
       <View
-        behavior={'padding'}
         style={styles.innerWrap}
         ref={component => this._root = component}>
         <Text style={styles.label}>{this.props.label}</Text>

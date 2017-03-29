@@ -14,6 +14,6 @@ export default class CustomerQueue extends Component {
       <View>
         <Text>Customer Queue</Text>
       </View>
-    ); 
+    );
   }
 }
