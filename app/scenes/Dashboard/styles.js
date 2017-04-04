@@ -15,7 +15,7 @@ export default styles = StyleSheet.create({
   default: {
     backgroundColor: 'white'
   },
-  logOutButton: {
+  brand: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

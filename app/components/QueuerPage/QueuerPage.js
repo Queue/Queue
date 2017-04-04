@@ -11,6 +11,8 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+import Field from '../Field';
+
 import styles from './styles';
 
 // Common libraries
@@ -28,10 +30,6 @@ export default class QueuerPage extends Component {
     super(props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    //console.log(nextProps.row);
-  }
-
   render() {
     let name = this.props.name || '<Name>';
 
@@ -43,40 +41,30 @@ export default class QueuerPage extends Component {
               {name}
             </Text>
             <View style={{marginTop: 20}}>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Name</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={this.props.nameChange}
-                  value={this.props.name}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Party Size</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={this.props.partyChange}
-                  value={this.props.partySize}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Phone Number</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={this.props.phoneChange}
-                  value={this.props.phoneNumber}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Notes</Text>
-                <TextInput
-                  multiline={true}
-                  numberOfLines={4}
-                  style={styles.textareaInput}
-                  onChangeText={this.props.notesChange}
-                  value={this.props.notes}
-                />
-              </View>
+              <Field
+                type={'text'}
+                label={'Name'}
+                value={this.props.name}
+                onChangeText={this.props.nameChange}
+              />
+              <Field
+                type={'text'}
+                label={'Party Size'}
+                value={this.props.partySize}
+                onChangeText={this.props.partyChange}
+              />
+              <Field
+                type={'text'}
+                label={'Phone Number'}
+                value={this.props.phoneNumber}
+                onChangeText={this.props.phoneChange}
+              />
+              <Field
+                type={'textarea'}
+                label={'Notes'}
+                value={this.props.notes}
+                onChangeText={this.props.notesChange}
+              />
             </View>
             <View style={{marginTop: 20}}>
               <Grid>

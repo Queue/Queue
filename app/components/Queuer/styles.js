@@ -3,6 +3,7 @@
 
 import { StyleSheet } from 'react-native';
 import Colors from '../../lib/colors';
+import Fonts from '../../lib/fonts';
 
 export default styles = StyleSheet.create({
   rowFront: {
@@ -19,6 +20,7 @@ export default styles = StyleSheet.create({
   },
   text: {
     fontSize: 17,
+    fontFamily: Fonts.content,
     paddingTop: 20,
     paddingBottom: 20
   }

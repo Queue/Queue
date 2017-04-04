@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { View, TextInput, Text, StyleSheet } from 'react-native';
 
 import Colors from '../../lib/colors';
+import Fonts from '../../lib/fonts';
 
 export default class Field extends Component {
   constructor(props) {
@@ -31,6 +32,19 @@ export default class Field extends Component {
           />
         </View>
       );
+    // text area type
+    } else if (this.props.type === 'textarea') {
+      return (
+        <View style={styles.fieldContainer}>
+          {this.hasLabel()}
+          <TextInput
+            {...this.props}
+            multiline={true}
+            numberOfLines={4}
+            style={styles.textareaInput}
+          />
+        </View>
+      );
     // if no type is specified
     } else {
       return (
@@ -46,6 +60,7 @@ const styles = StyleSheet.create({
   label: {
     letterSpacing: 1,
     marginBottom: 5,
+    fontFamily: Fonts.content,
     color: 'grey'
   },
   fieldContainer: {
@@ -55,6 +70,7 @@ const styles = StyleSheet.create({
   fieldBase: {
     paddingLeft: 15,
     height: 45,
+    fontFamily: Fonts.content,
     borderColor: Colors.primaryBackground,
     borderWidth: 1
   },
@@ -62,6 +78,7 @@ const styles = StyleSheet.create({
     paddingTop: 7,
     paddingLeft: 15,
     fontSize: 17,
+    fontFamily: Fonts.content,
     height: 140,
     borderColor: Colors.primaryBackground,
     borderWidth: 1

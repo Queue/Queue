@@ -3,14 +3,16 @@
 
 import { StyleSheet } from 'react-native';
 import Colors from '../../lib/colors';
+import Fonts from '../../lib/fonts';
 
 export default styles = StyleSheet.create({
   container: {
-    padding: 13
+    padding: 13,
   },
   header: {
     fontSize: 55,
     fontWeight: '100',
+    fontFamily: Fonts.content,
     letterSpacing: 2
   },
   buttonText: {
@@ -18,6 +20,7 @@ export default styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     padding: 15,
+    fontFamily: Fonts.content,
     letterSpacing: 1
   },
   col: {
@@ -26,6 +29,7 @@ export default styles = StyleSheet.create({
   label: {
     letterSpacing: 1,
     marginBottom: 5,
+    fontFamily: Fonts.content,
     color: 'grey'
   },
   unselectedContainer: {

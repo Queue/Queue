@@ -222,7 +222,6 @@ export default class Dashboard extends Component {
 
   setSettingsVisible() {
     this.setState({
-      selectedKey: '',
       homeVisible: false,
       settingsVisible: true
     });
@@ -230,7 +229,6 @@ export default class Dashboard extends Component {
 
   setHomeVisible() {
     this.setState({
-      selectedKey: '',
       homeVisible: true,
       settingsVisible: false
     });
@@ -270,6 +268,7 @@ export default class Dashboard extends Component {
         createdAt={data.createdAt}
         partySize={data.partySize}
         onPress={this.setSelectedQueuer.bind(this, data)}
+        home={this.state.homeVisible}
       />
     );
   }
@@ -371,9 +370,9 @@ export default class Dashboard extends Component {
         <Col style={styles.navMenu}>
           <View style={Layout.container}>
             <TextButton
-              styles={styles.logOutButton}
-              font={Fonts.content}
-              size={80}
+              styles={styles.brand}
+              font={Fonts.brand}
+              size={70}
               text={'Q'}
               press={() => {console.log(this.state.selectedRow)}}
             />

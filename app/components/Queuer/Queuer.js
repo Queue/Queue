@@ -41,10 +41,6 @@ export default class Queuer extends Component {
     Timer.clearInterval(this, `waitTimer_${this.props.key}`);
   }
 
-  componentWillUpdate(nextProps) {
-    //console.log(`${nextProps.selectedRow} : ${this.props.row}`);
-  }
-
   // calculate wait time
   calculateWaitTime() {
     let createdAt = new Date(this.props.createdAt),
@@ -58,7 +54,7 @@ export default class Queuer extends Component {
 
   render() {
     let isSelected = () => {
-      if (this.props.queuerKey === this.props.selectedKey) {
+      if (this.props.queuerKey === this.props.selectedKey && this.props.home) {
         return Colors.info;
       } else {
         return 'white';
