@@ -12,6 +12,7 @@ export default class Field extends Component {
     super(props);
   }
 
+  // if has label return label else return nada
   hasLabel() {
     if (this.props.label) {
       return (

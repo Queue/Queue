@@ -193,6 +193,7 @@ export default class Dashboard extends Component {
     }
   }
 
+  // Shows nav contexts
   showNavItems() {
     if (this.state.homeVisible) {
       return (
@@ -215,11 +216,14 @@ export default class Dashboard extends Component {
       );
     } else if (this.state.settingsVisible) {
       return (
-        <Settings />
+        <Settings
+          profile={Data.Auth.user()}
+        />
       );
     } else {}
   }
 
+  // set  the settings visible
   setSettingsVisible() {
     this.setState({
       homeVisible: false,
@@ -227,6 +231,7 @@ export default class Dashboard extends Component {
     });
   }
 
+  // set the home visible
   setHomeVisible() {
     this.setState({
       homeVisible: true,
@@ -234,6 +239,7 @@ export default class Dashboard extends Component {
     });
   }
 
+  // set the selected queuer
   setSelectedQueuer(data) {
     this.setHomeVisible();
     this.setState({
@@ -245,6 +251,7 @@ export default class Dashboard extends Component {
     });
   }
 
+  // sign out
   signOut() {
     Data.Auth.signOut().then(() => {
       Actions.SignInRoute();
@@ -253,7 +260,7 @@ export default class Dashboard extends Component {
     });
   }
 
-  // Individual row function
+  // individual row function
   row(data, secId, rowId) {
     // place in queue
     let place = Number(rowId) + 1;
@@ -273,7 +280,7 @@ export default class Dashboard extends Component {
     );
   }
 
-  // Individual hidden row function
+  // individual hidden row function
   hiddenRow(data, secId, rowId, rowMap) {
     let deletePress = () => {
       // needed to close row
@@ -359,6 +366,7 @@ export default class Dashboard extends Component {
     });
   }
 
+  // render the entire dashboard
   render() {
     return (
       <Grid>

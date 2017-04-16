@@ -19,7 +19,7 @@ export default styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20
+    paddingTop: 10 
   },
   navMenu: {
     borderRightWidth: 1,
