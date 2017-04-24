@@ -11,6 +11,7 @@ import styles from './styles';
 
 import Colors from '../../lib/colors';
 import Common from '../../lib/common';
+import Data from '../../lib/data';
 
 // grid system
 import { Grid, Col } from 'react-native-easy-grid';

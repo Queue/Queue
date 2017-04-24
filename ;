@@ -64,6 +64,7 @@ export default class Dashboard extends Component {
       queueData: this.ds.cloneWithRows([]), // holds the queuer data
       selectedKey: '', // the selected queuers key
       selectedRow: 0,
+      ok: false,
 
       // fields
       nameInput: '', // name input
@@ -253,20 +254,11 @@ export default class Dashboard extends Component {
 
   // sign out
   signOut() {
-    Alert.alert(
-      'Log Out',
-      'Are you sure you want to log out?',
-      [
-        {text: 'Cancel', style: 'cancel'},
-        {text: 'OK', onPress: () => {
-          Data.Auth.signOut().then(() => {
-            Actions.SignInRoute();
-          }, (error) => {
-            Common.error(error.code, error.message)
-          });       
-        }}
-      ]
-    );
+    Data.Auth.signOut().then(() => {
+      Actions.SignInRoute();
+    }, (error) => {
+      Common.error(error.code, error.message)
+    });
   }
 
   // individual row function
@@ -292,7 +284,7 @@ export default class Dashboard extends Component {
   removeQueuer() {
     Alert.alert(
       `Remove ${this.state.editName}`,
-      `Are you sure you want to remove ${this.state.editName}?`,
+      `Are you sure you want to remove ${this.state.editName}`,
       [
         {text: 'Cancel', onPress: () => {this.setState({ok: false})}, style: 'cancel'},
         {text: 'OK', onPress: () => {
@@ -312,10 +304,10 @@ export default class Dashboard extends Component {
 
   hiddenRemoveQueuer(data, secId, rowId, rowMap) {
     Alert.alert(
-      `Remove ${data.name}`,
-      `Are you sure you want to remove ${data.name}?`,
+      `Remove ${this.state.editName}`,
+      `Are you sure you want to remove ${this.state.editName}`,
       [
-        {text: 'Cancel', style: 'cancel'},
+        {text: 'Cancel', onPress: () => {this.setState({ok: false})}, style: 'cancel'},
         {text: 'OK', onPress: () => {
           rowMap[`${secId}${rowId}`].closeRow();
           Data.DB.delete(`queuers/${Data.Auth.user().uid}/${data._key}`);
@@ -332,6 +324,7 @@ export default class Dashboard extends Component {
         }}
       ]
     );
+
   }
 
   // individual hidden row function

@@ -18,6 +18,7 @@ import styles from './styles';
 // Common libraries
 import Common from '../../lib/common';
 import Colors from '../../lib/colors';
+import Data from '../../lib/data';
 
 // grid system
 import { Grid, Row, Col } from 'react-native-easy-grid';
@@ -28,6 +29,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 export default class QueuerPage extends Component {
   constructor(props) {
     super(props);
+  }
+
+  // remove queuer
+  removeQueuer() {
+    Data.DB.delete();
   }
 
   render() {
@@ -91,7 +97,7 @@ export default class QueuerPage extends Component {
                     <TouchableHighlight
                       style={{backgroundColor: Colors.error}}
                       underlayColor={Colors.red4}
-                      onPress={() => {Common.logLess('Cool')}}>
+                      onPress={this.props.remove}>
                       <Text style={styles.buttonText}>Remove</Text>
                     </TouchableHighlight>
                   </Col>

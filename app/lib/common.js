@@ -16,12 +16,15 @@ export default Common = {
     dismissKeyboard();
   },
 
-  warn(code, message) {
-    Reactotron.log(`Warning\nCode: ${code}\nMessage: ${message}`);
+  warn(title, message, cancel, ok) {
+    //Reactotron.log(`Warning\nCode: ${title}\nMessage: ${message}`);
     Alert.alert(
-      code,
+      title,
       message,
-      [{text: 'OK', style: 'cancel'}]
+      [
+        {text: 'Cancel', onPress: cancel, style: 'cancel'},
+        {text: 'OK', onPress: ok}
+      ]
     );
   },
 
