@@ -22,7 +22,8 @@ import {
   ModalWrap,
   QueuerPage,
   NavButton,
-  Settings
+  Settings,
+  Dropdown
 } from '../../components';
 
 // grid system
@@ -428,12 +429,10 @@ export default class Dashboard extends Component {
   }
 
   // edits and saves to the databse as typeing for NOTES
-  changeAndSaveNotes(text) {
-    let ref = `queuers/${this.use.uid}/${this.state.selectedKey}`;
-    this.setState({editNotes: text});
-    Data.DB.ref(ref).update({
-      notes: text
-    });
+  changeAndSaveNotes(editNotes) {
+    let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
+    this.setState({editNotes});
+    Data.DB.ref(ref).update({notes: editNotes});
   }
 
   // render the entire dashboard
@@ -510,10 +509,19 @@ export default class Dashboard extends Component {
           {this.showInput()}
         </ModalWrap>
 
+        <Dropdown />
+
         <DropdownAlert
           ref={(ref) => this.dropdown = ref}
           onClose={(data) => console.log(data)}
           closeInterval={1500}
+          successColor={Colors.green0}
+          containerStyle={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row'
+          }}
         />
 
       </Grid>

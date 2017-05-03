@@ -16,6 +16,7 @@ import QueuerPage from './QueuerPage';
 import NavButton from './NavButton';
 import Settings from './Settings';
 import Field from './Field';
+import Dropdown from './Dropdown';
 
 export {
   EmailField,
@@ -29,5 +30,6 @@ export {
   QueuerPage,
   NavButton,
   Settings,
-  Field
+  Field,
+  Dropdown
 };

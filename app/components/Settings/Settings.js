@@ -18,17 +18,6 @@ export default class Settings extends Component {
     super(props);
   }
 
-  saveProfile() {
-    this.user.updateProfile({
-      displayName: this.state.orgText
-    }).then(() => {
-      this.dropdown.alertWithType('success', 'Success', 'Profile Updated');
-      console.log('Profile Updated');
-    }, (error) => {
-      console.log('Profile Update ERROR');
-    });
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -55,7 +44,8 @@ export default class Settings extends Component {
         </TouchableHighlight>
         <DropdownAlert
           ref={(ref) => this.dropdown = ref}
-          onClose={(data) => this.onClose.bind(this, data)} />
+          onClose={(data) => this.onClose.bind(this, data)}
+        />
       </View>
     );
   }
