@@ -11,32 +11,18 @@ import {
 import Field from '../Field';
 import Colors from '../../lib/colors';
 import Common from '../../lib/common';
+import DropdownAlert from 'react-native-dropdownalert';
 
 export default class Settings extends Component {
   constructor(props) {
     super(props);
-
-    this.user = '';
-
-    this.state = {
-      emailText: '',
-      orgText: ''
-    };
-  }
-
-  componentDidMount() {
-    this.user = this.props.profile;
-
-    this.setState({
-      emailText: this.props.profile.email,
-      orgText: this.props.profile.displayName
-    });
   }
 
   saveProfile() {
     this.user.updateProfile({
       displayName: this.state.orgText
     }).then(() => {
+      this.dropdown.alertWithType('success', 'Success', 'Profile Updated');
       console.log('Profile Updated');
     }, (error) => {
       console.log('Profile Update ERROR');
@@ -52,21 +38,24 @@ export default class Settings extends Component {
         <Field
           type={'text'}
           label={'Email'}
-          onChangeText={(text) => this.setState({emailText: text})}
-          value={this.props.profile.email}
+          onChangeText={this.props.onChangeEmail}
+          value={this.props.email}
         />
         <Field
           type={'text'}
           label={'Organization'}
-          onChangeText={(text) => this.setState({orgText: text})}
-          value={this.state.orgText}
+          onChangeText={this.props.onChangeOrg}
+          value={this.props.organization}
         />
         <TouchableHighlight
           style={{marginTop: 10, backgroundColor: Colors.success}}
           underlayColor={Colors.green4}
-          onPress={this.saveProfile.bind(this)}>
+          onPress={this.props.savePress}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableHighlight>
+        <DropdownAlert
+          ref={(ref) => this.dropdown = ref}
+          onClose={(data) => this.onClose.bind(this, data)} />
       </View>
     );
   }

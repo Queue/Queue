@@ -13,6 +13,7 @@
     "react-native": "^0.41.1",
     "react-native-button": "^1.7.1",
     "react-native-dismiss-keyboard": "^1.0.0",
+    "react-native-dropdownalert": "^2.8.0",
     "react-native-easy-grid": "^0.1.7",
     "react-native-keyboard-aware-scroll-view": "^0.2.7",
     "react-native-keyboard-spacer": "^0.3.0",

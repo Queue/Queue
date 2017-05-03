@@ -13,7 +13,7 @@ import {
   Alert
 } from 'react-native';
 
-// Custom components
+// custom components
 import {
   TextButton,
   Queuer,
@@ -34,11 +34,16 @@ import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 // Spinner loader
 import Spinner from 'react-native-loading-spinner-overlay';
 
+// dropdown alerts
+import DropdownAlert from 'react-native-dropdownalert';
+
 // timers
 import Timer from 'react-native-timer';
 
-// Lib and common functions
+// router actions
 import { Actions } from 'react-native-router-flux'
+
+// Lib and common functions
 import Data from '../../lib/data';
 import Common from '../../lib/common';
 import Layout from '../../lib/layout';
@@ -58,12 +63,13 @@ export default class Dashboard extends Component {
       rowHasChanged: (r1, r2) => r2 !== r1
     });
 
+    this.user = Data.Auth.user();
+
     // local state
     this.state = {
       // data
       queueData: this.ds.cloneWithRows([]), // holds the queuer data
       selectedKey: '', // the selected queuers key
-      selectedRow: 0,
 
       // fields
       nameInput: '', // name input
@@ -73,6 +79,8 @@ export default class Dashboard extends Component {
       editParty: '', // editable party size for the queuer page text field
       editPhone: '', // editable phone number for the queuer page text field
       editNotes: '', // editable notes for the queuer page text field
+      emailInput: '', // email input
+      orgInput: '', // organization input
 
       // visual
       spinner: true, // determines loading spinner
@@ -87,13 +95,20 @@ export default class Dashboard extends Component {
 
   // listen for data when the component mounts
   componentDidMount() {
+    // wait for user data
     Data.Auth.authChange((user) => {
       if (user) {
+        this.user = Data.Auth.user();
         this.queuerItemsRef = Data.DB.ref(`queuers/${Data.Auth.user().uid}`);
         this.queuerItemsRef.orderByChild('createdAt');
         this.listenForItems(this.queuerItemsRef);
+        this.setState({
+          emailInput: Data.Auth.user().email,
+          orgInput: Data.Auth.user().displayName
+        });
       } else {
         console.log('Not logged in');
+        Actions.SignInRoute();
       }
     });
   }
@@ -150,7 +165,7 @@ export default class Dashboard extends Component {
     }
   }
 
-  // Show input group based on state
+  // show input group based on state
   showInput() {
     if (this.state.nameVisible) {
 
@@ -193,7 +208,7 @@ export default class Dashboard extends Component {
     }
   }
 
-  // Shows nav contexts
+  // shows nav contexts
   showNavItems() {
     if (this.state.homeVisible) {
       return (
@@ -217,13 +232,17 @@ export default class Dashboard extends Component {
     } else if (this.state.settingsVisible) {
       return (
         <Settings
-          profile={Data.Auth.user()}
+          email={this.state.emailInput}
+          organization={this.state.orgInput}
+          onChangeEmail={(text) => this.setState({emailInput: text})}
+          onChangeOrg={(text) => this.setState({orgInput: text})}
+          savePress={this.saveProfile.bind(this)}
         />
       );
     } else {}
   }
 
-  // set  the settings visible
+  // set the settings visible
   setSettingsVisible() {
     this.setState({
       homeVisible: false,
@@ -251,6 +270,19 @@ export default class Dashboard extends Component {
     });
   }
 
+  // save user profile
+  saveProfile() {
+    this.user.updateProfile({
+      displayName: this.state.orgInput
+    }).then(() => {
+      Common.dismissKeyboard();
+      this.dropdown.alertWithType('success', 'Success', 'Profile Updated');
+      console.log('Profile Updated');
+    }, (error) => {
+      console.log('Profile Update ERROR');
+    });
+  }
+
   // sign out
   signOut() {
     Alert.alert(
@@ -263,7 +295,7 @@ export default class Dashboard extends Component {
             Actions.SignInRoute();
           }, (error) => {
             Common.error(error.code, error.message)
-          });       
+          });
         }}
       ]
     );
@@ -289,6 +321,7 @@ export default class Dashboard extends Component {
     );
   }
 
+  // general remove queuer from db
   removeQueuer() {
     Alert.alert(
       `Remove ${this.state.editName}`,
@@ -296,10 +329,9 @@ export default class Dashboard extends Component {
       [
         {text: 'Cancel', onPress: () => {this.setState({ok: false})}, style: 'cancel'},
         {text: 'OK', onPress: () => {
-          Data.DB.delete(`queuers/${Data.Auth.user().uid}/${this.state.selectedKey}`);
+          Data.DB.delete(`queuers/${this.user.uid}/${this.state.selectedKey}`);
           this.setState({
             selectedKey: '',
-            selectedRow: '',
             editName: '',
             editParty: '',
             editPhone: '',
@@ -310,6 +342,7 @@ export default class Dashboard extends Component {
     );
   }
 
+  // special remove with touch context
   hiddenRemoveQueuer(data, secId, rowId, rowMap) {
     Alert.alert(
       `Remove ${data.name}`,
@@ -318,11 +351,10 @@ export default class Dashboard extends Component {
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
           rowMap[`${secId}${rowId}`].closeRow();
-          Data.DB.delete(`queuers/${Data.Auth.user().uid}/${data._key}`);
+          Data.DB.delete(`queuers/${this.user.uid}/${data._key}`);
           if (data._key === this.state.selectedKey) {
             this.setState({
               selectedKey: '',
-              selectedRow: '',
               editName: '',
               editParty: '',
               editPhone: '',
@@ -370,7 +402,7 @@ export default class Dashboard extends Component {
 
   // edits and saves to the databse as typeing for NAME
   changeAndSaveName(text) {
-    let ref = `queuers/${Data.Auth.user().uid}/${this.state.selectedKey}`;
+    let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
     this.setState({editName: text});
     Data.DB.ref(ref).update({
       name: text
@@ -379,7 +411,7 @@ export default class Dashboard extends Component {
 
   // edits and saves to the databse as typeing for PARTY SIZE
   changeAndSaveParty(text) {
-    let ref = `queuers/${Data.Auth.user().uid}/${this.state.selectedKey}`;
+    let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
     this.setState({editParty: text});
     Data.DB.ref(ref).update({
       partySize: text
@@ -388,7 +420,7 @@ export default class Dashboard extends Component {
 
   // edits and saves to the databse as typeing for PHONE NUMBER
   changeAndSavePhone(text) {
-    let ref = `queuers/${Data.Auth.user().uid}/${this.state.selectedKey}`;
+    let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
     this.setState({editPhone: text});
     Data.DB.ref(ref).update({
       phoneNumber: text
@@ -397,7 +429,7 @@ export default class Dashboard extends Component {
 
   // edits and saves to the databse as typeing for NOTES
   changeAndSaveNotes(text) {
-    let ref = `queuers/${Data.Auth.user().uid}/${this.state.selectedKey}`;
+    let ref = `queuers/${this.use.uid}/${this.state.selectedKey}`;
     this.setState({editNotes: text});
     Data.DB.ref(ref).update({
       notes: text
@@ -420,7 +452,7 @@ export default class Dashboard extends Component {
               font={Fonts.brand}
               size={70}
               text={'Q'}
-              press={() => {console.log(this.state.selectedRow)}}
+              press={() => {console.log(this.state.selectedKey)}}
             />
           </View>
           <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column'}}>
@@ -475,10 +507,14 @@ export default class Dashboard extends Component {
         <ModalWrap
           modalVisible={this.state.modalVisible}
           close={() => { this.setState({modalVisible: !this.state.modalVisible}) }}>
-
           {this.showInput()}
-
         </ModalWrap>
+
+        <DropdownAlert
+          ref={(ref) => this.dropdown = ref}
+          onClose={(data) => console.log(data)}
+          closeInterval={1500}
+        />
 
       </Grid>
     );
