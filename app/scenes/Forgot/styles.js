@@ -21,7 +21,7 @@ export default styles = StyleSheet.create({
   },
   brand: {
     fontSize: 80,
-    fontFamily: Fonts.content,
+    fontFamily: Fonts.brand,
     color: Colors.primaryForeground,
     textAlign: 'center'
   }

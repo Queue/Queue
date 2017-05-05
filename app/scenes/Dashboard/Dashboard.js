@@ -277,7 +277,7 @@ export default class Dashboard extends Component {
       displayName: this.state.orgInput
     }).then(() => {
       Common.dismissKeyboard();
-      this.myDropdown.showDropdown('success', 'Success', 'Profile has been updated');
+      this.dropdown.showDropdown('success', 'Success', 'Profile has been updated');
       console.log('Profile Updated');
     }, (error) => {
       console.log('Profile Update ERROR');
@@ -446,13 +446,15 @@ export default class Dashboard extends Component {
 
         <Col style={styles.navMenu}>
           <View style={Layout.container}>
-            <TextButton
-              styles={styles.brand}
-              font={Fonts.brand}
-              size={70}
-              text={'Q'}
-              press={() => {console.log(this.state.selectedKey)}}
-            />
+            <View style={{marginTop: 14}}>
+              <TextButton
+                styles={styles.brand}
+                font={Fonts.brand}
+                size={70}
+                text={'Q'}
+                press={() => {console.log(this.state.selectedKey)}}
+              />
+            </View>
           </View>
           <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column'}}>
             <NavButton
@@ -510,20 +512,8 @@ export default class Dashboard extends Component {
         </ModalWrap>
 
         <Dropdown
-          ref={ref => this.myDropdown = ref}
-        />
-
-        <DropdownAlert
-          ref={(ref) => this.dropdown = ref}
-          onClose={(data) => console.log(data)}
-          closeInterval={1500}
-          successColor={Colors.green0}
-          containerStyle={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'row'
-          }}
+          ref={ref => this.dropdown = ref}
+          speed={700}
         />
 
       </Grid>

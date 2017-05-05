@@ -16,10 +16,9 @@ export default styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   brand: {
-    flex: 1,
+    position: 'absolute',
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 10 
+    lineHeight: 50
   },
   navMenu: {
     borderRightWidth: 1,

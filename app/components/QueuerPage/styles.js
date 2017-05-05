@@ -19,7 +19,7 @@ export default styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 20,
-    padding: 15,
+    padding: 10,
     fontFamily: Fonts.content,
     letterSpacing: 1
   },

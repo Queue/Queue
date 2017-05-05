@@ -30,7 +30,7 @@ export default styles = {
     return {
       position: 'absolute',
       right: 20,
-      top: (inputHeight / 2),
+      top: (inputHeight / 2 - 5),
       zIndex: 9999,
       backgroundColor: 'transparent'
     }

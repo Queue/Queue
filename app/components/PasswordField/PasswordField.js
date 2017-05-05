@@ -5,13 +5,14 @@ import React, { Component } from 'react';
 import { TextInput, View, TouchableHighlight, Text } from 'react-native';
 import styles from './styles';
 import Colors from '../../lib/colors';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class PasswordField extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      hide: true
+      hide: true,
     };
   }
 
@@ -22,13 +23,15 @@ export default class PasswordField extends Component {
   }
 
   render() {
-    let eyeOfRa = '\uD83D\uDC41',
+    let eyeOfRa = this.state.hide ? 'ios-eye' : 'ios-eye-off',
         change = this.props.change,
         placeholder = this.props.placeholder,
         edit = this.props.edit,
         val = this.props.val,
         textColor = this.props.textColor,
         hide = this.state.hide;
+
+    //<Text style={styles.showText()}>{eyeOfRa}</Text>
 
     return (
       <View>
@@ -45,7 +48,7 @@ export default class PasswordField extends Component {
           style = {styles.showTextHighlight()}
           onPress = {this.showPass.bind(this)}
           underlayColor = {'transparent'}>
-          <Text style={styles.showText()}>{eyeOfRa}</Text>
+          <Icon name={eyeOfRa} size={30} color="grey" />
         </TouchableHighlight>
       </View>
     );

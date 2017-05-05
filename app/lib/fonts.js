@@ -2,6 +2,6 @@
 // fonts
 
 export default Fonts = {
-  brand   : 'Monoton',
-  content : 'Raleway'
+  brand   : 'Josefin Sans',
+  content : 'Open Sans'
 };

@@ -72,7 +72,7 @@ export default class QueuerPage extends Component {
                 onChangeText={this.props.notesChange}
               />
             </View>
-            <View style={{marginTop: 20}}>
+            <View style={{marginTop: 25}}>
               <Grid>
                 <Row>
                   <Col style={{marginBottom: 8}}>
@@ -85,7 +85,7 @@ export default class QueuerPage extends Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col style={{marginTop: 8, marginRight: 8}}>
+                  <Col style={{marginTop: 4, marginRight: 8}}>
                     <TouchableHighlight
                       style={{backgroundColor: Colors.success}}
                       underlayColor={Colors.green4}
@@ -93,7 +93,7 @@ export default class QueuerPage extends Component {
                       <Text style={styles.buttonText}>Seat</Text>
                     </TouchableHighlight>
                   </Col>
-                  <Col style={{marginTop: 8, marginLeft: 8}}>
+                  <Col style={{marginTop: 4, marginLeft: 8}}>
                     <TouchableHighlight
                       style={{backgroundColor: Colors.error}}
                       underlayColor={Colors.red4}
