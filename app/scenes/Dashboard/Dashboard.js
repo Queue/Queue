@@ -277,7 +277,7 @@ export default class Dashboard extends Component {
       displayName: this.state.orgInput
     }).then(() => {
       Common.dismissKeyboard();
-      this.dropdown.alertWithType('success', 'Success', 'Profile Updated');
+      this.myDropdown.showDropdown('success', 'Success', 'Profile has been updated');
       console.log('Profile Updated');
     }, (error) => {
       console.log('Profile Update ERROR');
@@ -509,7 +509,9 @@ export default class Dashboard extends Component {
           {this.showInput()}
         </ModalWrap>
 
-        <Dropdown />
+        <Dropdown
+          ref={ref => this.myDropdown = ref}
+        />
 
         <DropdownAlert
           ref={(ref) => this.dropdown = ref}
