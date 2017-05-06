@@ -60,7 +60,7 @@ export default class QueuerPage extends Component {
                 onChangeText={this.props.partyChange}
               />
               <Field
-                type={'text'}
+                type={'number'}
                 label={'Phone Number'}
                 value={this.props.phoneNumber}
                 onChangeText={this.props.phoneChange}
@@ -75,9 +75,13 @@ export default class QueuerPage extends Component {
             <View style={{marginTop: 25}}>
               <Grid>
                 <Row>
-                  <Col style={{marginBottom: 8}}>
+                  <Col style={{
+                      borderTopLeftRadius: 2,
+                      borderTopRightRadius: 2,
+                      marginBottom: 8,
+                      backgroundColor: Colors.info
+                  }}>
                     <TouchableHighlight
-                      style={{backgroundColor: Colors.info}}
                       underlayColor={Colors.blue4}
                       onPress={() => {Common.logLess('Cool')}}>
                       <Text style={styles.buttonText}>Text</Text>
@@ -85,17 +89,25 @@ export default class QueuerPage extends Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col style={{marginTop: 4, marginRight: 8}}>
+                  <Col style={{
+                      backgroundColor: Colors.success,
+                      borderBottomLeftRadius: 2,
+                      marginTop: 4,
+                      marginRight: 8
+                  }}>
                     <TouchableHighlight
-                      style={{backgroundColor: Colors.success}}
                       underlayColor={Colors.green4}
                       onPress={() => {Common.logLess('Cool')}}>
                       <Text style={styles.buttonText}>Seat</Text>
                     </TouchableHighlight>
                   </Col>
-                  <Col style={{marginTop: 4, marginLeft: 8}}>
+                  <Col style={{
+                    backgroundColor: Colors.error,
+                    borderBottomRightRadius: 2,
+                    marginTop: 4,
+                    marginLeft: 8
+                  }}>
                     <TouchableHighlight
-                      style={{backgroundColor: Colors.error}}
                       underlayColor={Colors.red4}
                       onPress={this.props.remove}>
                       <Text style={styles.buttonText}>Remove</Text>

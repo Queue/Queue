@@ -24,7 +24,7 @@ export default class Dropdown extends Component {
       hide: false,
       title: '',
       message: '',
-      type: 'success'
+      type: ''
     };
   }
 
@@ -50,8 +50,7 @@ export default class Dropdown extends Component {
     Animated.timing(this.state.y, {
       toValue: -22,
       duration: this.props.speed
-    }).start(() => {
-    });
+    }).start();
   }
 
   render() {
@@ -93,6 +92,27 @@ export default class Dropdown extends Component {
           </View>
         </Animated.View>
       );
+    } else if (this.state.type === 'warning') {
+       return (
+        <Animated.View style={{
+          height: 22,
+          width: Dimensions.get('window').width,
+          backgroundColor: Colors.warning,
+          position: 'absolute',
+          top: this.state.y
+        }}>
+          <StatusBar
+            hidden={this.state.hide}
+            animated={true}
+          />
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+            <Text style={{letterSpacing: 1, fontFamily: Fonts.content, color: 'white', fontWeight: '900'}}>{this.state.title}</Text>
+            <Text style={{fontFamily: Fonts.content, color: 'white', paddingLeft: 10}}>{this.state.message}</Text>
+          </View>
+        </Animated.View>
+      );
+    } else {
+      return null;
     }
   }
 }

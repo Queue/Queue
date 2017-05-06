@@ -22,38 +22,56 @@ export default class Field extends Component {
   }
 
   render() {
-    // text type
-    if (this.props.type === 'text') {
-      return (
-        <View style={styles.fieldContainer}>
-          {this.hasLabel()}
-          <TextInput
-            style={styles.fieldBase}
-            {...this.props}
-          />
-        </View>
-      );
-    // text area type
-    } else if (this.props.type === 'textarea') {
-      return (
-        <View style={styles.fieldContainer}>
-          {this.hasLabel()}
-          <TextInput
-            {...this.props}
-            multiline={true}
-            numberOfLines={4}
-            style={styles.textareaInput}
-          />
-        </View>
-      );
-    // if no type is specified
-    } else {
-      return (
-        <Text style={{color: Colors.error}}>
-          No Input Type
-        </Text>
-      );
+    switch (this.props.type) {
+
+      case 'text':
+        return (
+          <View style={styles.fieldContainer}>
+            {this.hasLabel()}
+            <TextInput
+              style={styles.fieldBase}
+              {...this.props}
+            />
+          </View>
+        );
+        break;
+
+      case 'textarea':
+        return (
+          <View style={styles.fieldContainer}>
+            {this.hasLabel()}
+            <TextInput
+              multiline={true}
+              numberOfLines={4}
+              style={[styles.textareaInput, this.props.style]}
+              {...this.props}
+            />
+          </View>
+        );
+        break;
+
+      case 'number':
+        return (
+          <View style={styles.fieldContainer}>
+            {this.hasLabel()}
+            <TextInput
+              style={[styles.fieldBase, this.props.style]}
+              keyboardType={'phone-pad'}
+              value={this.props.value}
+              {...this.props}
+            />
+          </View>
+        );
+        break;
+
+      default:
+        return (
+          <Text style={{color: Colors.error}}>
+            No Input Type
+          </Text>
+        );
     }
+
   }
 }
 
@@ -65,13 +83,14 @@ const styles = StyleSheet.create({
     color: 'grey'
   },
   fieldContainer: {
-    marginTop: 10,
-    marginBottom: 10
+    marginTop: 8,
+    marginBottom: 8
   },
   fieldBase: {
     paddingLeft: 15,
     height: 45,
     fontFamily: Fonts.content,
+    borderRadius: 2,
     borderColor: Colors.primaryBackground,
     borderWidth: 1
   },
@@ -81,6 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: Fonts.content,
     height: 140,
+    borderRadius: 2,
     borderColor: Colors.primaryBackground,
     borderWidth: 1
   }

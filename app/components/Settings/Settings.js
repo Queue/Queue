@@ -24,24 +24,31 @@ export default class Settings extends Component {
         <Text style={styles.header}>
           Settings
         </Text>
-        <Field
-          type={'text'}
-          label={'Email'}
-          onChangeText={this.props.onChangeEmail}
-          value={this.props.email}
-        />
-        <Field
-          type={'text'}
-          label={'Organization'}
-          onChangeText={this.props.onChangeOrg}
-          value={this.props.organization}
-        />
-        <TouchableHighlight
-          style={{marginTop: 10, backgroundColor: Colors.success}}
-          underlayColor={Colors.green4}
-          onPress={this.props.savePress}>
-          <Text style={styles.buttonText}>Save</Text>
-        </TouchableHighlight>
+          <View style={{marginTop: 10}}>
+          <Field
+            type={'text'}
+            label={'Email'}
+            onChangeText={this.props.onChangeEmail}
+            value={this.props.email}
+          />
+          <Field
+            type={'text'}
+            label={'Organization'}
+            onChangeText={this.props.onChangeOrg}
+            value={this.props.organization}
+          />
+          <View style={{
+            backgroundColor: Colors.success,
+            marginTop: 20,
+            borderRadius: 2
+          }}>
+            <TouchableHighlight
+              underlayColor={Colors.green4}
+              onPress={this.props.savePress}>
+              <Text style={styles.buttonText}>Save</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
         <DropdownAlert
           ref={(ref) => this.dropdown = ref}
           onClose={(data) => this.onClose.bind(this, data)}
@@ -56,8 +63,8 @@ const styles = StyleSheet.create({
     padding: 13
   },
   header: {
-    fontSize: 70,
-    fontWeight: '100',
+    fontSize: 60,
+    fontWeight: '400',
     letterSpacing: 2,
     marginBottom: 3
   },
@@ -65,7 +72,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 20,
-    padding: 15,
+    padding: 10,
     fontFamily: Fonts.content,
     letterSpacing: 1
   }

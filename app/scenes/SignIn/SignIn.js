@@ -11,7 +11,8 @@ import {
   PrimaryButton,
   EmailField,
   PasswordField,
-  TextButton
+  TextButton,
+  Dropdown
 } from '../../components';
 import Common from '../../lib/common';
 import Data from '../../lib/data';
@@ -55,10 +56,9 @@ export default class SignIn extends Component {
         Common.dismissKeyboard();
         Actions.DashboardRoute();
       }, (error) => {
-        Common.error(error.code, error.message);
       });
     } else {
-      Common.error('Error', 'Check your email and password.');
+      this.dropdown.showDropdown('error', 'Error', 'Check your email and password')
     }
   }
 
@@ -100,6 +100,9 @@ export default class SignIn extends Component {
           />
           <KeyboardSpacer />
         </View>
+        <Dropdown
+          ref={ref => this.dropdown = ref}
+        />
       </View>
     );
   }

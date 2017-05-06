@@ -71,6 +71,7 @@ export default class Dashboard extends Component {
       // data
       queueData: this.ds.cloneWithRows([]), // holds the queuer data
       selectedKey: '', // the selected queuers key
+      loaded: false,
 
       // fields
       nameInput: '', // name input
@@ -90,7 +91,9 @@ export default class Dashboard extends Component {
       partyVisible: false, // determines visibility of party size field
       phoneVisible: false, // determines visibility of phone number field
       homeVisible: true, // determines visibilty of home on dashboard
-      settingsVisible: false // determines visibility of settings on dashboard
+      settingsVisible: false, // determines visibility of settings on dashboard
+      editPhoneCheck: false,
+      phoneInputCheck: false
     };
   }
 
@@ -105,7 +108,8 @@ export default class Dashboard extends Component {
         this.listenForItems(this.queuerItemsRef);
         this.setState({
           emailInput: Data.Auth.user().email,
-          orgInput: Data.Auth.user().displayName
+          orgInput: Data.Auth.user().displayName,
+          loaded: true
         });
       } else {
         console.log('Not logged in');
@@ -148,22 +152,6 @@ export default class Dashboard extends Component {
       modalVisible: true,
       nameVisible: true
     });
-  }
-
-  checkNameInput() {
-    if (this.state.nameInput !== '') {
-      this.setState({nameVisible: false, partyVisible: true});
-    } else {
-      Common.error('Error', 'Enter a Name');
-    }
-  }
-
-  checkPartyInput() {
-    if (this.state.partyInput !== '') {
-      this.setState({partyVisible: false, phoneVisible: true});
-    } else {
-      Common.error('Error', 'Enter the Party Size');
-    }
   }
 
   // show input group based on state
@@ -280,6 +268,7 @@ export default class Dashboard extends Component {
       this.dropdown.showDropdown('success', 'Success', 'Profile has been updated');
       console.log('Profile Updated');
     }, (error) => {
+      this.dropdown.showDropdown('error', 'Error', `Error on pdating profile: ${error}`);
       console.log('Profile Update ERROR');
     });
   }
@@ -338,6 +327,7 @@ export default class Dashboard extends Component {
             editPhone: '',
             editNotes: ''
           });
+          this.dropdown.showDropdown('warning', 'Warning', `${this.state.editName} was removed from queue`);
         }}
       ]
     );
@@ -362,6 +352,7 @@ export default class Dashboard extends Component {
               editNotes: ''
             });
           }
+          this.dropdown.showDropdown('warning', 'Warning', `${data.name} was removed from queue`);
         }}
       ]
     );
@@ -434,6 +425,26 @@ export default class Dashboard extends Component {
     this.setState({editNotes});
     Data.DB.ref(ref).update({notes: editNotes});
   }
+
+  // checks name input in modal
+  checkNameInput() {
+    if (this.state.nameInput !== '') {
+      this.setState({nameVisible: false, partyVisible: true});
+    } else {
+      Common.error('Error', 'Enter a Name');
+    }
+  }
+
+  // checks the party size input
+  checkPartyInput() {
+    if (this.state.partyInput !== '') {
+      this.setState({partyVisible: false, phoneVisible: true});
+    } else {
+      Common.error('Error', 'Enter the Party Size');
+    }
+  }
+
+
 
   // render the entire dashboard
   render() {
@@ -513,7 +524,7 @@ export default class Dashboard extends Component {
 
         <Dropdown
           ref={ref => this.dropdown = ref}
-          speed={700}
+          speed={250}
         />
 
       </Grid>
