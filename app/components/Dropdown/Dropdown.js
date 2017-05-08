@@ -68,7 +68,7 @@ export default class Dropdown extends Component {
             animated={true}
           />
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-            <Text style={{letterSpacing: 1, fontFamily: Fonts.content, color: 'white', fontWeight: '900'}}>{this.state.title}</Text>
+            <Text style={{fontFamily: Fonts.content, color: 'white', fontWeight: '900'}}>{this.state.title}</Text>
             <Text style={{fontFamily: Fonts.content, color: 'white', paddingLeft: 10}}>{this.state.message}</Text>
           </View>
         </Animated.View>
@@ -87,7 +87,7 @@ export default class Dropdown extends Component {
             animated={true}
           />
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-            <Text style={{letterSpacing: 1, fontFamily: Fonts.content, color: 'white', fontWeight: '900'}}>{this.state.title}</Text>
+            <Text style={{fontFamily: Fonts.content, color: 'white', fontWeight: '900'}}>{this.state.title}</Text>
             <Text style={{fontFamily: Fonts.content, color: 'white', paddingLeft: 10}}>{this.state.message}</Text>
           </View>
         </Animated.View>
@@ -106,7 +106,7 @@ export default class Dropdown extends Component {
             animated={true}
           />
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-            <Text style={{letterSpacing: 1, fontFamily: Fonts.content, color: 'white', fontWeight: '900'}}>{this.state.title}</Text>
+            <Text style={{fontFamily: Fonts.content, color: 'white', fontWeight: '900'}}>{this.state.title}</Text>
             <Text style={{fontFamily: Fonts.content, color: 'white', paddingLeft: 10}}>{this.state.message}</Text>
           </View>
         </Animated.View>

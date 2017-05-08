@@ -18,7 +18,8 @@ export default styles = StyleSheet.create({
   brand: {
     position: 'absolute',
     justifyContent: 'center',
-    lineHeight: 50
+    lineHeight: 50,
+    fontWeight: '900'
   },
   navMenu: {
     borderRightWidth: 1,

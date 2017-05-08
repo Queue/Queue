@@ -28,6 +28,8 @@ import {
 
 // grid system
 import { Grid, Col } from 'react-native-easy-grid';
+//import {Column as Col, Row} from 'react-native-responsive-grid';
+
 
 // swipe list view
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
@@ -443,8 +445,6 @@ export default class Dashboard extends Component {
       Common.error('Error', 'Enter the Party Size');
     }
   }
-
-
 
   // render the entire dashboard
   render() {
