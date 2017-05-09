@@ -17,14 +17,17 @@ export default class NavButton extends Component {
     let isSelectedForeground = this.props.isSelected ? Colors.green0 : 'grey';
 
     return (
-      <TouchableHighlight
-        onPress={this.props.onPress}
-        underlayColor={Colors.primaryBackground}
-        style={styles.highlight}>
-        <View style={{backgroundColor: isSelectedBackground, height: 110}}>
-          <Icon style={[styles.text, {color: isSelectedForeground}]} name={this.props.symbol} size={30} />
-        </View>
-      </TouchableHighlight>
+      <View style={styles.highlight}>
+        <TouchableHighlight
+          style={{width: '100%'}}
+          onPress={this.props.onPress}
+          underlayColor={Colors.primaryBackground}
+        >
+          <View style={{backgroundColor: isSelectedBackground, height: 110}}>
+            <Icon style={[styles.text, {color: isSelectedForeground}]} name={this.props.symbol} size={30} />
+          </View>
+        </TouchableHighlight>
+      </View>
     );
   }
 }

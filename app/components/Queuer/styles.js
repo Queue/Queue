@@ -7,13 +7,13 @@ import Fonts from '../../lib/fonts';
 
 export default styles = StyleSheet.create({
   rowFront: {
+    width: '100%',
     backgroundColor: 'white',
     marginBottom: 1,
     paddingLeft: 20,
-    paddingRight: 20
+    height: 64
   },
   wrap: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'

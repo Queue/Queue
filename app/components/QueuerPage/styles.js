@@ -7,6 +7,7 @@ import Fonts from '../../lib/fonts';
 
 export default styles = StyleSheet.create({
   container: {
+    width: '100%',
     padding: 13,
   },
   header: {
@@ -37,7 +38,7 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 250,
-    maxWidth: 400
+    width: '100%'
   },
   unselectedText: {
     fontSize: 30,

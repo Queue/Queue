@@ -27,9 +27,8 @@ import {
 } from '../../components';
 
 // grid system
-import { Grid, Col } from 'react-native-easy-grid';
-//import {Column as Col, Row} from 'react-native-responsive-grid';
-
+//import { Grid, Col } from 'react-native-easy-grid';
+import {Column as Col, Row} from 'react-native-responsive-grid';
 
 // swipe list view
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
@@ -449,14 +448,14 @@ export default class Dashboard extends Component {
   // render the entire dashboard
   render() {
     return (
-      <Grid>
+      <Row fullHeight>
 
         <Spinner
           visible={this.state.spinner}
         />
 
-        <Col style={styles.navMenu}>
-          <View style={Layout.container}>
+        <Col size={11} style={styles.navMenu}>
+          <View style={[Layout.container, {paddingLeft: 0, paddingRight: 0}]}>
             <View style={{marginTop: 14}}>
               <TextButton
                 styles={styles.brand}
@@ -467,7 +466,14 @@ export default class Dashboard extends Component {
               />
             </View>
           </View>
-          <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column'}}>
+          <View style={{
+            marginTop: -20,
+            width: '100%',
+            flex: 1,
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            flexDirection: 'column'
+          }}>
             <NavButton
               symbol={'ios-home'}
               isSelected={this.state.homeVisible}
@@ -491,13 +497,13 @@ export default class Dashboard extends Component {
           </View>
         </Col>
 
-        <Col style={styles.actionArea}>
+        <Col size={49} style={styles.actionArea}>
           <View style={Layout.container}>
             {this.showNavItems()}
           </View>
         </Col>
 
-        <Col style={styles.queueList}>
+        <Col size={40} style={styles.queueList}>
           <View style={styles.listContainer}>
             <SwipeListView
               dataSource={this.state.queueData}
@@ -527,7 +533,7 @@ export default class Dashboard extends Component {
           speed={250}
         />
 
-      </Grid>
+      </Row>
     );
   }
 };

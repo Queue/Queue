@@ -21,7 +21,8 @@ import Colors from '../../lib/colors';
 import Data from '../../lib/data';
 
 // grid system
-import { Grid, Row, Col } from 'react-native-easy-grid';
+//import { Grid, Row, Col } from 'react-native-easy-grid';
+import {Column as Col, Row} from 'react-native-responsive-grid';
 
 // keyboard scroll view
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -73,48 +74,52 @@ export default class QueuerPage extends Component {
               />
             </View>
             <View style={{marginTop: 25}}>
-              <Grid>
-                <Row>
-                  <Col style={{
-                      borderTopLeftRadius: 2,
-                      borderTopRightRadius: 2,
-                      marginBottom: 8,
-                      backgroundColor: Colors.info
+              <Row>
+                <Col size={100}>
+                  <View style={{
+                    borderTopLeftRadius: 2,
+                    borderTopRightRadius: 2,
+                    marginBottom: 8,
+                    backgroundColor: Colors.info,
+                    width: '100%'
                   }}>
                     <TouchableHighlight
                       underlayColor={Colors.blue4}
                       onPress={() => {Common.logLess('Cool')}}>
                       <Text style={styles.buttonText}>Text</Text>
                     </TouchableHighlight>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col style={{
-                      backgroundColor: Colors.success,
-                      borderBottomLeftRadius: 2,
-                      marginTop: 4,
-                      marginRight: 8
+                  </View>
+                </Col>
+              </Row>
+              <Row>
+                <Col size={50}>
+                  <View style={{
+                    backgroundColor: Colors.success,
+                    borderBottomLeftRadius: 2,
+                    width: '100%'
                   }}>
                     <TouchableHighlight
                       underlayColor={Colors.green4}
                       onPress={() => {Common.logLess('Cool')}}>
                       <Text style={styles.buttonText}>Seat</Text>
                     </TouchableHighlight>
-                  </Col>
-                  <Col style={{
+                  </View>
+                </Col>
+                <Col size={50}>
+                  <View style={{
                     backgroundColor: Colors.error,
                     borderBottomRightRadius: 2,
-                    marginTop: 4,
-                    marginLeft: 8
+                    width: '100%',
+                    paddingLeft: 8
                   }}>
                     <TouchableHighlight
                       underlayColor={Colors.red4}
                       onPress={this.props.remove}>
                       <Text style={styles.buttonText}>Remove</Text>
                     </TouchableHighlight>
-                  </Col>
-                </Row>
-              </Grid>
+                  </View>
+                </Col>
+              </Row>
             </View>
           </KeyboardAwareScrollView>
         ) : (
