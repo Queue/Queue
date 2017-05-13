@@ -73,7 +73,8 @@ export default Data = {
           seated: false,
           removed: false,
           cancelled: false,
-          old: false
+          old: false,
+          selected: false
         }
       });
     }

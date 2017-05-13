@@ -10,7 +10,8 @@ import {
   Text,
   ListView,
   TouchableHighlight,
-  Alert
+  Alert,
+  FlatList
 } from 'react-native';
 
 // custom components
@@ -71,6 +72,7 @@ export default class Dashboard extends Component {
     this.state = {
       // data
       queueData: this.ds.cloneWithRows([]), // holds the queuer data
+      queuerData: [],
       selectedKey: '', // the selected queuers key
       loaded: false,
 
@@ -130,18 +132,22 @@ export default class Dashboard extends Component {
       // Iterate over snapshot
       snap.forEach((child) => {
         queuerItems.push({
-          _key: child.key,
+          key: child.key,
           name: child.val().name,
           partySize: child.val().partySize,
           phoneNumber: child.val().phoneNumber,
           createdAt: child.val().createdAt,
-          notes: child.val().notes
+          notes: child.val().notes,
+          activity: {
+            selected: child.val().activity.selected
+          }
         });
       });
 
       // fill state with data and turn spinner off
       this.setState({
         queueData: this.ds.cloneWithRows(queuerItems),
+        queuerData: queuerItems,
         spinner: false
       });
     });
@@ -248,18 +254,6 @@ export default class Dashboard extends Component {
     });
   }
 
-  // set the selected queuer
-  setSelectedQueuer(data) {
-    this.setHomeVisible();
-    this.setState({
-      selectedKey: data._key,
-      editName: data.name,
-      editParty: data.partySize,
-      editPhone: data.phoneNumber,
-      editNotes: data.notes
-    });
-  }
-
   // save user profile
   saveProfile() {
     this.user.updateProfile({
@@ -292,21 +286,47 @@ export default class Dashboard extends Component {
     );
   }
 
+  // set the selected queuer
+  setSelectedQueuer(item) {
+    let data = this.state.queuerData;
+    for (let i = 0; i < data.length; i++) {
+      let key = data[i].key;
+      if (key === item.key) {
+        Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
+          activity: { selected: true }
+        });
+      } else {
+        Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
+          activity: { selected: false }
+        });
+      }
+    }
+    this.setHomeVisible();
+    this.setState({
+      selectedKey: item.key,
+      editName: item.name,
+      editParty: item.partySize,
+      editPhone: item.phoneNumber,
+      editNotes: item.notes
+    });
+  }
+
   // individual row function
-  row(data, secId, rowId) {
+  row({item, index}) {
     // place in queue
-    let place = Number(rowId) + 1;
+    let place = index + 1;
 
     return (
       <Queuer
-        key={data._key}
-        queuerKey={data._key}
+        _key={item.key}
+        queuerKey={item.key}
         place={place}
-        name={data.name}
+        name={item.name}
         selectedKey={this.state.selectedKey}
-        createdAt={data.createdAt}
-        partySize={data.partySize}
-        onPress={this.setSelectedQueuer.bind(this, data)}
+        isSelected={item.activity.selected}
+        createdAt={item.createdAt}
+        partySize={item.partySize}
+        onPress={this.setSelectedQueuer.bind(this, item)}
         home={this.state.homeVisible}
       />
     );
@@ -504,14 +524,18 @@ export default class Dashboard extends Component {
         </Col>
 
         <Col size={40} style={styles.queueList}>
-          <View style={styles.listContainer}>
-            <SwipeListView
+          <View style={[styles.listContainer, {flex: 1}]}>
+            {/*<SwipeListView
               dataSource={this.state.queueData}
               initialListSize={100}
               enableEmptySections={true}
               renderRow={this.row.bind(this)}
               renderHiddenRow={this.hiddenRow.bind(this)}
               rightOpenValue={-150}
+            />*/}
+            <FlatList
+              data={this.state.queuerData}
+              renderItem={this.row.bind(this)}
             />
           </View>
           <TouchableHighlight

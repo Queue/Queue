@@ -1,7 +1,7 @@
 //
 // Dashboard styles
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default styles = StyleSheet.create({
   listContainer: {
@@ -36,14 +36,12 @@ export default styles = StyleSheet.create({
   },
   queueList: {
     width: '100%',
-    height: '100%',
     backgroundColor: 'transparent'
   },
   addButton: {
     width: '100%',
     backgroundColor: Colors.primaryForeground,
     zIndex: 999,
-    marginTop: -81,
     height: 60
   },
   addButtonText: {

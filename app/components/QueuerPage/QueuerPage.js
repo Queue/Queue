@@ -92,7 +92,7 @@ export default class QueuerPage extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col size={50}>
+                <Col size={50} style={{paddingRight: 4}}>
                   <View style={{
                     backgroundColor: Colors.success,
                     borderBottomLeftRadius: 2,
@@ -105,12 +105,11 @@ export default class QueuerPage extends Component {
                     </TouchableHighlight>
                   </View>
                 </Col>
-                <Col size={50}>
+                <Col size={50} style={{paddingLeft: 4}}>
                   <View style={{
                     backgroundColor: Colors.error,
                     borderBottomRightRadius: 2,
                     width: '100%',
-                    paddingLeft: 8
                   }}>
                     <TouchableHighlight
                       underlayColor={Colors.red4}

@@ -16,6 +16,7 @@ import Data from '../../lib/data';
 // grid system
 //import { Row, Col } from 'react-native-easy-grid';
 import {Column as Col, Row} from 'react-native-responsive-grid';
+import Swipeout from 'react-native-swipeout';
 
 import Icon from 'react-native-vector-icons/EvilIcons';
 import Timer from 'react-native-timer';
@@ -56,13 +57,13 @@ export default class Queuer extends Component {
       this.setState({waitTime: min});
     } else {
       // clear timer if above 999
-      Timer.clearInterval(this, `waitTimer_${this.props.key}`);
+      Timer.clearInterval(this, `waitTimer_${this.props._key}`);
     }
   }
 
   render() {
     let isSelected = () => {
-      if (this.props.queuerKey === this.props.selectedKey && this.props.home) {
+      if (this.props.isSelected) {
         return Colors.info;
       } else {
         return 'white';
@@ -73,47 +74,55 @@ export default class Queuer extends Component {
         partySize = this.props.partySize || '0',
         selected = isSelected();
 
+    const swipeoutBtns = [
+      {
+        text: 'Button'
+      }
+    ]
+
     return (
-      <View>
-        <TouchableHighlight
-          onPress = {this.props.onPress}
-          style = {styles.rowFront}
-          underlayColor = {'white'}>
-          <Row>
-            <Col size={3}>
-              <View style={{backgroundColor: selected, width: 10, height: '100%', marginLeft: -20}}></View>
-            </Col>
-            <Col size={4}>
-              <View style={{width: '100%', marginLeft: -10}}>
-                <Text style={[styles.text, {color: 'gray', textAlign: 'center'}]}>{this.props.place}</Text>
-              </View>
-            </Col>
-            <Col size={57}>
-              <View style={{paddingLeft: 8}}>
-                <Text style={styles.text}>{name}</Text>
-              </View>
-            </Col>
-            <Col size={20}>
-              <View style={{width: '100%'}}>
-                <Text style={[styles.text, {color: 'gray', textAlign: 'center'}]}>
-                  {this.state.waitTime + ' '}
-                  <Icon name="clock" size={20} color="grey" />
-                </Text>
-              </View>
-            </Col>
-            <Col size={16}>
-              <View style={{
-                alignItems: 'center',
-                width: '100%',
-                borderLeftWidth: 1,
-                borderColor: Colors.primaryBackground,
-              }}>
-                <Text style={[styles.text, {color: 'gray', textAlign: 'center'}]}>{partySize}</Text>
-              </View>
-            </Col>
-          </Row>
-        </TouchableHighlight>
-      </View>
+      <Swipeout right={swipeoutBtns}>
+        <View>
+          <TouchableHighlight
+            onPress = {this.props.onPress}
+            style = {styles.rowFront}
+            underlayColor = {'white'}>
+            <Row>
+              <Col size={2}>
+                <View style={{backgroundColor: selected, width: 10, height: '100%', marginLeft: -20}}></View>
+              </Col>
+              <Col size={8}>
+                <View style={{width: '100%', marginLeft: -10}}>
+                  <Text style={[styles.text, {color: 'gray', textAlign: 'center'}]}>{this.props.place}</Text>
+                </View>
+              </Col>
+              <Col size={52}>
+                <View style={{paddingLeft: 8}}>
+                  <Text style={styles.text}>{name}</Text>
+                </View>
+              </Col>
+              <Col size={22}>
+                <View style={{width: '100%'}}>
+                  <Text style={[styles.text, {color: 'gray', textAlign: 'center'}]}>
+                    {this.state.waitTime + ' '}
+                    <Icon name="clock" size={20} color="grey" />
+                  </Text>
+                </View>
+              </Col>
+              <Col size={16}>
+                <View style={{
+                  alignItems: 'center',
+                  width: '100%',
+                  borderLeftWidth: 1,
+                  borderColor: Colors.primaryBackground,
+                }}>
+                  <Text style={[styles.text, {color: 'gray', textAlign: 'center'}]}>{partySize}</Text>
+                </View>
+              </Col>
+            </Row>
+          </TouchableHighlight>
+        </View>
+      </Swipeout>
     );
   }
 }
