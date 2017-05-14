@@ -61,17 +61,12 @@ export default class Dashboard extends Component {
     // queuers data reference
     this.queuerItemsRef = Data.DB.ref(`queuers`);
 
-    // data source for the listview
-    this.ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r2 !== r1
-    });
-
+    // current user
     this.user = Data.Auth.user();
 
     // local state
     this.state = {
       // data
-      queueData: this.ds.cloneWithRows([]), // holds the queuer data
       queuerData: [],
       selectedKey: '', // the selected queuers key
       loaded: false,
@@ -139,14 +134,27 @@ export default class Dashboard extends Component {
           createdAt: child.val().createdAt,
           notes: child.val().notes,
           activity: {
-            selected: child.val().activity.selected
+            selected: child.val().activity.selected,
+            opened: child.val().activity.opened
           }
         });
       });
 
+      // set initial selected queuer
+      for (let i = 0; i < queuerItems.length; i++) {
+        if (queuerItems[i].activity.selected) {
+          this.setState({
+            selectedKey: queuerItems[i].key,
+            editName: queuerItems[i].name,
+            editParty: queuerItems[i].partySize,
+            editPhone: queuerItems[i].phoneNumber,
+            editNotes: queuerItems[i].notes
+          });
+        }
+      }
+
       // fill state with data and turn spinner off
       this.setState({
-        queueData: this.ds.cloneWithRows(queuerItems),
         queuerData: queuerItems,
         spinner: false
       });
@@ -220,8 +228,8 @@ export default class Dashboard extends Component {
           phoneChange={this.changeAndSavePhone.bind(this)}
           notesChange={this.changeAndSaveNotes.bind(this)}
           save={this.saveQueuer.bind(this)}
-          text={''}
-          seat={''}
+          text={() => {console.log('Text')}}
+          seat={this.seatQueuer.bind(this)}
           remove={this.removeQueuer.bind(this)}
         />
       );
@@ -288,6 +296,11 @@ export default class Dashboard extends Component {
 
   // set the selected queuer
   setSelectedQueuer(item) {
+
+    // make sure your on home
+    this.setHomeVisible();
+
+    // set selected queuer
     let data = this.state.queuerData;
     for (let i = 0; i < data.length; i++) {
       let key = data[i].key;
@@ -301,7 +314,8 @@ export default class Dashboard extends Component {
         });
       }
     }
-    this.setHomeVisible();
+
+    // set current item
     this.setState({
       selectedKey: item.key,
       editName: item.name,
@@ -313,58 +327,64 @@ export default class Dashboard extends Component {
 
   // individual row function
   row({item, index}) {
+
     // place in queue
     let place = index + 1;
 
     return (
       <Queuer
         _key={item.key}
-        queuerKey={item.key}
         place={place}
         name={item.name}
-        selectedKey={this.state.selectedKey}
         isSelected={item.activity.selected}
+        isOpen={item.activity.opened}
         createdAt={item.createdAt}
         partySize={item.partySize}
         onPress={this.setSelectedQueuer.bind(this, item)}
-        home={this.state.homeVisible}
+        onOpen={this.setOpenQueuer.bind(this, item)}
+        onRemovePress={this.removeQueuer.bind(this, item)}
+        onSeatPress={this.seatQueuer.bind(this, item)}
       />
     );
   }
 
-  // general remove queuer from db
-  removeQueuer() {
-    Alert.alert(
-      `Remove ${this.state.editName}`,
-      `Are you sure you want to remove ${this.state.editName}?`,
-      [
-        {text: 'Cancel', onPress: () => {this.setState({ok: false})}, style: 'cancel'},
-        {text: 'OK', onPress: () => {
-          Data.DB.delete(`queuers/${this.user.uid}/${this.state.selectedKey}`);
-          this.setState({
-            selectedKey: '',
-            editName: '',
-            editParty: '',
-            editPhone: '',
-            editNotes: ''
-          });
-          this.dropdown.showDropdown('warning', 'Warning', `${this.state.editName} was removed from queue`);
-        }}
-      ]
-    );
+  // sets the opened swipeout for each queuer - can only open one in the lsit
+  setOpenQueuer(item) {
+    let queuers = this.state.queuerData;
+    for (let i = 0; i < queuers.length; i++) {
+      let queuerKey = queuers[i].key;
+      if (queuerKey === item.key) {
+        Data.DB.ref(`queuers/${this.user.uid}/${queuerKey}`).update({
+          activity: {
+            selected: queuers[i].activity.selected,
+            opened: true
+          }
+        });
+      } else {
+        Data.DB.ref(`queuers/${this.user.uid}/${queuerKey}`).update({
+          activity: {
+            selected: queuers[i].activity.selected,
+            opened: false
+          }
+        });
+      }
+    }
   }
 
   // special remove with touch context
-  hiddenRemoveQueuer(data, secId, rowId, rowMap) {
+  removeQueuer(item) {
+    let name = item.name || this.state.editName,
+        key = item.key || this.state.selectedKey;
+
     Alert.alert(
-      `Remove ${data.name}`,
-      `Are you sure you want to remove ${data.name}?`,
+      `Remove ${name}`,
+      `Are you sure you want to remove ${name}?`,
       [
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
-          rowMap[`${secId}${rowId}`].closeRow();
-          Data.DB.delete(`queuers/${this.user.uid}/${data._key}`);
-          if (data._key === this.state.selectedKey) {
+          Data.DB.delete(`queuers/${this.user.uid}/${key}`);
+          if (key === this.state.selectedKey) {
+            this.dropdown.showDropdown('warning', 'Warning', `${name} was removed from queue`);
             this.setState({
               selectedKey: '',
               editName: '',
@@ -373,18 +393,35 @@ export default class Dashboard extends Component {
               editNotes: ''
             });
           }
-          this.dropdown.showDropdown('warning', 'Warning', `${data.name} was removed from queue`);
         }}
       ]
     );
   }
 
-  // individual hidden row function
-  hiddenRow(data, secId, rowId, rowMap) {
-    return (
-      <HiddenRow
-        textPress={() => {Common.logLess(data.createdAt)}}
-        deletePress={this.hiddenRemoveQueuer.bind(this, data, secId, rowId, rowMap)} />
+  // seat the queuer
+  seatQueuer(item) {
+    let name = item.name || this.state.editName,
+        key = item.key || this.state.selectedKey;
+
+    Alert.alert(
+      `Seat ${name}`,
+      `Are you sure you want to seat ${name}?`,
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {text: 'OK', onPress: () => {
+          Data.DB.delete(`queuers/${this.user.uid}/${key}`);
+          if (key === this.state.selectedKey) {
+            this.dropdown.showDropdown('success', 'Success', `${name} has been seated`);
+            this.setState({
+              selectedKey: '',
+              editName: '',
+              editParty: '',
+              editPhone: '',
+              editNotes: ''
+            });
+          }
+        }}
+      ]
     );
   }
 
@@ -393,7 +430,8 @@ export default class Dashboard extends Component {
     Data.DB.addQueuer(this.queuerItemsRef,
       this.state.nameInput,
       this.state.partyInput,
-      this.state.phoneInput);
+      this.state.phoneInput
+    );
 
     this.setState({
       modalVisible: false,
@@ -525,14 +563,6 @@ export default class Dashboard extends Component {
 
         <Col size={40} style={styles.queueList}>
           <View style={[styles.listContainer, {flex: 1}]}>
-            {/*<SwipeListView
-              dataSource={this.state.queueData}
-              initialListSize={100}
-              enableEmptySections={true}
-              renderRow={this.row.bind(this)}
-              renderHiddenRow={this.hiddenRow.bind(this)}
-              rightOpenValue={-150}
-            />*/}
             <FlatList
               data={this.state.queuerData}
               renderItem={this.row.bind(this)}
@@ -554,7 +584,7 @@ export default class Dashboard extends Component {
 
         <Dropdown
           ref={ref => this.dropdown = ref}
-          speed={250}
+          speed={500}
         />
 
       </Row>

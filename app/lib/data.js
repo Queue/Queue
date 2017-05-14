@@ -74,7 +74,8 @@ export default Data = {
           removed: false,
           cancelled: false,
           old: false,
-          selected: false
+          selected: false,
+          opened: false
         }
       });
     }

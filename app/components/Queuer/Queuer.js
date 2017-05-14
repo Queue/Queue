@@ -76,12 +76,34 @@ export default class Queuer extends Component {
 
     const swipeoutBtns = [
       {
-        text: 'Button'
+        text: 'Remove',
+        backgroundColor: Colors.error,
+        underlayColor: Colors.red4,
+        onPress: this.props.onRemovePress
+      },
+      {
+        text: 'Seat',
+        backgroundColor: Colors.success,
+        underlayColor: Colors.green4,
+        onPress: this.props.onSeatPress
+      },
+      {
+        text: 'Text',
+        backgroundColor: Colors.info,
+        underlayColor: Colors.blue4,
+        onPress: this.props.onTextPress
       }
     ]
 
     return (
-      <Swipeout right={swipeoutBtns}>
+      <Swipeout
+        style={{height: 65}}
+        buttonWidth={70}
+        right={swipeoutBtns}
+        autoClose={true}
+        close={!(this.props.isOpen)}
+        onOpen={this.props.onOpen}
+      >
         <View>
           <TouchableHighlight
             onPress = {this.props.onPress}

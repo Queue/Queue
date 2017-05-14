@@ -85,7 +85,7 @@ export default class QueuerPage extends Component {
                   }}>
                     <TouchableHighlight
                       underlayColor={Colors.blue4}
-                      onPress={() => {Common.logLess('Cool')}}>
+                      onPress={this.props.text}>
                       <Text style={styles.buttonText}>Text</Text>
                     </TouchableHighlight>
                   </View>
@@ -100,7 +100,7 @@ export default class QueuerPage extends Component {
                   }}>
                     <TouchableHighlight
                       underlayColor={Colors.green4}
-                      onPress={() => {Common.logLess('Cool')}}>
+                      onPress={this.props.seat}>
                       <Text style={styles.buttonText}>Seat</Text>
                     </TouchableHighlight>
                   </View>
