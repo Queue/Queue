@@ -68,6 +68,8 @@
 		C1DA67A71EBCF18800E4B84B /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1DA67931EBCF18800E4B84B /* OpenSans-Semibold.ttf */; };
 		C1DA67A81EBCF18800E4B84B /* OpenSans-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1DA67941EBCF18800E4B84B /* OpenSans-SemiboldItalic.ttf */; };
 		C866F325562B4D8385FEA9B5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABB750FF5F2143CBB0DB244D /* SimpleLineIcons.ttf */; };
+		7A54ACE81F994E8A9B0645D3 /* libRNBackgroundTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E8BC2CBCF846499B326EFA /* libRNBackgroundTimer.a */; };
+		9FF555CDC0A64C4290FD4C1B /* libRCTTwilio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F719C9706994F20BDD159A8 /* libRCTTwilio.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -328,6 +330,10 @@
 		C1DA67921EBCF18800E4B84B /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "Queue/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		C1DA67931EBCF18800E4B84B /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "Queue/Fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		C1DA67941EBCF18800E4B84B /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiboldItalic.ttf"; path = "Queue/Fonts/OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		3AAB12D43CFD4517980A6C41 /* RNBackgroundTimer.xcodeproj */ = {isa = PBXFileReference; name = "RNBackgroundTimer.xcodeproj"; path = "../node_modules/react-native-background-timer/ios/RNBackgroundTimer.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		47E8BC2CBCF846499B326EFA /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; name = "libRNBackgroundTimer.a"; path = "libRNBackgroundTimer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		4833FAEB0F3A494C9FE7C914 /* RCTTwilio.xcodeproj */ = {isa = PBXFileReference; name = "RCTTwilio.xcodeproj"; path = "../node_modules/react-native-twilio/ios/RCTTwilio.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5F719C9706994F20BDD159A8 /* libRCTTwilio.a */ = {isa = PBXFileReference; name = "libRCTTwilio.a"; path = "libRCTTwilio.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,6 +361,8 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				B3E199F555FB4F44B96CDEC1 /* libRNVectorIcons.a in Frameworks */,
+				7A54ACE81F994E8A9B0645D3 /* libRNBackgroundTimer.a in Frameworks */,
+				9FF555CDC0A64C4290FD4C1B /* libRCTTwilio.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +549,8 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				11FE2F3EC6FF44B290ABF454 /* RNVectorIcons.xcodeproj */,
+				3AAB12D43CFD4517980A6C41 /* RNBackgroundTimer.xcodeproj */,
+				4833FAEB0F3A494C9FE7C914 /* RCTTwilio.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1138,6 +1148,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1145,6 +1157,11 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Queue.app/Queue";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+				);
 			};
 			name = Debug;
 		};
@@ -1159,6 +1176,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1166,6 +1185,11 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Queue.app/Queue";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+				);
 			};
 			name = Release;
 		};
@@ -1188,6 +1212,11 @@
 				PRODUCT_NAME = Queue;
 				TARGETED_DEVICE_FAMILY = 2;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+				);
 			};
 			name = Debug;
 		};
@@ -1209,6 +1238,11 @@
 				PRODUCT_NAME = Queue;
 				TARGETED_DEVICE_FAMILY = 2;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+				);
 			};
 			name = Release;
 		};
@@ -1235,6 +1269,16 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+				);
 			};
 			name = Debug;
 		};
@@ -1261,6 +1305,16 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+				);
 			};
 			name = Release;
 		};
@@ -1282,6 +1336,11 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Queue-tvOS.app/Queue-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 			};
 			name = Debug;
 		};
@@ -1303,6 +1362,11 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Queue-tvOS.app/Queue-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 			};
 			name = Release;
 		};

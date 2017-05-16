@@ -44,6 +44,7 @@ export default class ModalExample extends Component {
 const styles = StyleSheet.create({
   wrap: {
     flex: 1,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,.8)'

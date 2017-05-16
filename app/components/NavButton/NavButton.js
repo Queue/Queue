@@ -8,6 +8,10 @@ import Colors from '../../lib/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class NavButton extends Component {
+  static defaultProps = {
+    text: 'Title'
+  }
+
   constructor(props) {
     super(props);
   }
@@ -25,6 +29,7 @@ export default class NavButton extends Component {
         >
           <View style={{backgroundColor: isSelectedBackground, height: 110}}>
             <Icon style={[styles.text, {color: isSelectedForeground}]} name={this.props.symbol} size={30} />
+            <Text style={[styles.type, {color: isSelectedForeground}]}>{this.props.text}</Text>
           </View>
         </TouchableHighlight>
       </View>

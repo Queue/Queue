@@ -68,15 +68,13 @@ export default Data = {
         createdAt: Date(),
         seatedAt: '',
         waitTime: 0,
-        activity: {
-          texted: false,
-          seated: false,
-          removed: false,
-          cancelled: false,
-          old: false,
-          selected: false,
-          opened: false
-        }
+        texted: false,
+        seated: false,
+        removed: false,
+        cancelled: false,
+        old: false,
+        selected: false,
+        opened: false
       });
     }
 

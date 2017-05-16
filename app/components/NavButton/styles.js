@@ -3,6 +3,7 @@
 
 import { StyleSheet } from 'react-native';
 import Colors from '../../lib/colors';
+import Fonts from '../../lib/fonts';
 
 const boxWH = 110;
 
@@ -20,6 +21,15 @@ export default styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     color: 'gray',
-    marginTop: (boxWH / 2 - 20)
+    marginTop: (boxWH / 2 - 25)
+  },
+  type: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: 10,
+    fontWeight: '600',
+    fontFamily: Fonts.content,
+    color: 'gray',
+    letterSpacing: 1
   }
 });

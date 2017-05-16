@@ -10,10 +10,9 @@ let { width, height }  = Dimensions.get('window');
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    width: width,
-    height: height,
     backgroundColor: Colors.primaryBackground
   },
   wrapper: {

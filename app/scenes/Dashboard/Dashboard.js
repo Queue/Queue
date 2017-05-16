@@ -27,6 +27,9 @@ import {
   Dropdown
 } from '../../components';
 
+// scenes
+import History from '../History';
+
 // grid system
 //import { Grid, Col } from 'react-native-easy-grid';
 import {Column as Col, Row} from 'react-native-responsive-grid';
@@ -53,6 +56,8 @@ import Layout from '../../lib/layout';
 import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
 import styles from './styles';
+import Twilio from '../../lib/twilio';
+import BackgroundTimer from 'react-native-background-timer';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -68,6 +73,7 @@ export default class Dashboard extends Component {
     this.state = {
       // data
       queuerData: [],
+      filteredData: [],
       selectedKey: '', // the selected queuers key
       loaded: false,
 
@@ -85,13 +91,8 @@ export default class Dashboard extends Component {
       // visual
       spinner: true, // determines loading spinner
       modalVisible: false, // determines visibility of modal
-      nameVisible: false, // determines visibility of name field
-      partyVisible: false, // determines visibility of party size field
-      phoneVisible: false, // determines visibility of phone number field
-      homeVisible: true, // determines visibilty of home on dashboard
-      settingsVisible: false, // determines visibility of settings on dashboard
-      editPhoneCheck: false,
-      phoneInputCheck: false
+      modalItemVisible: 'NAME', // determines visibility of name field
+      navVisible: 'HISTORY'
     };
   }
 
@@ -120,29 +121,29 @@ export default class Dashboard extends Component {
   // Triggers a rerender when new data is added
   listenForItems(itemsRef) {
     itemsRef.on('value', (snap) => {
-
       // Get children as an array
-      let queuerItems = [];
+      let queuerItems = [],
+          filteredQueuerItems = [];
 
       // Iterate over snapshot
       snap.forEach((child) => {
-        queuerItems.push({
-          key: child.key,
-          name: child.val().name,
-          partySize: child.val().partySize,
-          phoneNumber: child.val().phoneNumber,
-          createdAt: child.val().createdAt,
-          notes: child.val().notes,
-          activity: {
-            selected: child.val().activity.selected,
-            opened: child.val().activity.opened
-          }
-        });
+        let data = child.val();
+        if (data.removed || data.seated) {
+          filteredQueuerItems.push({
+            ...data,
+            key: child.key
+          });
+        } else {
+          queuerItems.push({
+            ...data,
+            key: child.key,
+          });
+        }
       });
 
       // set initial selected queuer
       for (let i = 0; i < queuerItems.length; i++) {
-        if (queuerItems[i].activity.selected) {
+        if (queuerItems[i].selected) {
           this.setState({
             selectedKey: queuerItems[i].key,
             editName: queuerItems[i].name,
@@ -156,6 +157,7 @@ export default class Dashboard extends Component {
       // fill state with data and turn spinner off
       this.setState({
         queuerData: queuerItems,
+        filteredData: filteredQueuerItems,
         spinner: false
       });
     });
@@ -165,101 +167,134 @@ export default class Dashboard extends Component {
   openModal() {
     this.setState({
       modalVisible: true,
-      nameVisible: true
+      modalItemVisible: 'NAME'
     });
   }
 
   // show input group based on state
   showInput() {
-    if (this.state.nameVisible) {
+    switch (this.state.modalItemVisible) {
 
-      // return name input field
-      return (
-        <InputModal
-          label={'Name'}
-          buttonText={'→'}
-          onChangeText={(text) => {this.setState({nameInput: text})}}
-          value={this.state.nameInput}
-          onPress={this.checkNameInput.bind(this)} />
-      );
+      case 'NAME':
+        // return name input field
+        return (
+          <InputModal
+            label={'Name'}
+            buttonText={'→'}
+            onChangeText={(text) => {this.setState({nameInput: text})}}
+            value={this.state.nameInput}
+            onPress={this.checkNameInput.bind(this)}
+          />
+        );
+        break;
 
-    } else if (this.state.partyVisible) {
+      case 'PARTY':
+        // return party size input field
+        return (
+          <InputModal
+            label={'Size of Party'}
+            buttonText={'→'}
+            onChangeText={(text) => {this.setState({partyInput: text})}}
+            value={this.state.partyInput}
+            onPress={this.checkPartyInput.bind(this)} />
+        );
+        break;
 
-      // return party size input field
-      return (
-        <InputModal
-          label={'Size of Party'}
-          buttonText={'→'}
-          onChangeText={(text) => {this.setState({partyInput: text})}}
-          value={this.state.partyInput}
-          onPress={this.checkPartyInput.bind(this)} />
-      );
+      case 'NUMBER':
+        // return phone number input field
+        return (
+          <InputModal
+            label={'Phone Number (optional)'}
+            buttonText={'Submit'}
+            onChangeText={(text) => {this.setState({phoneInput: text})}}
+            value={this.state.phoneInput}
+            onPress={this.addQueuer.bind(this)} />
+        );
+        break;
 
-    } else if (this.state.phoneVisible) {
+      case 'ABOUT':
+        // return text about Q
+        return (
+          <Text style={{color: 'white', fontSize: 35, lineHeight: 55, maxWidth: 600}}>
+            Queue was created by Chris Wahlfeldt in Champaign IL. USA
+          </Text>
+        );
 
-      // return phone number input field
-      return (
-        <InputModal
-          label={'Phone Number (optional)'}
-          buttonText={'Submit'}
-          onChangeText={(text) => {this.setState({phoneInput: text})}}
-          value={this.state.phoneInput}
-          onPress={this.addQueuer.bind(this)} />
-      );
+      default:
+        return (<Text>None</Text>);
+        break;
+    }
+  }
 
+  // checks name input in modal
+  checkNameInput() {
+    if (this.state.nameInput !== '') {
+      this.setState({modalItemVisible: 'PARTY'});
     } else {
-      return (<Text>Done</Text>);
+      Common.error('Error', 'Enter a Name');
+    }
+  }
+
+  // checks the party size input
+  checkPartyInput() {
+    if (this.state.partyInput !== '') {
+      this.setState({modalItemVisible: 'NUMBER'});
+    } else {
+      Common.error('Error', 'Enter the Party Size');
     }
   }
 
   // shows nav contexts
   showNavItems() {
-    if (this.state.homeVisible) {
-      return (
-        <QueuerPage
-          queuerKey={this.state.selectedKey}
-          queuer={this.state.selectedQueuer}
-          name={this.state.editName}
-          partySize={this.state.editParty}
-          phoneNumber={this.state.editPhone}
-          notes={this.state.editNotes}
-          nameChange={this.changeAndSaveName.bind(this)}
-          partyChange={this.changeAndSaveParty.bind(this)}
-          phoneChange={this.changeAndSavePhone.bind(this)}
-          notesChange={this.changeAndSaveNotes.bind(this)}
-          save={this.saveQueuer.bind(this)}
-          text={() => {console.log('Text')}}
-          seat={this.seatQueuer.bind(this)}
-          remove={this.removeQueuer.bind(this)}
-        />
-      );
-    } else if (this.state.settingsVisible) {
-      return (
-        <Settings
-          email={this.state.emailInput}
-          organization={this.state.orgInput}
-          onChangeEmail={(text) => this.setState({emailInput: text})}
-          onChangeOrg={(text) => this.setState({orgInput: text})}
-          savePress={this.saveProfile.bind(this)}
-        />
-      );
-    } else {}
-  }
 
-  // set the settings visible
-  setSettingsVisible() {
-    this.setState({
-      homeVisible: false,
-      settingsVisible: true
-    });
-  }
+    switch (this.state.navVisible) {
 
-  // set the home visible
-  setHomeVisible() {
-    this.setState({
-      homeVisible: true,
-      settingsVisible: false
-    });
+      case 'HOME':
+        // return home
+        return (
+          <QueuerPage
+            queuerKey={this.state.selectedKey}
+            queuer={this.state.selectedQueuer}
+            name={this.state.editName}
+            partySize={this.state.editParty}
+            phoneNumber={this.state.editPhone}
+            notes={this.state.editNotes}
+            nameChange={this.changeAndSaveName.bind(this)}
+            partyChange={this.changeAndSaveParty.bind(this)}
+            phoneChange={this.changeAndSavePhone.bind(this)}
+            notesChange={this.changeAndSaveNotes.bind(this)}
+            save={this.saveQueuer.bind(this)}
+            text={this.textQueuer.bind(this)}
+            seat={this.seatQueuer.bind(this)}
+            remove={this.removeQueuer.bind(this)}
+          />
+        );
+        break;
+
+      case 'SETTINGS':
+        return (
+          <Settings
+            email={this.state.emailInput}
+            organization={this.state.orgInput}
+            onChangeEmail={(text) => this.setState({emailInput: text})}
+            onChangeOrg={(text) => this.setState({orgInput: text})}
+            savePress={this.saveProfile.bind(this)}
+          />
+        );
+        break;
+
+      case 'HISTORY':
+        return (
+          <History
+            data={this.state.filteredData}
+            uid={this.user.uid}
+          />
+        );
+
+      default:
+        return (<Text>No nav item</Text>)
+        break;
+    }
   }
 
   // save user profile
@@ -271,7 +306,7 @@ export default class Dashboard extends Component {
       this.dropdown.showDropdown('success', 'Success', 'Profile has been updated');
       console.log('Profile Updated');
     }, (error) => {
-      this.dropdown.showDropdown('error', 'Error', `Error on pdating profile: ${error}`);
+      this.dropdown.showDropdown('error', 'Error', `Error on updating profile: ${error}`);
       console.log('Profile Update ERROR');
     });
   }
@@ -296,21 +331,17 @@ export default class Dashboard extends Component {
 
   // set the selected queuer
   setSelectedQueuer(item) {
-
-    // make sure your on home
-    this.setHomeVisible();
-
     // set selected queuer
     let data = this.state.queuerData;
     for (let i = 0; i < data.length; i++) {
       let key = data[i].key;
       if (key === item.key) {
         Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
-          activity: { selected: true }
+          selected: true
         });
       } else {
         Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
-          activity: { selected: false }
+          selected: false
         });
       }
     }
@@ -321,7 +352,8 @@ export default class Dashboard extends Component {
       editName: item.name,
       editParty: item.partySize,
       editPhone: item.phoneNumber,
-      editNotes: item.notes
+      editNotes: item.notes,
+      navVisible: 'HOME'
     });
   }
 
@@ -336,16 +368,44 @@ export default class Dashboard extends Component {
         _key={item.key}
         place={place}
         name={item.name}
-        isSelected={item.activity.selected}
-        isOpen={item.activity.opened}
+        isSelected={item.selected}
+        isOpen={item.opened}
         createdAt={item.createdAt}
         partySize={item.partySize}
         onPress={this.setSelectedQueuer.bind(this, item)}
         onOpen={this.setOpenQueuer.bind(this, item)}
         onRemovePress={this.removeQueuer.bind(this, item)}
         onSeatPress={this.seatQueuer.bind(this, item)}
+        onTextPress={this.textQueuer.bind(this, item)}
       />
     );
+  }
+
+  textQueuer(item) {
+    let number = item.phoneNumber || this.state.editPhone,
+        name = item.name || this.state.editName;
+    let message = `Your table is ready! Please see the host for more details.\n\nText 'Cancel' to remove yourself from Queue.`;
+
+    if (number !== '' && Common.validatePhoneNumber(number)) {
+      Alert.alert(
+        `Text ${name}`,
+        `Are you sure you want to text ${name}?`,
+        [
+          {text: 'Cancel', style: 'cancel'},
+          {text: 'OK', onPress: () => {
+            Twilio.text(number, message).then(response => {
+              this.dropdown.showDropdown('success', 'Success', `Texted ${name}`);
+              console.log(response);
+            }).catch(error => {
+              this.dropdown.showDropdown('error', 'Error', error);
+              console.log(error);
+            });
+          }}
+        ]
+      );
+    } else {
+      this.dropdown.showDropdown('error', 'Error', 'Incorrect phone number provided');
+    }
   }
 
   // sets the opened swipeout for each queuer - can only open one in the lsit
@@ -355,17 +415,13 @@ export default class Dashboard extends Component {
       let queuerKey = queuers[i].key;
       if (queuerKey === item.key) {
         Data.DB.ref(`queuers/${this.user.uid}/${queuerKey}`).update({
-          activity: {
-            selected: queuers[i].activity.selected,
-            opened: true
-          }
+          selected: queuers[i].selected,
+          opened: true
         });
       } else {
         Data.DB.ref(`queuers/${this.user.uid}/${queuerKey}`).update({
-          activity: {
-            selected: queuers[i].activity.selected,
-            opened: false
-          }
+          selected: queuers[i].selected,
+          opened: false
         });
       }
     }
@@ -382,7 +438,13 @@ export default class Dashboard extends Component {
       [
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
-          Data.DB.delete(`queuers/${this.user.uid}/${key}`);
+          Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
+            removed: true,
+            selected: false
+          });
+          BackgroundTimer.setTimeout(() => {
+            Data.DB.ref(`queuers/${this.user.uid}/${key}`).remove();
+          }, (3600000 * 8));
           if (key === this.state.selectedKey) {
             this.dropdown.showDropdown('warning', 'Warning', `${name} was removed from queue`);
             this.setState({
@@ -409,7 +471,13 @@ export default class Dashboard extends Component {
       [
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
-          Data.DB.delete(`queuers/${this.user.uid}/${key}`);
+          Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
+            seated: true,
+            selected: false
+          });
+          BackgroundTimer.setTimeout(() => {
+            Data.DB.ref(`queuers/${this.user.uid}/${key}`).remove();
+          }, (3600000 * 8));
           if (key === this.state.selectedKey) {
             this.dropdown.showDropdown('success', 'Success', `${name} has been seated`);
             this.setState({
@@ -427,14 +495,30 @@ export default class Dashboard extends Component {
 
   // compute when submitting a queuer and check phone input
   addQueuer() {
+    // init text to customer
+    if (this.state.phoneInput !== '') {
+      if (Common.validatePhoneNumber(this.state.phoneInput)) {
+        let message = `Thanks ${this.state.nameInput}, your table will be ready soon.\n\nText 'Cancel' to remove yourself from Queue.`;
+        Twilio.text(this.state.phoneInput, message).then(response => {
+          console.log(response);
+        }).catch(error => {
+          console.log(error);
+        });
+      } else {
+        return this.dropdown.showDropdown('error', 'Error', 'Invalid phone number');
+      }
+    }
+    // show dropdown
+    this.dropdown.showDropdown('success', 'Queuer Added', `${this.state.nameInput} has been added to Queue`);
+    // add the queuer
     Data.DB.addQueuer(this.queuerItemsRef,
       this.state.nameInput,
       this.state.partyInput,
       this.state.phoneInput
     );
-
     this.setState({
       modalVisible: false,
+      modalItemVisible: 'NAME',
       nameInput: '',
       partyInput: '',
       phoneInput: ''
@@ -478,29 +562,13 @@ export default class Dashboard extends Component {
     });
   }
 
-  // edits and saves to the databse as typeing for NOTES
-  changeAndSaveNotes(editNotes) {
+  // edits and saves to the databse as typeing for NAME
+  changeAndSaveNotes(text) {
     let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
-    this.setState({editNotes});
-    Data.DB.ref(ref).update({notes: editNotes});
-  }
-
-  // checks name input in modal
-  checkNameInput() {
-    if (this.state.nameInput !== '') {
-      this.setState({nameVisible: false, partyVisible: true});
-    } else {
-      Common.error('Error', 'Enter a Name');
-    }
-  }
-
-  // checks the party size input
-  checkPartyInput() {
-    if (this.state.partyInput !== '') {
-      this.setState({partyVisible: false, phoneVisible: true});
-    } else {
-      Common.error('Error', 'Enter the Party Size');
-    }
+    this.setState({editNotes: text});
+    Data.DB.ref(ref).update({
+      notes: text
+    });
   }
 
   // render the entire dashboard
@@ -520,12 +588,12 @@ export default class Dashboard extends Component {
                 font={Fonts.brand}
                 size={70}
                 text={'Q'}
-                press={() => {console.log(this.state.selectedKey)}}
+                press={() => {this.setState({modalVisible: true, modalItemVisible: 'ABOUT'})}}
               />
             </View>
           </View>
           <View style={{
-            marginTop: -20,
+            marginTop: -21,
             width: '100%',
             flex: 1,
             justifyContent: 'flex-end',
@@ -533,22 +601,32 @@ export default class Dashboard extends Component {
             flexDirection: 'column'
           }}>
             <NavButton
-              symbol={'ios-home'}
-              isSelected={this.state.homeVisible}
-              onPress={this.setHomeVisible.bind(this)}
+              text={'Home'}
+              symbol={'ios-home-outline'}
+              isSelected={this.state.navVisible === 'HOME'}
+              onPress={() => {this.setState({navVisible: 'HOME'})}}
+            />
+            <NavButton
+              text={'History'}
+              symbol={'ios-list-box-outline'}
+              isSelected={this.state.navVisible === 'HISTORY'}
+              onPress={() => {this.setState({navVisible: 'HISTORY'})}}
             />
             {/*<NavButton
-              symbol={'ios-list-box'}
+              text={'Self Host'}
+              symbol={'ios-unlock'}
               isSelected={false}
-              onPress={() => {console.log('cool')}}
+              onPress={() => {console.log('alright')}}
             />*/}
             <NavButton
-              symbol={'ios-settings'}
-              isSelected={this.state.settingsVisible}
-              onPress={this.setSettingsVisible.bind(this)}
+              text={'Settings'}
+              symbol={'ios-settings-outline'}
+              isSelected={this.state.navVisible === 'SETTINGS'}
+              onPress={() => {this.setState({navVisible: 'SETTINGS'})}}
             />
             <NavButton
-              symbol={'ios-exit'}
+              text={'Logout'}
+              symbol={'ios-exit-outline'}
               isSelected={false}
               onPress={this.signOut.bind(this)}
             />
@@ -556,7 +634,7 @@ export default class Dashboard extends Component {
         </Col>
 
         <Col size={49} style={styles.actionArea}>
-          <View style={Layout.container}>
+          <View style={[Layout.container, {height: '100%'}]}>
             {this.showNavItems()}
           </View>
         </Col>

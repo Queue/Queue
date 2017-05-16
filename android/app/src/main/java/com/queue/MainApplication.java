@@ -3,6 +3,8 @@ package com.queue;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rogchap.react.modules.twilio.TwilioPackage;
+import com.ocetnik.timer.BackgroundTimerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new TwilioPackage(),
+            new BackgroundTimerPackage(),
             new VectorIconsPackage()
       );
     }

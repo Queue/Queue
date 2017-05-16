@@ -9,7 +9,7 @@ import Fonts from '../../lib/fonts';
 export default class Dropdown extends Component {
   static defaultProps = {
     duration: 2000,
-    speed: 500
+    speed: 100
   }
 
   static propTypes = {
