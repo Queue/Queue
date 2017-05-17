@@ -24,6 +24,7 @@ export default class History extends Component {
     super(props);
   }
 
+  // delete an item from the database
   del(item) {
     Alert.alert(
       `Remove ${item.name}`,
@@ -37,6 +38,7 @@ export default class History extends Component {
     );
   }
 
+  // undo an item and return it back to the list
   undo(item) {
     Alert.alert(
       `Undo ${item.name}`,
@@ -53,22 +55,40 @@ export default class History extends Component {
     );
   }
 
+  // clear all removed and seated in the database
+  clear() {
+    Alert.alert(
+      `Clear All`,
+      `Are you sure you want to clear and remove all queuers from the database?`,
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {text: 'OK', onPress: () => {
+          let data = this.props.data;
+          for (let i = 0; i < data.length; i++) {
+            let key = data[i].key;
+            Data.DB.ref(`queuers/${this.props.uid}/${key}`).remove();
+          }
+        }}
+      ]
+    );
+  }
+
   renderItem({item, index}) {
     return (
       <View style={[styles.itemContainer, {borderColor: item.removed ? Colors.error : Colors.success}]}>
         <Row>
-          <Col size={1}>
-            <View style={{marginLeft: -35, backgroundColor: 'transparent'}}>
-              <Text style={[styles.text, {color: 'white', textAlign: 'center'}]}>{index + 1}.</Text>
+          <Col size={6}>
+            <View style={{backgroundColor: 'transparent'}}>
+              <Text style={[styles.text, {textAlign: 'center'}]}>{index + 1}.</Text>
             </View>
           </Col>
-          <Col size={32}>
+          <Col size={30}>
             <Text style={styles.text}>{item.name}</Text>
           </Col>
-          <Col size={40}>
-            <Text style={styles.text}>{moment(new Date(item.createdAt)).format('MMM Do, h:mma')}</Text>
+          <Col size={29}>
+            <Text style={styles.text}>{moment(new Date(item.createdAt)).format('h:mma')}</Text>
           </Col>
-          <Col size={12}>
+          <Col size={16}>
             <TouchableHighlight
               underlayColor={'transparent'}
               onPress={this.del.bind(this, item)}
@@ -76,7 +96,7 @@ export default class History extends Component {
               <Text style={[styles.text, {color: Colors.error}]}>DEL</Text>
             </TouchableHighlight>
           </Col>
-          <Col size={15}>
+          <Col size={19}>
             <TouchableHighlight
               underlayColor={'transparent'}
               onPress={this.undo.bind(this, item)}
@@ -93,11 +113,30 @@ export default class History extends Component {
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.header}>History</Text>
-        <View style={{marginTop: 30}}>
-        <FlatList
-          data={this.props.data}
-          renderItem={this.renderItem.bind(this)}
-        />
+        <Text style={styles.text}>Queuers will be kept in history for 8 hours.</Text>
+          <Row style={{marginTop: 20}}>
+            <Col size={50}>
+              <View style={{width: '100%', borderLeftWidth: 10, borderColor: Colors.success}}>
+                <Text style={[styles.text, {padding: 10}]}>Seated</Text>
+              </View>
+            </Col>
+            <Col size={50}>
+              <View style={{width: '100%', borderLeftWidth: 10, borderColor: Colors.error}}>
+                <Text style={[styles.text, {padding: 10}]}>Removed</Text>
+              </View>
+            </Col>
+          </Row>
+        <View style={{marginTop: 20}}>
+          <FlatList
+            data={this.props.data}
+            renderItem={this.renderItem.bind(this)}
+          />
+          <TouchableHighlight
+            onPress={this.clear.bind(this)}
+            style={{backgroundColor: Colors.error, width: '100%', marginTop: 10, borderRadius: 2}}
+          >
+            <Text style={[styles.text, {textAlign: 'center', color: 'white', padding: 10}]}>Clear</Text>
+          </TouchableHighlight>
         </View>
       </ScrollView>
     );
@@ -117,13 +156,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    fontFamily: Fonts.content
   },
   itemContainer: {
     padding: 10,
     marginTop: 5,
     marginBottom: 5,
-    borderRadius: 2,
-    borderWidth: 1,
-    borderLeftWidth: 40
+    borderLeftWidth: 10
   }
 });

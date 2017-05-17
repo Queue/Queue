@@ -1,6 +1,7 @@
 //
 // Dashboard scene
 
+// {# imports
 import React, { Component } from 'react';
 
 // RN components
@@ -58,6 +59,7 @@ import Fonts from '../../lib/fonts';
 import styles from './styles';
 import Twilio from '../../lib/twilio';
 import BackgroundTimer from 'react-native-background-timer';
+// #}
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -76,6 +78,7 @@ export default class Dashboard extends Component {
       filteredData: [],
       selectedKey: '', // the selected queuers key
       loaded: false,
+      textsSent: 0,
 
       // fields
       nameInput: '', // name input
@@ -92,7 +95,7 @@ export default class Dashboard extends Component {
       spinner: true, // determines loading spinner
       modalVisible: false, // determines visibility of modal
       modalItemVisible: 'NAME', // determines visibility of name field
-      navVisible: 'HISTORY'
+      navVisible: 'HOME' // change nav menu
     };
   }
 
@@ -109,6 +112,9 @@ export default class Dashboard extends Component {
           emailInput: Data.Auth.user().email,
           orgInput: Data.Auth.user().displayName,
           loaded: true
+        });
+        Data.DB.ref(`users/${this.user.uid}`).once('value').then(snap => {
+          this.setState({textsSent: snap.val().texts});
         });
       } else {
         console.log('Not logged in');
@@ -214,6 +220,7 @@ export default class Dashboard extends Component {
 
       case 'ABOUT':
         // return text about Q
+        console.log(this.user.texts)
         return (
           <Text style={{color: 'white', fontSize: 35, lineHeight: 55, maxWidth: 600}}>
             Queue was created by Chris Wahlfeldt in Champaign IL. USA
@@ -276,6 +283,7 @@ export default class Dashboard extends Component {
           <Settings
             email={this.state.emailInput}
             organization={this.state.orgInput}
+            textsSent={this.state.textsSent}
             onChangeEmail={(text) => this.setState({emailInput: text})}
             onChangeOrg={(text) => this.setState({orgInput: text})}
             savePress={this.saveProfile.bind(this)}
@@ -493,6 +501,15 @@ export default class Dashboard extends Component {
     );
   }
 
+  incrementTexts() {
+    this.setState({textsSent: this.state.textsSent + 1});
+    Data.DB.ref(`users/${this.user.uid}`).set({
+      texts: this.state.textsSent
+    }).catch(error => {
+      console.log(error)
+    });
+  }
+
   // compute when submitting a queuer and check phone input
   addQueuer() {
     // init text to customer
@@ -500,6 +517,7 @@ export default class Dashboard extends Component {
       if (Common.validatePhoneNumber(this.state.phoneInput)) {
         let message = `Thanks ${this.state.nameInput}, your table will be ready soon.\n\nText 'Cancel' to remove yourself from Queue.`;
         Twilio.text(this.state.phoneInput, message).then(response => {
+          this.incrementTexts();
           console.log(response);
         }).catch(error => {
           console.log(error);

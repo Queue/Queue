@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Field from '../Field';
 import Colors from '../../lib/colors';
+import Fonts from '../../lib/fonts';
 import Common from '../../lib/common';
 import DropdownAlert from 'react-native-dropdownalert';
 
@@ -24,7 +25,10 @@ export default class Settings extends Component {
         <Text style={styles.header}>
           Settings
         </Text>
-          <View style={{marginTop: 10}}>
+        <Text style={{fontSize: 16, fontFamily: Fonts.content}}>
+          Texts sent this month: {this.props.textsSent}
+        </Text>
+        <View style={{marginTop: 10}}>
           <Field
             type={'text'}
             label={'Email'}
