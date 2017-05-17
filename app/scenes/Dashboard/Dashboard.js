@@ -389,6 +389,7 @@ export default class Dashboard extends Component {
     );
   }
 
+  // text the queuer
   textQueuer(item) {
     let number = item.phoneNumber || this.state.editPhone,
         name = item.name || this.state.editName;
@@ -402,6 +403,7 @@ export default class Dashboard extends Component {
           {text: 'Cancel', style: 'cancel'},
           {text: 'OK', onPress: () => {
             Twilio.text(number, message).then(response => {
+              this.incrementTexts();
               this.dropdown.showDropdown('success', 'Success', `Texted ${name}`);
               console.log(response);
             }).catch(error => {

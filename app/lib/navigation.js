@@ -7,7 +7,8 @@ import {
   SignIn,
   SignUp,
   Forgot,
-  Dashboard
+  Dashboard,
+  Payment
 } from '../scenes';
 import Data from './data'
 
@@ -17,7 +18,6 @@ export default class Navigation extends Component {
       <Router>
         <Scene key={'Root'} animation={'fade'}>
           <Scene
-            initial = {true}
             key = {'SignInRoute'}
             component = {SignIn}
             hideNavBar = {true}
@@ -39,6 +39,12 @@ export default class Navigation extends Component {
             hideNavBar = {true}
             panHandlers={null}
             direction = {'vertical'}
+          />
+          <Scene
+            initial = {true}
+            key = {'PaymentRoute'}
+            component = {Payment}
+            hideNavBar = {true}
           />
         </Scene>
       </Router>

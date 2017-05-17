@@ -133,9 +133,10 @@ export default class History extends Component {
           />
           <TouchableHighlight
             onPress={this.clear.bind(this)}
+            underlayColor={Colors.red4}
             style={{backgroundColor: Colors.error, width: '100%', marginTop: 10, borderRadius: 2}}
           >
-            <Text style={[styles.text, {textAlign: 'center', color: 'white', padding: 10}]}>Clear</Text>
+            <Text style={[styles.text, {textAlign: 'center', color: 'white', padding: 10, fontSize: 20}]}>Clear</Text>
           </TouchableHighlight>
         </View>
       </ScrollView>

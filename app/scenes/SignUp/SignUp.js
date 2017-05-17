@@ -34,10 +34,14 @@ export default class SignUp extends Component {
 
     if (Common.validateEmail(email)) {
       if (password !== '' || password.length >= 8) {
-        Data.Auth.signUp(email, password).then(() => { // sign up the user
-          Common.log('Success', 'User signed up.');
-          Actions.DashboardRoute();
-          Common.dismissKeyboard();
+        Data.Auth.signUp(email, password).then(user => { // sign up the user
+          Data.DB.ref(`users/${user.uid}`).set({
+            texts: 0
+          }).then(() => {
+            Common.log('Success', 'User signed up.');
+            Actions.DashboardRoute();
+            Common.dismissKeyboard();
+          });
         }, (error) => {
           Common.error(error.code, error.message);
         });

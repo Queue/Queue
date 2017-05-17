@@ -13,6 +13,7 @@ import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
 import Common from '../../lib/common';
 import DropdownAlert from 'react-native-dropdownalert';
+import { Actions } from 'react-native-router-flux';
 
 export default class Settings extends Component {
   constructor(props) {
@@ -44,12 +45,25 @@ export default class Settings extends Component {
           <View style={{
             backgroundColor: Colors.success,
             marginTop: 20,
-            borderRadius: 2
+            borderTopLeftRadius: 2,
+            borderTopRightRadius: 2
           }}>
             <TouchableHighlight
               underlayColor={Colors.green4}
               onPress={this.props.savePress}>
               <Text style={styles.buttonText}>Save</Text>
+            </TouchableHighlight>
+          </View>
+          <View style={{
+            backgroundColor: Colors.info,
+            marginTop: 10,
+            borderBottomLeftRadius: 2,
+            borderBottomRightRadius: 2
+          }}>
+            <TouchableHighlight
+              underlayColor={Colors.blue4}
+              onPress={() => {Actions.PaymentRoute()}}>
+              <Text style={styles.buttonText}>Update Payment</Text>
             </TouchableHighlight>
           </View>
         </View>
