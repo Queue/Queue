@@ -8,7 +8,7 @@ import styles from './styles';
 import Button from 'react-native-button';
 import Colors from '../../lib/colors';
 
-export default PrimaryBtn = ({name, press, buttonColor, fontSize}) => {
+export default PrimaryBtn = ({name, press, buttonColor, fontSize, style=[] }) => {
 
   styles.buttonOverwrite = {
     color: buttonColor,
@@ -22,7 +22,7 @@ export default PrimaryBtn = ({name, press, buttonColor, fontSize}) => {
   return (
     <Button
       onPress={press}
-      style={[styles.primaryBtn, styles.buttonOverwrite]}
+      style={[styles.primaryBtn, styles.buttonOverwrite, ...style]}
       containerStyle={[styles.btnContainer, styles.containerOverwrite]}>
       {name}
     </Button>

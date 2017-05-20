@@ -11,6 +11,8 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+import PrimaryButton from '../PrimaryButton';
+
 import Field from '../Field';
 
 import styles from './styles';
@@ -65,57 +67,45 @@ export default class QueuerPage extends Component {
                 label={'Phone Number'}
                 value={this.props.phoneNumber}
                 onChangeText={this.props.phoneChange}
+                placeholder={'Phone Number'}
               />
               <Field
                 type={'textarea'}
                 label={'Notes'}
                 value={this.props.notes}
                 onChangeText={this.props.notesChange}
+                placeholder={'Notes'}
               />
             </View>
             <View style={{marginTop: 25}}>
               <Row>
                 <Col size={100}>
-                  <View style={{
-                    borderTopLeftRadius: 2,
-                    borderTopRightRadius: 2,
-                    marginBottom: 8,
-                    backgroundColor: Colors.info,
-                    width: '100%'
-                  }}>
-                    <TouchableHighlight
-                      underlayColor={Colors.blue4}
-                      onPress={this.props.text}>
-                      <Text style={styles.buttonText}>Text</Text>
-                    </TouchableHighlight>
+                  <View style={{width: '100%'}}>
+                    <PrimaryButton
+                      name={'Text'}
+                      buttonColor={Colors.info}
+                      press={this.props.text}
+                    />
                   </View>
                 </Col>
               </Row>
               <Row>
-                <Col size={50} style={{paddingRight: 4}}>
-                  <View style={{
-                    backgroundColor: Colors.success,
-                    borderBottomLeftRadius: 2,
-                    width: '100%'
-                  }}>
-                    <TouchableHighlight
-                      underlayColor={Colors.green4}
-                      onPress={this.props.seat}>
-                      <Text style={styles.buttonText}>Seat</Text>
-                    </TouchableHighlight>
+                <Col size={50}>
+                  <View style={{width: '100%'}}>
+                    <PrimaryButton
+                      name={'Seat'}
+                      buttonColor={Colors.success}
+                      press={this.props.seat}
+                    />
                   </View>
                 </Col>
-                <Col size={50} style={{paddingLeft: 4}}>
-                  <View style={{
-                    backgroundColor: Colors.error,
-                    borderBottomRightRadius: 2,
-                    width: '100%',
-                  }}>
-                    <TouchableHighlight
-                      underlayColor={Colors.red4}
-                      onPress={this.props.remove}>
-                      <Text style={styles.buttonText}>Remove</Text>
-                    </TouchableHighlight>
+                <Col size={50}>
+                   <View style={{width: '100%'}}>
+                    <PrimaryButton
+                      name={'Remove'}
+                      buttonColor={Colors.error}
+                      press={this.props.remove}
+                    />
                   </View>
                 </Col>
               </Row>
@@ -123,9 +113,9 @@ export default class QueuerPage extends Component {
           </KeyboardAwareScrollView>
         ) : (
           <View style={styles.unselectedContainer}>
-              <Text style={styles.unselectedText}>
-                Select a person in queue to edit their values.
-              </Text>
+            <Text style={styles.unselectedText}>
+              Select a person in queue to edit their values.
+            </Text>
           </View>
         )}
       </View>

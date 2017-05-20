@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableHighlight
 } from 'react-native';
+import PrimaryButton from '../PrimaryButton';
 import Field from '../Field';
 import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
@@ -42,29 +43,21 @@ export default class Settings extends Component {
             onChangeText={this.props.onChangeOrg}
             value={this.props.organization}
           />
-          <View style={{
-            backgroundColor: Colors.success,
-            marginTop: 20,
-            borderTopLeftRadius: 2,
-            borderTopRightRadius: 2
-          }}>
-            <TouchableHighlight
-              underlayColor={Colors.green4}
-              onPress={this.props.savePress}>
-              <Text style={styles.buttonText}>Save</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={{
-            backgroundColor: Colors.info,
-            marginTop: 10,
-            borderBottomLeftRadius: 2,
-            borderBottomRightRadius: 2
-          }}>
-            <TouchableHighlight
-              underlayColor={Colors.blue4}
-              onPress={() => {Actions.PaymentRoute()}}>
-              <Text style={styles.buttonText}>Update Payment</Text>
-            </TouchableHighlight>
+          <View style={{marginTop: 20}}>
+            <View style={{width: '100%'}}>
+              <PrimaryButton
+                name={'Save'}
+                buttonColor={Colors.success}
+                press={this.props.savePress}
+              />
+            </View>
+            <View style={{width: '100%'}}>
+              <PrimaryButton
+                name={'Update Payment'}
+                buttonColor={Colors.info}
+                press={() => {Actions.PaymentRoute(this.props.user)}}
+              />
+            </View>
           </View>
         </View>
         <DropdownAlert

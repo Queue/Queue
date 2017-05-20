@@ -30,6 +30,7 @@ import {
 
 // scenes
 import History from '../History';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // grid system
 //import { Grid, Col } from 'react-native-easy-grid';
@@ -46,6 +47,7 @@ import DropdownAlert from 'react-native-dropdownalert';
 
 // timers
 import Timer from 'react-native-timer';
+import BackgroundTimer from 'react-native-background-timer';
 
 // router actions
 import { Actions } from 'react-native-router-flux'
@@ -58,7 +60,6 @@ import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
 import styles from './styles';
 import Twilio from '../../lib/twilio';
-import BackgroundTimer from 'react-native-background-timer';
 // #}
 
 export default class Dashboard extends Component {
@@ -281,6 +282,7 @@ export default class Dashboard extends Component {
       case 'SETTINGS':
         return (
           <Settings
+            user={this.user}
             email={this.state.emailInput}
             organization={this.state.orgInput}
             textsSent={this.state.textsSent}
@@ -566,6 +568,9 @@ export default class Dashboard extends Component {
 
   // edits and saves to the databse as typeing for PARTY SIZE
   changeAndSaveParty(text) {
+    if (isNaN(text)) {
+      return;
+    }
     let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
     this.setState({editParty: text});
     Data.DB.ref(ref).update({
@@ -575,6 +580,9 @@ export default class Dashboard extends Component {
 
   // edits and saves to the databse as typeing for PHONE NUMBER
   changeAndSavePhone(text) {
+    if (isNaN(text)) {
+      return;
+    }
     let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
     this.setState({editPhone: text});
     Data.DB.ref(ref).update({
@@ -670,7 +678,7 @@ export default class Dashboard extends Component {
             style={styles.addButton}
             underlayColor={Colors.green4}
             onPress={this.openModal.bind(this)}>
-            <Text style={styles.addButtonText}>+</Text>
+            <Icon style={{textAlign: 'center'}} name={'ios-add-outline'} size={60} color={'white'} />
           </TouchableHighlight>
         </Col>
 

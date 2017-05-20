@@ -38,9 +38,6 @@ export default class SignIn extends Component {
   }
 
   signInUser() {
-    // strictly development purposes turn off when testing auth
-//    return Actions.DashboardRoute();
-
     let email = this.state.emailText,
         password = this.state.passwordText;
 
@@ -85,6 +82,7 @@ export default class SignIn extends Component {
             val = {password}
           />
           <PrimaryButton
+            style={{marginTop: 20}}
             name = {'Sign In'}
             press = {this.signInUser.bind(this)}
           />

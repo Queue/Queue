@@ -12,7 +12,10 @@ export default styles = StyleSheet.create({
   },
   btnContainer: {
     padding: 8,
-    margin: 15,
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 5,
+    marginBottom: 5,
     overflow:'hidden',
     borderWidth: 1,
     borderColor: Colors.primaryForeground,

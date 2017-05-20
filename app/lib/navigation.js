@@ -15,9 +15,10 @@ import Data from './data'
 export default class Navigation extends Component {
    render() {
     return (
-      <Router>
+      <Router duration={0}>
         <Scene key={'Root'} animation={'fade'}>
           <Scene
+            initial = {true}
             key = {'SignInRoute'}
             component = {SignIn}
             hideNavBar = {true}
@@ -41,7 +42,6 @@ export default class Navigation extends Component {
             direction = {'vertical'}
           />
           <Scene
-            initial = {true}
             key = {'PaymentRoute'}
             component = {Payment}
             hideNavBar = {true}

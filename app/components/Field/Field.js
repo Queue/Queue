@@ -4,6 +4,9 @@
 import React, { Component } from 'react';
 import { View, TextInput, Text, StyleSheet } from 'react-native';
 
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Sae } from 'react-native-textinput-effects';
+
 import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
 
@@ -32,6 +35,16 @@ export default class Field extends Component {
               style={styles.fieldBase}
               {...this.props}
             />
+            {/*<Sae
+              label={this.props.label}
+              iconClass={FontAwesomeIcon}
+              iconName={'pencil'}
+              iconColor={'#333'}
+              autoCapitalize={'words'}
+              autoCorrect={false}
+              inputStyle={{color: '#333'}}
+              {...this.props}
+            />*/}
           </View>
         );
         break;
@@ -78,30 +91,29 @@ export default class Field extends Component {
 const styles = StyleSheet.create({
   label: {
     letterSpacing: 1,
-    marginBottom: 5,
+    marginBottom: 2,
     fontFamily: Fonts.content,
     color: 'grey'
   },
   fieldContainer: {
     marginTop: 8,
-    marginBottom: 8
+    marginBottom: 8,
+    borderColor: Colors.primaryBackground,
+    borderBottomWidth: 1,
+    width: '100%'
   },
   fieldBase: {
     paddingLeft: 15,
-    height: 45,
+    height: 40,
     fontFamily: Fonts.content,
-    borderRadius: 2,
-    borderColor: Colors.primaryBackground,
-    borderWidth: 1
   },
   textareaInput: {
     paddingTop: 7,
     paddingLeft: 15,
     fontSize: 17,
     fontFamily: Fonts.content,
-    height: 140,
-    borderRadius: 2,
+    height: 170,
     borderColor: Colors.primaryBackground,
-    borderWidth: 1
+    borderLeftWidth: 1
   }
 });

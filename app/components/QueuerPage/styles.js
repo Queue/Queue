@@ -52,7 +52,7 @@ export default styles = StyleSheet.create({
     paddingLeft: 15,
     height: 45,
     borderColor: Colors.primaryBackground,
-    borderWidth: 1
+    //borderBottomWidth: 1
   },
   textareaInput: {
     paddingTop: 7,
