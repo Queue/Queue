@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "base-64": "^0.1.0",
+    "btoa": "^1.1.2",
     "firebase": "^3.6.3",
     "moment": "^2.18.1",
     "query-string": "^4.3.4",
@@ -28,6 +29,7 @@
     "react-native-loading-spinner-overlay": "^0.4.1",
     "react-native-responsive-grid": "^0.23.0",
     "react-native-router-flux": "3.38.0",
+    "react-native-stripe-api": "^0.0.6",
     "react-native-swipe-list-view": "^0.4.1",
     "react-native-swipeout": "^2.1.1",
     "react-native-textinput-effects": "^0.3.1",

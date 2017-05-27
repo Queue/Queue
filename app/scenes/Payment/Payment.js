@@ -6,14 +6,18 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableHighlight } from
 import { TextButton, PrimaryButton } from '../../components';
 import { CreditCardInput, LiteCreditCardInput } from 'react-native-credit-card-input-fullpage';
 import Spinner from 'react-native-loading-spinner-overlay';
+import moment from 'moment';
 
 import Colors from '../../lib/colors';
 import Data from '../../lib/data';
-import Stripe from '../../lib/stripe';
+//import Stripe from '../../lib/stripe';
 import Fonts from '../../lib/fonts';
 import { Actions } from 'react-native-router-flux'
+import Stripe from 'react-native-stripe-api';
+import Creds from '../../lib/creds';
 
-//const Stripe = require('stripe')('sk_test_OH9kC8qEBMyBW5FbITvFEgFo');
+const apiKey = Creds.stripe.live.secret;
+const client = new Stripe(apiKey);
 
 export default class Payment extends Component {
   constructor(props) {
@@ -34,16 +38,35 @@ export default class Payment extends Component {
   }
 
   submitCardData() {
-    Stripe.createCustomer(this.user).then(resp => {
-      console.log(resp);
+    let { number, expiry, cvc } = this.state.cardData.values;
+    client.createToken(number,
+      expiry.split('/').shift(),
+      expiry.split('/').pop(),
+      cvc).then(token => {
+
+      console.log(token);
+      client.createCustomer(token.id, this.user.email).then(resp => {
+        console.log(resp);
+        Data.DB.ref(this.user.id).update({
+          customerId: resp.id
+        });
+      });
+
+    }).catch(error => {
+
+      console.error(error);
+
+    });
+    /*Stripe.createCustomer(this.user).then(resp => {
+      console.log(resp.id);
     }).catch(error => {
       console.log(error);
-    });
+    });*/
   }
 
   render() {
     //console.disableYellowBox = true;
-    //console.ignoredYellowBox = ['Warning: "keyboardShouldPersistTaps"'];
+    console.ignoredYellowBox = ['Warning: "keyboardShouldPersistTaps"'];
 
     return (
       <View

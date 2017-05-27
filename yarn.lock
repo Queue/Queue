@@ -970,6 +970,10 @@ bser@^2.0.0:
   dependencies:
     node-int64 "^0.4.0"
 
+btoa@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/btoa/-/btoa-1.1.2.tgz#3e40b81663f81d2dd6596a4cb714a8dc16cfabe0"
+
 buffer-equal-constant-time@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz#f8e71132f7ffe6e01a5c9697a4c6f3e48d5cc819"
@@ -3863,6 +3867,10 @@ react-native-router-flux@3.38.0:
     react-native-experimental-navigation "0.26.x"
     react-native-tabs "^1.0.9"
     react-static-container "1.0.1"
+
+react-native-stripe-api@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-stripe-api/-/react-native-stripe-api-0.0.6.tgz#355e5dd9cc67e4a3fdae2cafd7b01635633bc276"
 
 react-native-swipe-list-view@^0.4.1:
   version "0.4.1"
