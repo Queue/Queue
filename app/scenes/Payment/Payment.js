@@ -36,7 +36,7 @@ export default class Payment extends Component {
   submitCardData() {
     //let { number, expiry, cvc } = this.state.cardData.values;
 
-    StripeApi.createAndSubscribe('4782002039157955', '10', '18', '604', this.user.email)
+    StripeApi.createAndSubscribe('', '', '', '', this.user.email)
       .then(resp => {
         console.log(resp);
       });
