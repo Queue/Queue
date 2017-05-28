@@ -10,14 +10,10 @@ import moment from 'moment';
 
 import Colors from '../../lib/colors';
 import Data from '../../lib/data';
-//import Stripe from '../../lib/stripe';
 import Fonts from '../../lib/fonts';
 import { Actions } from 'react-native-router-flux'
-import Stripe from 'react-native-stripe-api';
+import StripeApi from '../../lib/stripe';
 import Creds from '../../lib/creds';
-
-const apiKey = Creds.stripe.live.secret;
-const client = new Stripe(apiKey);
 
 export default class Payment extends Component {
   constructor(props) {
@@ -38,29 +34,16 @@ export default class Payment extends Component {
   }
 
   submitCardData() {
-    let { number, expiry, cvc } = this.state.cardData.values;
-    client.createToken(number,
-      expiry.split('/').shift(),
-      expiry.split('/').pop(),
-      cvc).then(token => {
+    //let { number, expiry, cvc } = this.state.cardData.values;
 
-      console.log(token);
-      client.createCustomer(token.id, this.user.email).then(resp => {
+    StripeApi.createAndSubscribe('4782002039157955', '10', '18', '604', this.user.email)
+      .then(resp => {
         console.log(resp);
-        Data.DB.ref(this.user.id).update({
-          customerId: resp.id
-        });
       });
 
-    }).catch(error => {
-
-      console.error(error);
-
-    });
-    /*Stripe.createCustomer(this.user).then(resp => {
-      console.log(resp.id);
-    }).catch(error => {
-      console.log(error);
+    /*Data.DB.ref(`users/${this.user.uid}`).update({
+      customerId: customer.id,
+      tokenId: token.id
     });*/
   }
 
@@ -73,9 +56,9 @@ export default class Payment extends Component {
         style={styles.container}
       >
         <View style={{position: 'absolute', top: '18%'}}>
-          <Text style={styles.brand}>
+          {/*<Text style={styles.brand}>
             Queue
-          </Text>
+          </Text>*/}
         </View>
         <KeyboardAvoidingView
           behavior={'position'}
@@ -109,10 +92,11 @@ const styles = StyleSheet.create({
   brand: {
     fontSize: 75,
     color: Colors.primaryForeground,
-    fontFamily: Fonts.brand
+    fontFamily: Fonts.brand,
   },
   container: {
     flex: 1,
+    marginTop: -100,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

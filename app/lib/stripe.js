@@ -4,8 +4,12 @@
 import { stripe } from '../lib/creds';
 import Creds from '../lib/creds';
 import moment from 'moment';
+import Stripe from 'react-native-stripe-api';
 
-export default Stripe = {
+const apiKey = Creds.stripe.live.secret;
+const client = new Stripe(apiKey);
+
+export default StripeApi = {
 
   // creates a new customer
   createCustomer: user => {
@@ -50,5 +54,27 @@ export default Stripe = {
     }).then(response => {
       return response.json();
     });
+  },
+
+  // create and subscribe credit card
+  createAndSubscribe: (number, month, year, cvc, email) => {
+    return client.createToken(number, month, year, cvc)
+      .then(token => {
+        return client.createCustomer(token.id, email).then(customer => {
+          return customer;
+        });
+      })
+      .then((customer, token) => {
+        return client.createSubscription(customer.id, 'queue').then(subscription => {
+          return {
+            customerId: customer.id,
+            tokenId: token.id,
+            subscriptionId: subscription.id
+          };
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
