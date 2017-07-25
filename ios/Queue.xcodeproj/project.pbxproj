@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -41,12 +42,16 @@
 		4F01BC8AD1084E7FBB24D3A7 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7EC5F640BD374E88A6E7AD86 /* Zocial.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6FF559C007F848E4A063D1E3 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 412E44D526A14CE7A20557AA /* Entypo.ttf */; };
+		74F86CF86E964DB4B1C79664 /* libRCTBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3AF5F11D62F4304A4B75851 /* libRCTBrowser.a */; };
+		7A54ACE81F994E8A9B0645D3 /* libRNBackgroundTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E8BC2CBCF846499B326EFA /* libRNBackgroundTimer.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		9FF555CDC0A64C4290FD4C1B /* libRCTTwilio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F719C9706994F20BDD159A8 /* libRCTTwilio.a */; };
 		B3E199F555FB4F44B96CDEC1 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15502ED3417C4CEA852FB625 /* libRNVectorIcons.a */; };
 		B5B53CCECFEA4F6F9DD9DE9D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73259A0842414CD89571653E /* Foundation.ttf */; };
 		BBC8E969D2CC46A9AA61EBF3 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505995210E9045819EC566CC /* MaterialIcons.ttf */; };
 		C1662D351E9321990048F72C /* Monoton-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1662D331E9321520048F72C /* Monoton-Regular.ttf */; };
 		C1662D361E93219B0048F72C /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1662D341E9321520048F72C /* Raleway-Regular.ttf */; };
+		C18343691F27B2D200F24477 /* libRCTBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1211F7E1F27AD310040B6CD /* libRCTBrowser.a */; };
 		C1DA67951EBCF18800E4B84B /* JosefinSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1DA67811EBCF18800E4B84B /* JosefinSans-Bold.ttf */; };
 		C1DA67961EBCF18800E4B84B /* JosefinSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1DA67821EBCF18800E4B84B /* JosefinSans-BoldItalic.ttf */; };
 		C1DA67971EBCF18800E4B84B /* JosefinSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1DA67831EBCF18800E4B84B /* JosefinSans-Italic.ttf */; };
@@ -68,8 +73,6 @@
 		C1DA67A71EBCF18800E4B84B /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1DA67931EBCF18800E4B84B /* OpenSans-Semibold.ttf */; };
 		C1DA67A81EBCF18800E4B84B /* OpenSans-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1DA67941EBCF18800E4B84B /* OpenSans-SemiboldItalic.ttf */; };
 		C866F325562B4D8385FEA9B5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABB750FF5F2143CBB0DB244D /* SimpleLineIcons.ttf */; };
-		7A54ACE81F994E8A9B0645D3 /* libRNBackgroundTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E8BC2CBCF846499B326EFA /* libRNBackgroundTimer.a */; };
-		9FF555CDC0A64C4290FD4C1B /* libRCTTwilio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F719C9706994F20BDD159A8 /* libRCTTwilio.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,12 +265,54 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		C1211F7D1F27AD310040B6CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7464CCE0E70E4DE090ABC89B /* RCTBrowser.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2791E7EA1BB3C10A00FD32EA;
+			remoteInfo = RCTBrowser;
+		};
+		C1211F7F1F27AD310040B6CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7464CCE0E70E4DE090ABC89B /* RCTBrowser.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2791E7F51BB3C10A00FD32EA;
+			remoteInfo = RCTBrowserTests;
+		};
+		C159ECC41EE3085A0013F45F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4833FAEB0F3A494C9FE7C914 /* RCTTwilio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DB0862131BF2D3AF00A97135;
+			remoteInfo = RCTTwilio;
+		};
+		C159ECD21EE3085A0013F45F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3AAB12D43CFD4517980A6C41 /* RNBackgroundTimer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNBackgroundTimer;
+		};
 		C1A2DCFF1E5B657E0018F08B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 11FE2F3EC6FF44B290ABF454 /* RNVectorIcons.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
+		};
+		C1CAD2731F27AFBF00E85D5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1CAD2691F27AFBF00E85D5D /* RCTBrowser.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2791E7EA1BB3C10A00FD32EA;
+			remoteInfo = RCTBrowser;
+		};
+		C1CAD2751F27AFBF00E85D5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1CAD2691F27AFBF00E85D5D /* RCTBrowser.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2791E7F51BB3C10A00FD32EA;
+			remoteInfo = RCTBrowserTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -296,20 +341,27 @@
 		15502ED3417C4CEA852FB625 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Queue-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Queue-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Queue-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Queue-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AAB12D43CFD4517980A6C41 /* RNBackgroundTimer.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundTimer.xcodeproj; path = "../node_modules/react-native-background-timer/ios/RNBackgroundTimer.xcodeproj"; sourceTree = "<group>"; };
 		3C0EC55E90094D7BBA01751F /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		412E44D526A14CE7A20557AA /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		47E8BC2CBCF846499B326EFA /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBackgroundTimer.a; sourceTree = "<group>"; };
+		4833FAEB0F3A494C9FE7C914 /* RCTTwilio.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTTwilio.xcodeproj; path = "../node_modules/react-native-twilio/ios/RCTTwilio.xcodeproj"; sourceTree = "<group>"; };
 		505995210E9045819EC566CC /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		5F719C9706994F20BDD159A8 /* libRCTTwilio.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTTwilio.a; sourceTree = "<group>"; };
 		6A2277F4E56241DDAD56CD97 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		73259A0842414CD89571653E /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		7464CCE0E70E4DE090ABC89B /* RCTBrowser.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTBrowser.xcodeproj; path = "../node_modules/react-native-browser/RCTBrowser.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7EC5F640BD374E88A6E7AD86 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8E9C941150DB4A6A8876C793 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		A3AF5F11D62F4304A4B75851 /* libRCTBrowser.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBrowser.a; sourceTree = "<group>"; };
 		A7A540EFE22148ADBF16EAD0 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		ABB750FF5F2143CBB0DB244D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		C1662D331E9321520048F72C /* Monoton-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Monoton-Regular.ttf"; path = "Queue/Fonts/Monoton-Regular.ttf"; sourceTree = "<group>"; };
 		C1662D341E9321520048F72C /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Regular.ttf"; path = "Queue/Fonts/Raleway-Regular.ttf"; sourceTree = "<group>"; };
+		C1CAD2691F27AFBF00E85D5D /* RCTBrowser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBrowser.xcodeproj; path = "../node_modules/react-native-browser/RCTBrowser.xcodeproj"; sourceTree = "<group>"; };
 		C1DA67811EBCF18800E4B84B /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "JosefinSans-Bold.ttf"; path = "Queue/Fonts/JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
 		C1DA67821EBCF18800E4B84B /* JosefinSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "JosefinSans-BoldItalic.ttf"; path = "Queue/Fonts/JosefinSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		C1DA67831EBCF18800E4B84B /* JosefinSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "JosefinSans-Italic.ttf"; path = "Queue/Fonts/JosefinSans-Italic.ttf"; sourceTree = "<group>"; };
@@ -330,10 +382,6 @@
 		C1DA67921EBCF18800E4B84B /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "Queue/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		C1DA67931EBCF18800E4B84B /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "Queue/Fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		C1DA67941EBCF18800E4B84B /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiboldItalic.ttf"; path = "Queue/Fonts/OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
-		3AAB12D43CFD4517980A6C41 /* RNBackgroundTimer.xcodeproj */ = {isa = PBXFileReference; name = "RNBackgroundTimer.xcodeproj"; path = "../node_modules/react-native-background-timer/ios/RNBackgroundTimer.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		47E8BC2CBCF846499B326EFA /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; name = "libRNBackgroundTimer.a"; path = "libRNBackgroundTimer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		4833FAEB0F3A494C9FE7C914 /* RCTTwilio.xcodeproj */ = {isa = PBXFileReference; name = "RCTTwilio.xcodeproj"; path = "../node_modules/react-native-twilio/ios/RCTTwilio.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		5F719C9706994F20BDD159A8 /* libRCTTwilio.a */ = {isa = PBXFileReference; name = "libRCTTwilio.a"; path = "libRCTTwilio.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -363,6 +411,8 @@
 				B3E199F555FB4F44B96CDEC1 /* libRNVectorIcons.a in Frameworks */,
 				7A54ACE81F994E8A9B0645D3 /* libRNBackgroundTimer.a in Frameworks */,
 				9FF555CDC0A64C4290FD4C1B /* libRCTTwilio.a in Frameworks */,
+				74F86CF86E964DB4B1C79664 /* libRCTBrowser.a in Frameworks */,
+				C18343691F27B2D200F24477 /* libRCTBrowser.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +587,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C1CAD2691F27AFBF00E85D5D /* RCTBrowser.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -551,6 +602,7 @@
 				11FE2F3EC6FF44B290ABF454 /* RNVectorIcons.xcodeproj */,
 				3AAB12D43CFD4517980A6C41 /* RNBackgroundTimer.xcodeproj */,
 				4833FAEB0F3A494C9FE7C914 /* RCTTwilio.xcodeproj */,
+				7464CCE0E70E4DE090ABC89B /* RCTBrowser.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -608,10 +660,44 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C1211F761F27AD310040B6CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C1211F7E1F27AD310040B6CD /* libRCTBrowser.a */,
+				C1211F801F27AD310040B6CD /* RCTBrowserTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C159ECB11EE3085A0013F45F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C159ECD31EE3085A0013F45F /* libRNBackgroundTimer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C159ECB31EE3085A0013F45F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C159ECC51EE3085A0013F45F /* libRCTTwilio.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C1A2DCE31E5B657B0018F08B /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				C1A2DD001E5B657E0018F08B /* libRNVectorIcons.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C1CAD26A1F27AFBF00E85D5D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C1CAD2741F27AFBF00E85D5D /* libRCTBrowser.a */,
+				C1CAD2761F27AFBF00E85D5D /* RCTBrowserTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -739,6 +825,14 @@
 					ProjectRef = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
 				},
 				{
+					ProductGroup = C1211F761F27AD310040B6CD /* Products */;
+					ProjectRef = 7464CCE0E70E4DE090ABC89B /* RCTBrowser.xcodeproj */;
+				},
+				{
+					ProductGroup = C1CAD26A1F27AFBF00E85D5D /* Products */;
+					ProjectRef = C1CAD2691F27AFBF00E85D5D /* RCTBrowser.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
 					ProjectRef = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
 				},
@@ -763,6 +857,10 @@
 					ProjectRef = 832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */;
 				},
 				{
+					ProductGroup = C159ECB31EE3085A0013F45F /* Products */;
+					ProjectRef = 4833FAEB0F3A494C9FE7C914 /* RCTTwilio.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302E01ABCB9EE00DB3ED1 /* Products */;
 					ProjectRef = 00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */;
 				},
@@ -773,6 +871,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = C159ECB11EE3085A0013F45F /* Products */;
+					ProjectRef = 3AAB12D43CFD4517980A6C41 /* RNBackgroundTimer.xcodeproj */;
 				},
 				{
 					ProductGroup = C1A2DCE31E5B657B0018F08B /* Products */;
@@ -965,11 +1067,53 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C1211F7E1F27AD310040B6CD /* libRCTBrowser.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTBrowser.a;
+			remoteRef = C1211F7D1F27AD310040B6CD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C1211F801F27AD310040B6CD /* RCTBrowserTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RCTBrowserTests.xctest;
+			remoteRef = C1211F7F1F27AD310040B6CD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C159ECC51EE3085A0013F45F /* libRCTTwilio.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTTwilio.a;
+			remoteRef = C159ECC41EE3085A0013F45F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C159ECD31EE3085A0013F45F /* libRNBackgroundTimer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNBackgroundTimer.a;
+			remoteRef = C159ECD21EE3085A0013F45F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C1A2DD001E5B657E0018F08B /* libRNVectorIcons.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNVectorIcons.a;
 			remoteRef = C1A2DCFF1E5B657E0018F08B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C1CAD2741F27AFBF00E85D5D /* libRCTBrowser.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTBrowser.a;
+			remoteRef = C1CAD2731F27AFBF00E85D5D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C1CAD2761F27AFBF00E85D5D /* RCTBrowserTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RCTBrowserTests.xctest;
+			remoteRef = C1CAD2751F27AFBF00E85D5D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1142,11 +1286,18 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+					"$(SRCROOT)/../node_modules/react-native-browser/**",
+				);
 				INFOPLIST_FILE = QueueTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1157,11 +1308,6 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Queue.app/Queue";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
-					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
-				);
 			};
 			name = Debug;
 		};
@@ -1170,11 +1316,18 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+					"$(SRCROOT)/../node_modules/react-native-browser/**",
+				);
 				INFOPLIST_FILE = QueueTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1185,11 +1338,6 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Queue.app/Queue";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
-					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
-				);
 			};
 			name = Release;
 		};
@@ -1200,6 +1348,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 5K8EY6W754;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+					"$(SRCROOT)/../node_modules/react-native-browser/**",
+				);
 				INFOPLIST_FILE = Queue/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1212,11 +1366,6 @@
 				PRODUCT_NAME = Queue;
 				TARGETED_DEVICE_FAMILY = 2;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
-					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
-				);
 			};
 			name = Debug;
 		};
@@ -1226,6 +1375,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5K8EY6W754;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+					"$(SRCROOT)/../node_modules/react-native-browser/**",
+				);
 				INFOPLIST_FILE = Queue/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1238,11 +1393,6 @@
 				PRODUCT_NAME = Queue;
 				TARGETED_DEVICE_FAMILY = 2;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
-					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
-				);
 			};
 			name = Release;
 		};
@@ -1258,8 +1408,20 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+					"$(SRCROOT)/../node_modules/react-native-browser/**",
+				);
 				INFOPLIST_FILE = "Queue-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1269,16 +1431,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
-					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
-				);
 			};
 			name = Debug;
 		};
@@ -1294,8 +1446,20 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
+					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
+					"$(SRCROOT)/../node_modules/react-native-browser/**",
+				);
 				INFOPLIST_FILE = "Queue-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1305,16 +1469,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
-					"$(SRCROOT)/../node_modules/react-native-twilio/ios/RCTTwilio/**",
-				);
 			};
 			name = Release;
 		};
@@ -1331,16 +1485,17 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Queue-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Queue-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Queue-tvOS.app/Queue-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 			};
 			name = Debug;
 		};
@@ -1357,16 +1512,17 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Queue-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Queue-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Queue-tvOS.app/Queue-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 			};
 			name = Release;
 		};

@@ -55,7 +55,7 @@ export default class Settings extends Component {
               <PrimaryButton
                 name={'Update Payment'}
                 buttonColor={Colors.info}
-                press={() => {Actions.PaymentRoute(this.props.user)}}
+                press={this.props.paymentPress}
               />
             </View>
           </View>

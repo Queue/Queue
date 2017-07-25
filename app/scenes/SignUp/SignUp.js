@@ -39,7 +39,7 @@ export default class SignUp extends Component {
             texts: 0
           }).then(() => {
             Common.log('Success', 'User signed up.');
-            Actions.DashboardRoute();
+            Actions.InfoRoute();
             Common.dismissKeyboard();
           });
         }, (error) => {

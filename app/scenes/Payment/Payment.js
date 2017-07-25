@@ -18,6 +18,8 @@ import Creds from '../../lib/creds';
 export default class Payment extends Component {
   constructor(props) {
     super(props);
+    this.user = undefined;
+
     this.state = {
       cardData: {},
       spinner: true
@@ -33,27 +35,58 @@ export default class Payment extends Component {
     });
   }
 
-  submitCardData() {
+  async submitCardInit() {
     //let { number, expiry, cvc } = this.state.cardData.values;
 
-    StripeApi.createAndSubscribe('', '', '', '', this.user.email)
-      .then(resp => {
-        console.log(resp);
+    let { customerId, cardId, subscriptionId } = await StripeApi.createAndSubscribe(
+      Creds.card.number,
+      Creds.card.month,
+      Creds.card.year,
+      Creds.card.cvc,
+      this.user.email,
+    );
+
+    Data.DB.ref(`users/${this.user.uid}`).update({
+      customerId,
+      cardId,
+      subscriptionId,
+    });
+  }
+
+  async submitCard() {
+    let { cardId, customerId } = await Data
+      .DB
+      .ref(`users/${this.user.uid}`)
+      .once('value')
+      .then(snapshot => {
+        return snapshot.val();
+      }).catch(error => {
+        console.log(error);
       });
 
-    /*Data.DB.ref(`users/${this.user.uid}`).update({
-      customerId: customer.id,
-      tokenId: token.id
-    });*/
+    let { newCardId } = await StripeApi.updateAndSubscribe(
+      Creds.card.number,
+      Creds.card.month,
+      Creds.card.year,
+      Creds.card.cvc,
+      cardId,
+      customerId,
+    );
+
+    Data.DB.ref(`users/${this.user.uid}`).update({
+      cardId: newCardId,
+    });
   }
 
   render() {
-    //console.disableYellowBox = true;
-    console.ignoredYellowBox = ['Warning: "keyboardShouldPersistTaps"'];
+    console.disableYellowBox = true;
+    console.ignoredYellowBox = ['Warning: keyboardShouldPersistTaps'];
+
+    var backgroundColor = this.props.backgroundColor || Colors.primaryBackground;
 
     return (
       <View
-        style={styles.container}
+        style={[styles.container, {backgroundColor: this.props.backgroundColor}]}
       >
         <View style={{position: 'absolute', top: '18%'}}>
           {/*<Text style={styles.brand}>
@@ -71,13 +104,13 @@ export default class Payment extends Component {
           </View>
         </KeyboardAvoidingView>
         <View style={{position: 'absolute', top: '73%', width: 310}}>
-          <PrimaryButton  name={'Submit'} press={this.submitCardData.bind(this)} />
+          <PrimaryButton  name={'Submit'} press={this.submitCard.bind(this)} />
         </View>
         <View style={{position: 'absolute', top: '82%'}}>
           <TextButton
             size = {16}
             text = {'Back↵ '}
-            press = {this.props.comingFrom ? Actions.DashboardRoute : Actions.SignInRoute}
+            press = {this.props.backPress}
           />
         </View>
         <Spinner
@@ -100,6 +133,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.primaryBackground
   }
 });

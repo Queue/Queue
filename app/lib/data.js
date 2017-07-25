@@ -66,6 +66,7 @@ export default Data = {
         phoneNumber: phoneNumber,
         notes: '',
         createdAt: Date(),
+        removedAt: '',
         seatedAt: '',
         waitTime: 0,
         texted: false,

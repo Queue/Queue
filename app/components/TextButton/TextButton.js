@@ -7,7 +7,7 @@ import styles from './styles';
 import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
 
-export default TextButton = ({font, press, text, size}) => {
+export default TextButton = ({font, press, text, size, disable}) => {
 
   // Set font size defaults to 14
   styles.size = {
@@ -18,7 +18,8 @@ export default TextButton = ({font, press, text, size}) => {
   return (
     <TouchableHighlight
       onPress = {press}
-      underlayColor = {'transparent'}>
+      underlayColor = {'transparent'}
+    >
       <Text style = {[styles.textButton, styles.size]}>{text}</Text>
     </TouchableHighlight>
   );

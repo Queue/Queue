@@ -32,6 +32,7 @@ export default class History extends Component {
       [
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
+          this.props.dropdown.showDropdown('success', 'Success', `${item.name} removed from database`)
           Data.DB.ref(`queuers/${this.props.uid}/${item.key}`).remove();
         }}
       ]
@@ -46,6 +47,7 @@ export default class History extends Component {
       [
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
+          this.props.dropdown.showDropdown('success', 'Success', `${item.name} moved back to queue`)
           Data.DB.ref(`queuers/${this.props.uid}/${item.key}`).update({
             seated: false,
             removed: false
@@ -57,20 +59,25 @@ export default class History extends Component {
 
   // clear all removed and seated in the database
   clear() {
-    Alert.alert(
-      `Clear All`,
-      `Are you sure you want to clear and remove all queuers from the database?`,
-      [
-        {text: 'Cancel', style: 'cancel'},
-        {text: 'OK', onPress: () => {
-          let data = this.props.data;
-          for (let i = 0; i < data.length; i++) {
-            let key = data[i].key;
-            Data.DB.ref(`queuers/${this.props.uid}/${key}`).remove();
-          }
-        }}
-      ]
-    );
+    if (this.props.data.length) {
+      Alert.alert(
+        `Clear All`,
+        `Are you sure you want to clear and remove all queuers from the database?`,
+        [
+          {text: 'Cancel', style: 'cancel'},
+          {text: 'OK', onPress: () => {
+            let data = this.props.data;
+            for (let i = 0; i < data.length; i++) {
+              let key = data[i].key;
+              Data.DB.ref(`queuers/${this.props.uid}/${key}`).remove();
+            }
+            this.props.dropdown.showDropdown('success', 'Success', 'All queuers removed from database')
+          }}
+        ]
+      );
+    } else {
+      this.props.dropdown.showDropdown('error', 'Error', 'No queuers to remove');
+    }
   }
 
   renderItem({item, index}) {

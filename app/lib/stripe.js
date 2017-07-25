@@ -57,24 +57,41 @@ export default StripeApi = {
   },
 
   // create and subscribe credit card
-  createAndSubscribe: (number, month, year, cvc, email) => {
-    return client.createToken(number, month, year, cvc)
-      .then(token => {
-        return client.createCustomer(token.id, email).then(customer => {
-          return customer;
-        });
-      })
-      .then((customer, token) => {
-        return client.createSubscription(customer.id, 'queue').then(subscription => {
-          return {
-            customerId: customer.id,
-            tokenId: token.id,
-            subscriptionId: subscription.id
-          };
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
+  async createAndSubscribe(number, month, year, cvc, email) {
+    let token = await client.createToken(number, month, year, cvc);
+    let customer = await client.createCustomer(token.id, email);
+    let subscription = await client.createSubscription(customer.id, 'queue');
+
+    return {
+      cardId: token.card.id,
+      customerId: customer.id,
+      subscriptionId: subscription.id,
+    };
+  },
+
+  // destroy card -> create token -> update user
+  async updateAndSubscribe(number, month, year, cvc, cardId, custId) {
+    console.log(custId);
+    let destroy = await this.destroyCard(cardId, custId);
+    let token = await client.createToken(number, month, year, cvc);
+    let customer = client.addCardToCustomer(token.id, custId);
+
+    return {newCardId: token.card.id};
+  },
+
+  async destroyCard(cardId, custId) {
+    let destroyedCard = await fetch(`https://api.stripe.com/v1/customers/${custId}/sources/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${Creds.stripe.live.secret}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }).then(() => {
+      console.log('success - destroy')
+    }).catch(error => {
+      console.log(error);
+    });
+
+    return destroyedCard;
+  },
 };

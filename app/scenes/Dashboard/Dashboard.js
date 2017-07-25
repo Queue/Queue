@@ -25,11 +25,13 @@ import {
   QueuerPage,
   NavButton,
   Settings,
-  Dropdown
+  Dropdown,
 } from '../../components';
 
 // scenes
 import History from '../History';
+import Payment from '../Payment';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // grid system
@@ -136,6 +138,26 @@ export default class Dashboard extends Component {
       snap.forEach((child) => {
         let data = child.val();
         if (data.removed || data.seated) {
+          // remove queuer if its been seated for 8+ hours
+          if (data.seatedAt !== '') {
+            let now = new Date(),
+                seatedAt = new Date(data.seatedAt);
+            let hoursDiff = Math.floor(now - seatedAt) / 36e5;
+
+            if (hoursDiff >= 8) {
+              Data.DB.ref(`queuers/${this.user.uid}/${child.key}`).remove();
+            }
+          }
+          // remove queuer if its been seated for 8+ hours
+          if (data.removedAt !== '') {
+            let now = new Date(),
+                removedAt = new Date(data.removedAt);
+            let hoursDiff = Math.floor(now - removedAt) / 36e5;
+
+            if (hoursDiff >= 8) {
+              Data.DB.ref(`queuers/${this.user.uid}/${child.key}`).remove();
+            }
+          }
           filteredQueuerItems.push({
             ...data,
             key: child.key
@@ -213,7 +235,7 @@ export default class Dashboard extends Component {
           <InputModal
             label={'Phone Number (optional)'}
             buttonText={'Submit'}
-            onChangeText={(text) => {this.setState({phoneInput: text})}}
+            onChangeText={this.changePhoneInput.bind(this)}
             value={this.state.phoneInput}
             onPress={this.addQueuer.bind(this)} />
         );
@@ -221,7 +243,6 @@ export default class Dashboard extends Component {
 
       case 'ABOUT':
         // return text about Q
-        console.log(this.user.texts)
         return (
           <Text style={{color: 'white', fontSize: 35, lineHeight: 55, maxWidth: 600}}>
             Queue was created by Chris Wahlfeldt in Champaign IL. USA
@@ -232,6 +253,15 @@ export default class Dashboard extends Component {
         return (<Text>None</Text>);
         break;
     }
+  }
+
+  changePhoneInput(text) {
+    //if (isNaN(text)) return;
+
+    let phoneNum = text.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    let newNum = !phoneNum[2] ? phoneNum[1] : `(${phoneNum[1]}) ${phoneNum[2]}${phoneNum[3] ? '-' + phoneNum[3] : ''}`;
+
+    this.setState({phoneInput: newNum});
   }
 
   // checks name input in modal
@@ -289,6 +319,7 @@ export default class Dashboard extends Component {
             onChangeEmail={(text) => this.setState({emailInput: text})}
             onChangeOrg={(text) => this.setState({orgInput: text})}
             savePress={this.saveProfile.bind(this)}
+            paymentPress={() => this.setState({navVisible: "PAYMENT"})}
           />
         );
         break;
@@ -298,6 +329,14 @@ export default class Dashboard extends Component {
           <History
             data={this.state.filteredData}
             uid={this.user.uid}
+            dropdown={this.dropdown}
+          />
+        );
+
+      case 'PAYMENT':
+        return (
+          <Payment
+            backPress = {() => this.setState({navVisible: "SETTINGS"})}
           />
         );
 
@@ -452,7 +491,8 @@ export default class Dashboard extends Component {
         {text: 'OK', onPress: () => {
           Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
             removed: true,
-            selected: false
+            selected: false,
+            removedAt: Date(),
           });
           BackgroundTimer.setTimeout(() => {
             Data.DB.ref(`queuers/${this.user.uid}/${key}`).remove();
@@ -485,11 +525,9 @@ export default class Dashboard extends Component {
         {text: 'OK', onPress: () => {
           Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
             seated: true,
-            selected: false
+            selected: false,
+            seatedAt: Date(),
           });
-          BackgroundTimer.setTimeout(() => {
-            Data.DB.ref(`queuers/${this.user.uid}/${key}`).remove();
-          }, (3600000 * 8));
           if (key === this.state.selectedKey) {
             this.dropdown.showDropdown('success', 'Success', `${name} has been seated`);
             this.setState({
@@ -580,13 +618,16 @@ export default class Dashboard extends Component {
 
   // edits and saves to the databse as typeing for PHONE NUMBER
   changeAndSavePhone(text) {
-    if (isNaN(text)) {
-      return;
-    }
+    //if (isNaN(text)) return;
+
+    let phoneNum = text.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    let newNum = !phoneNum[2] ? phoneNum[1] : `(${phoneNum[1]}) ${phoneNum[2]}${phoneNum[3] ? '-' + phoneNum[3] : ''}`;
+
+    this.setState({editPhone: newNum});
+
     let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
-    this.setState({editPhone: text});
     Data.DB.ref(ref).update({
-      phoneNumber: text
+      phoneNumber: newNum,
     });
   }
 

@@ -47,7 +47,7 @@ export default class Queuer extends Component {
   // calculate wait time
   calculateWaitTime() {
     // cant go beyond 999
-    if (this.state.waitTime <= 999) {
+    if (this.state.waitTime < 999) {
       let createdAt = new Date(this.props.createdAt),
           now = new Date();
 
@@ -57,6 +57,7 @@ export default class Queuer extends Component {
       this.setState({waitTime: min});
     } else {
       // clear timer if above 999
+      this.setState({waitTime: 999});
       Timer.clearInterval(this, `waitTimer_${this.props._key}`);
     }
   }
