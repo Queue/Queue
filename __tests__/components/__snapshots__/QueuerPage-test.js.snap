@@ -1,11 +1,14 @@
-exports[`test renders correctly 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
 <View
   style={
     Object {
       "padding": 13,
       "width": "100%",
     }
-  }>
+  }
+>
   <RCTScrollView
     contentInset={
       Object {
@@ -19,11 +22,13 @@ exports[`test renders correctly 1`] = `
     keyboardDismissMode="interactive"
     onScroll={[Function]}
     scrollEventThrottle={0}
-    showsVerticalScrollIndicator={true}>
+    showsVerticalScrollIndicator={true}
+  >
     <View>
       <Text
         accessible={true}
         allowFontScaling={true}
+        disabled={false}
         ellipsizeMode="tail"
         style={
           Object {
@@ -32,15 +37,17 @@ exports[`test renders correctly 1`] = `
             "fontWeight": "100",
             "letterSpacing": 2,
           }
-        }>
-        <Name>
+        }
+      >
+        &lt;Name&gt;
       </Text>
       <View
         style={
           Object {
             "marginTop": 20,
           }
-        }>
+        }
+      >
         <View
           style={
             Object {
@@ -50,10 +57,12 @@ exports[`test renders correctly 1`] = `
               "marginTop": 8,
               "width": "100%",
             }
-          }>
+          }
+        >
           <Text
             accessible={true}
             allowFontScaling={true}
+            disabled={false}
             ellipsizeMode="tail"
             style={
               Object {
@@ -62,7 +71,8 @@ exports[`test renders correctly 1`] = `
                 "letterSpacing": 1,
                 "marginBottom": 2,
               }
-            }>
+            }
+          >
             Name
           </Text>
           <TextInput
@@ -76,7 +86,8 @@ exports[`test renders correctly 1`] = `
               }
             }
             type="text"
-            value={undefined} />
+            value={undefined}
+          />
         </View>
         <View
           style={
@@ -87,10 +98,12 @@ exports[`test renders correctly 1`] = `
               "marginTop": 8,
               "width": "100%",
             }
-          }>
+          }
+        >
           <Text
             accessible={true}
             allowFontScaling={true}
+            disabled={false}
             ellipsizeMode="tail"
             style={
               Object {
@@ -99,7 +112,8 @@ exports[`test renders correctly 1`] = `
                 "letterSpacing": 1,
                 "marginBottom": 2,
               }
-            }>
+            }
+          >
             Party Size
           </Text>
           <TextInput
@@ -113,7 +127,8 @@ exports[`test renders correctly 1`] = `
               }
             }
             type="text"
-            value={undefined} />
+            value={undefined}
+          />
         </View>
         <View
           style={
@@ -124,10 +139,12 @@ exports[`test renders correctly 1`] = `
               "marginTop": 8,
               "width": "100%",
             }
-          }>
+          }
+        >
           <Text
             accessible={true}
             allowFontScaling={true}
+            disabled={false}
             ellipsizeMode="tail"
             style={
               Object {
@@ -136,7 +153,8 @@ exports[`test renders correctly 1`] = `
                 "letterSpacing": 1,
                 "marginBottom": 2,
               }
-            }>
+            }
+          >
             Phone Number
           </Text>
           <TextInput
@@ -155,7 +173,8 @@ exports[`test renders correctly 1`] = `
               ]
             }
             type="number"
-            value={undefined} />
+            value={undefined}
+          />
         </View>
         <View
           style={
@@ -166,10 +185,12 @@ exports[`test renders correctly 1`] = `
               "marginTop": 8,
               "width": "100%",
             }
-          }>
+          }
+        >
           <Text
             accessible={true}
             allowFontScaling={true}
+            disabled={false}
             ellipsizeMode="tail"
             style={
               Object {
@@ -178,7 +199,8 @@ exports[`test renders correctly 1`] = `
                 "letterSpacing": 1,
                 "marginBottom": 2,
               }
-            }>
+            }
+          >
             Notes
           </Text>
           <TextInput
@@ -202,7 +224,8 @@ exports[`test renders correctly 1`] = `
               ]
             }
             type="textarea"
-            value={undefined} />
+            value={undefined}
+          />
         </View>
       </View>
       <View
@@ -210,7 +233,8 @@ exports[`test renders correctly 1`] = `
           Object {
             "marginTop": 25,
           }
-        }>
+        }
+      >
         <View
           style={
             Array [
@@ -224,7 +248,8 @@ exports[`test renders correctly 1`] = `
                 "justifyContent": "flex-start",
               },
             ]
-          }>
+          }
+        >
           <View
             onLayout={[Function]}
             style={
@@ -239,20 +264,24 @@ exports[`test renders correctly 1`] = `
                   "width": "100%",
                 },
               ]
-            }>
+            }
+          >
             <View
               style={
                 Object {
                   "width": "100%",
                 }
-              }>
+              }
+            >
               <View
                 accessibilityComponentType="button"
                 accessibilityLabel={undefined}
                 accessibilityTraits="button"
                 accessible={true}
+                collapsable={undefined}
                 hitSlop={undefined}
                 isTVSelectable={true}
+                nativeID={undefined}
                 onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -275,10 +304,12 @@ exports[`test renders correctly 1`] = `
                   }
                 }
                 testID={undefined}
-                tvParallaxProperties={undefined}>
+                tvParallaxProperties={undefined}
+              >
                 <Text
                   accessible={true}
                   allowFontScaling={true}
+                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -301,7 +332,8 @@ exports[`test renders correctly 1`] = `
                       ],
                       null,
                     ]
-                  }>
+                  }
+                >
                   Text
                 </Text>
               </View>
@@ -321,7 +353,8 @@ exports[`test renders correctly 1`] = `
                 "justifyContent": "flex-start",
               },
             ]
-          }>
+          }
+        >
           <View
             onLayout={[Function]}
             style={
@@ -336,20 +369,24 @@ exports[`test renders correctly 1`] = `
                   "width": "50%",
                 },
               ]
-            }>
+            }
+          >
             <View
               style={
                 Object {
                   "width": "100%",
                 }
-              }>
+              }
+            >
               <View
                 accessibilityComponentType="button"
                 accessibilityLabel={undefined}
                 accessibilityTraits="button"
                 accessible={true}
+                collapsable={undefined}
                 hitSlop={undefined}
                 isTVSelectable={true}
+                nativeID={undefined}
                 onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -372,10 +409,12 @@ exports[`test renders correctly 1`] = `
                   }
                 }
                 testID={undefined}
-                tvParallaxProperties={undefined}>
+                tvParallaxProperties={undefined}
+              >
                 <Text
                   accessible={true}
                   allowFontScaling={true}
+                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -398,7 +437,8 @@ exports[`test renders correctly 1`] = `
                       ],
                       null,
                     ]
-                  }>
+                  }
+                >
                   Seat
                 </Text>
               </View>
@@ -418,20 +458,24 @@ exports[`test renders correctly 1`] = `
                   "width": "50%",
                 },
               ]
-            }>
+            }
+          >
             <View
               style={
                 Object {
                   "width": "100%",
                 }
-              }>
+              }
+            >
               <View
                 accessibilityComponentType="button"
                 accessibilityLabel={undefined}
                 accessibilityTraits="button"
                 accessible={true}
+                collapsable={undefined}
                 hitSlop={undefined}
                 isTVSelectable={true}
+                nativeID={undefined}
                 onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -454,10 +498,12 @@ exports[`test renders correctly 1`] = `
                   }
                 }
                 testID={undefined}
-                tvParallaxProperties={undefined}>
+                tvParallaxProperties={undefined}
+              >
                 <Text
                   accessible={true}
                   allowFontScaling={true}
+                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -480,7 +526,8 @@ exports[`test renders correctly 1`] = `
                       ],
                       null,
                     ]
-                  }>
+                  }
+                >
                   Remove
                 </Text>
               </View>

@@ -1,11 +1,15 @@
-exports[`test renders correctly 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
 <View
   accessibilityComponentType="button"
   accessibilityLabel={undefined}
   accessibilityTraits="button"
   accessible={true}
+  collapsable={undefined}
   hitSlop={undefined}
   isTVSelectable={true}
+  nativeID={undefined}
   onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -28,10 +32,12 @@ exports[`test renders correctly 1`] = `
     }
   }
   testID={undefined}
-  tvParallaxProperties={undefined}>
+  tvParallaxProperties={undefined}
+>
   <Text
     accessible={true}
     allowFontScaling={true}
+    disabled={false}
     ellipsizeMode="tail"
     style={
       Array [
@@ -54,7 +60,8 @@ exports[`test renders correctly 1`] = `
         ],
         null,
       ]
-    }>
+    }
+  >
     Log In
   </Text>
 </View>

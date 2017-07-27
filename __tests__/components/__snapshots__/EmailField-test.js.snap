@@ -1,4 +1,6 @@
-exports[`test renders correctly 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
 <TextInput
   autoCapitalize="none"
   autoFocus={undefined}
@@ -23,5 +25,6 @@ exports[`test renders correctly 1`] = `
       },
     ]
   }
-  value={undefined} />
+  value={undefined}
+/>
 `;

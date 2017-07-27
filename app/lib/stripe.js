@@ -5,6 +5,7 @@ import { stripe } from '../lib/creds';
 import Creds from '../lib/creds';
 import moment from 'moment';
 import Stripe from 'react-native-stripe-api';
+import Common from '../lib/common';
 
 const apiKey = Creds.stripe.live.secret;
 const client = new Stripe(apiKey);
@@ -17,8 +18,8 @@ export default StripeApi = {
 
   // create and subscribe credit card @TODO remove this
   async createAndSubscribe(email) {
-    let customer = await this.createCustomer(email);
-    let subscription = await client.createSubscription(customer.id, 'queue');
+    const customer = await this.createCustomer(email);
+    const subscription = await client.createSubscription(customer.id, 'queue');
 
     return {
       customerId: customer.id,
@@ -28,15 +29,15 @@ export default StripeApi = {
 
   // destroy card -> create token -> update user @TODO remove this
   async updateAndSubscribe(number, month, year, cvc, cardId, custId) {
-    let destroy = await this.destroyCard(cardId, custId);
-    let token = await client.createToken(number, month, year, cvc);
-    let customer = client.addCardToCustomer(token.id, custId);
+    const destroy = await this.destroyCard(cardId, custId);
+    const token = await client.createToken(number, month, year, cvc);
+    const customer = client.addCardToCustomer(token.id, custId);
 
     return {newCardId: token.card.id};
   },
 
   async destroyCard(cardId, custId) {
-    let destroyedCard = await fetch(`https://api.stripe.com/v1/customers/${custId}/sources/${cardId}`, {
+    const destroyedCard = await fetch(`https://api.stripe.com/v1/customers/${custId}/sources/${cardId}`, {
       method: 'DELETE',
       headers,
     }).then((card) => {
@@ -50,7 +51,7 @@ export default StripeApi = {
   },
 
   async createCustomer(email) {
-    let customer = await fetch('https://api.stripe.com/v1/customers', {
+    const customer = await fetch('https://api.stripe.com/v1/customers', {
       method: 'POST',
       headers,
       body: `email=${email}`,
@@ -65,7 +66,7 @@ export default StripeApi = {
   },
 
   async getCustomer(customerId) {
-    let customer = await fetch(`https://api.stripe.com/v1/customers/${customerId}`, {
+    const customer = await fetch(`https://api.stripe.com/v1/customers/${customerId}`, {
       method: 'GET',
       headers,
     }).then(customer => {
@@ -78,7 +79,48 @@ export default StripeApi = {
     return customer;
   },
 
-  async createSubscription(customerId) {},
+  async createPlan(customerId) {
+    const body = Common.serialize({
+      id: `${customerId}_plan`,
+      amount: 100,
+      currency: 'usd',
+      interval: 'month',
+      name: `${customerId} Plan`,
+    });
+    const plan = await fetch('https://api.stripe.com/v1/plans', {
+      method: 'POST',
+      headers,
+      body,
+    }).then(plan => {
+      console.log('success - plan created');
+      return plan.json();
+    }).catch(error => {
+      console.log(error);
+    });
+
+    return plan;
+  },
+
+  async createSubscription(customerId) {
+    const body = Common.serialize({
+      customer: customerId,
+      plan: `${customerId}_plan`,
+      quantity: 60,
+      trial_period_days: 7,
+    });
+    const subscription = await fetch('https://api.stripe.com/v1/subscriptions', {
+      method: 'POST',
+      headers,
+      body,
+    }).then(subscription => {
+      console.log('success - new subscription');
+      return subscription.json();
+    }).catch(error => {
+      console.log(error);
+    });
+
+    return subscription;
+  },
 
   async addSubscription(subscriptionId) {},
 

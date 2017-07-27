@@ -23,7 +23,6 @@ export default class Navigation extends Component {
             key = {'SignInRoute'}
             component = {SignIn}
             hideNavBar = {true}
-            direction = {'leftToRight'}
           />
           <Scene
             key = {'SignUpRoute'}
@@ -40,7 +39,6 @@ export default class Navigation extends Component {
             component = {Dashboard}
             hideNavBar = {true}
             panHandlers={null}
-            direction = {'vertical'}
           />
           <Scene
             key = {'PaymentRoute'}
