@@ -8,44 +8,16 @@ import Stripe from 'react-native-stripe-api';
 
 const apiKey = Creds.stripe.live.secret;
 const client = new Stripe(apiKey);
+const headers = {
+  'Authorization': `Bearer ${apiKey}`,
+  'Content-Type': 'application/x-www-form-urlencoded',
+};
 
 export default StripeApi = {
 
-  // creates card
-  createCard: token => {
-    return fetch(`https://api.stripe.com/v1/customers/${customerId}/sources`, {
-      method: 'POST',
-      body: `source=${cardData}`,
-      headers: {
-        'Authorization': `Bearer ${Creds.stripe.test.secret}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).then(response => {
-      return response.json();
-    });
-  },
-
-  // creates token for credit card entry
-  createToken: cardData => {
-    return fetch(`https://api.stripe.com/v1/tokens`, {
-      method: 'POST',
-      body: `card[number]=${cardData.values.number}
-        &card[exp_month]=${cardData.values.expiry.split('/').pop()}
-        &card[exp_year]=${cardData.values.expiry.split('/').shift()}
-        &card[cvc]=${cardData.values.cvc}`,
-      headers: {
-        'Authorization': `Bearer ${Creds.stripe.test.secret}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).then(response => {
-      return response.json();
-    });
-  },
-
-  // create and subscribe credit card
+  // create and subscribe credit card @TODO remove this
   async createAndSubscribe(email) {
     let customer = await this.createCustomer(email);
-    console.log('customer');
     let subscription = await client.createSubscription(customer.id, 'queue');
 
     return {
@@ -54,9 +26,8 @@ export default StripeApi = {
     };
   },
 
-  // destroy card -> create token -> update user
+  // destroy card -> create token -> update user @TODO remove this
   async updateAndSubscribe(number, month, year, cvc, cardId, custId) {
-    console.log(custId);
     let destroy = await this.destroyCard(cardId, custId);
     let token = await client.createToken(number, month, year, cvc);
     let customer = client.addCardToCustomer(token.id, custId);
@@ -67,13 +38,10 @@ export default StripeApi = {
   async destroyCard(cardId, custId) {
     let destroyedCard = await fetch(`https://api.stripe.com/v1/customers/${custId}/sources/${cardId}`, {
       method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${Creds.stripe.live.secret}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers,
     }).then((card) => {
-      return card;
-      console.log('success - destroy')
+      console.log('success - destroyed source')
+      return card.json();
     }).catch(error => {
       console.log(error);
     });
@@ -84,14 +52,11 @@ export default StripeApi = {
   async createCustomer(email) {
     let customer = await fetch('https://api.stripe.com/v1/customers', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${Creds.stripe.live.secret}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers,
       body: `email=${email}`,
-    }).then((customer) => {
+    }).then(customer => {
       console.log('success - new cust');
-      return customer;
+      return customer.json();
     }).catch(error => {
       console.log(error);
     });
@@ -102,13 +67,10 @@ export default StripeApi = {
   async getCustomer(customerId) {
     let customer = await fetch(`https://api.stripe.com/v1/customers/${customerId}`, {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${Creds.stripe.live.secret}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers,
     }).then(customer => {
       console.log('success - new cust');
-      return customer;
+      return customer.json();
     }).catch(error => {
       console.log(error);
     });

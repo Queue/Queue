@@ -18,7 +18,10 @@ exports[`test renders correctly 1`] = `
       "borderColor": "#48C948",
       "borderRadius": 4,
       "borderWidth": 1,
-      "margin": 15,
+      "marginBottom": 5,
+      "marginLeft": 5,
+      "marginRight": 5,
+      "marginTop": 5,
       "opacity": 1,
       "overflow": "hidden",
       "padding": 8,
@@ -41,6 +44,7 @@ exports[`test renders correctly 1`] = `
         null,
         Array [
           Object {
+            "fontFamily": "Open Sans",
             "fontWeight": "500",
           },
           Object {

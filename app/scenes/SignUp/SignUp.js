@@ -29,18 +29,18 @@ export default class SignUp extends Component {
     };
   }
 
-  createUser() {
+  async createUser() {
     let email = this.state.emailText,
         password = this.state.passwordText;
 
     if (Common.validateEmail(email)) {
       if (password !== '' || password.length >= 8) {
-        Data.Auth.signUp(email, password).then(user => { // sign up the user
-          StripeApi.createAndSubscribe(user.email).then(customer => {
-            console.log(customer.customerId);
-          });
+        Data.Auth.signUp(email, password).then(async (user) => { // sign up the user
+          let customer = await StripeApi.createCustomer(user.email);
+          let subscription = await StripeApi.createSubscription(customer.id);
           Data.DB.ref(`users/${user.uid}`).set({
-            texts: 0
+            texts: 0,
+            customerId: customer.id,
           }).then(() => {
             Common.log('Success', 'User signed up.');
             Actions.DashboardRoute();

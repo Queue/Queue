@@ -39,7 +39,8 @@ exports[`test renders correctly 1`] = `
           "textAlign": "center",
         },
         Object {
-          "fontFamily": "Helvetica Neue",
+          "color": "#48C948",
+          "fontFamily": "Open Sans",
           "fontSize": 14,
         },
       ]

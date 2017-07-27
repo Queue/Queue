@@ -11,7 +11,7 @@ exports[`test renders correctly 1`] = `
         "alignItems": "center",
         "backgroundColor": "white",
         "borderRadius": 2,
-        "fontFamily": "Helvetica Neue",
+        "fontFamily": "Open Sans",
         "height": 40,
         "justifyContent": "center",
         "margin": 10,

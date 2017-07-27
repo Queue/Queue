@@ -1,5 +1,14 @@
 exports[`test renders correctly 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "borderBottomWidth": 1,
+      "borderColor": "#eaeaea",
+      "marginBottom": 8,
+      "marginTop": 8,
+      "width": "100%",
+    }
+  }>
   <Text
     accessible={true}
     allowFontScaling={true}
@@ -7,8 +16,9 @@ exports[`test renders correctly 1`] = `
     style={
       Object {
         "color": "grey",
+        "fontFamily": "Open Sans",
         "letterSpacing": 1,
-        "marginBottom": 5,
+        "marginBottom": 2,
       }
     }>
     Log In
@@ -18,9 +28,8 @@ exports[`test renders correctly 1`] = `
     onPress={[Function]}
     style={
       Object {
-        "borderColor": "#eaeaea",
-        "borderWidth": 1,
-        "height": 45,
+        "fontFamily": "Open Sans",
+        "height": 40,
         "paddingLeft": 15,
       }
     }

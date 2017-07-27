@@ -5,9 +5,8 @@ exports[`test renders correctly 1`] = `
       "alignItems": "center",
       "backgroundColor": "#eaeaea",
       "flex": 1,
-      "height": 1334,
       "justifyContent": "center",
-      "width": 750,
+      "width": "100%",
     }
   }>
   <View
@@ -23,7 +22,7 @@ exports[`test renders correctly 1`] = `
       style={
         Object {
           "color": "#48C948",
-          "fontFamily": "Helvetica Neue",
+          "fontFamily": "Josefin Sans",
           "fontSize": 80,
           "textAlign": "center",
         }
@@ -42,7 +41,7 @@ exports[`test renders correctly 1`] = `
             "alignItems": "center",
             "backgroundColor": "white",
             "borderRadius": 2,
-            "fontFamily": "Helvetica Neue",
+            "fontFamily": "Open Sans",
             "height": 40,
             "justifyContent": "center",
             "margin": 10,
@@ -68,7 +67,7 @@ exports[`test renders correctly 1`] = `
             "backgroundColor": "white",
             "borderRadius": 2,
             "color": "#48C948",
-            "fontFamily": "Helvetica Neue",
+            "fontFamily": "Open Sans",
             "height": 40,
             "justifyContent": "center",
             "margin": 10,
@@ -102,7 +101,7 @@ exports[`test renders correctly 1`] = `
               "backgroundColor": "transparent",
               "position": "absolute",
               "right": 20,
-              "top": 20,
+              "top": 15,
               "zIndex": 9999,
             },
           ]
@@ -111,14 +110,23 @@ exports[`test renders correctly 1`] = `
         tvParallaxProperties={undefined}>
         <Text
           accessible={true}
-          allowFontScaling={true}
+          allowFontScaling={false}
           ellipsizeMode="tail"
           style={
-            Object {
-              "color": "#48C948",
-            }
+            Array [
+              Object {
+                "color": "grey",
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Ionicons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+            ]
           }>
-          👁
+          
         </Text>
       </View>
     </View>
@@ -141,7 +149,10 @@ exports[`test renders correctly 1`] = `
           "borderColor": "#48C948",
           "borderRadius": 4,
           "borderWidth": 1,
-          "margin": 15,
+          "marginBottom": 5,
+          "marginLeft": 5,
+          "marginRight": 5,
+          "marginTop": 5,
           "opacity": 1,
           "overflow": "hidden",
           "padding": 8,
@@ -164,6 +175,7 @@ exports[`test renders correctly 1`] = `
             null,
             Array [
               Object {
+                "fontFamily": "Open Sans",
                 "fontWeight": "500",
               },
               Object {
@@ -217,7 +229,8 @@ exports[`test renders correctly 1`] = `
               "textAlign": "center",
             },
             Object {
-              "fontFamily": "Helvetica Neue",
+              "color": "#48C948",
+              "fontFamily": "Open Sans",
               "fontSize": 16,
             },
           ]
@@ -265,7 +278,8 @@ exports[`test renders correctly 1`] = `
               "textAlign": "center",
             },
             Object {
-              "fontFamily": "Helvetica Neue",
+              "color": "#48C948",
+              "fontFamily": "Open Sans",
               "fontSize": 12,
             },
           ]
