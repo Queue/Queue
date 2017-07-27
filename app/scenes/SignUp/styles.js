@@ -12,7 +12,7 @@ export default styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: width,
+    width: '100%',
     height: height,
     backgroundColor: Colors.primaryBackground
   },

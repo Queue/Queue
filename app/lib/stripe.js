@@ -11,20 +11,6 @@ const client = new Stripe(apiKey);
 
 export default StripeApi = {
 
-  // creates a new customer
-  createCustomer: user => {
-    return fetch('https://api.stripe.com/v1/customers', {
-      method: 'POST',
-      body: `email=${user.email}`,
-      headers: {
-        'Authorization': `Bearer ${Creds.stripe.test.secret}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).then(response => {
-      return response.json();
-    });
-  },
-
   // creates card
   createCard: token => {
     return fetch(`https://api.stripe.com/v1/customers/${customerId}/sources`, {
@@ -57,13 +43,12 @@ export default StripeApi = {
   },
 
   // create and subscribe credit card
-  async createAndSubscribe(number, month, year, cvc, email) {
-    let token = await client.createToken(number, month, year, cvc);
-    let customer = await client.createCustomer(token.id, email);
+  async createAndSubscribe(email) {
+    let customer = await this.createCustomer(email);
+    console.log('customer');
     let subscription = await client.createSubscription(customer.id, 'queue');
 
     return {
-      cardId: token.card.id,
       customerId: customer.id,
       subscriptionId: subscription.id,
     };
@@ -86,7 +71,8 @@ export default StripeApi = {
         'Authorization': `Bearer ${Creds.stripe.live.secret}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-    }).then(() => {
+    }).then((card) => {
+      return card;
       console.log('success - destroy')
     }).catch(error => {
       console.log(error);
@@ -94,4 +80,50 @@ export default StripeApi = {
 
     return destroyedCard;
   },
+
+  async createCustomer(email) {
+    let customer = await fetch('https://api.stripe.com/v1/customers', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${Creds.stripe.live.secret}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `email=${email}`,
+    }).then((customer) => {
+      console.log('success - new cust');
+      return customer;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    return customer;
+  },
+
+  async getCustomer(customerId) {
+    let customer = await fetch(`https://api.stripe.com/v1/customers/${customerId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${Creds.stripe.live.secret}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }).then(customer => {
+      console.log('success - new cust');
+      return customer;
+    }).catch(error => {
+      console.log(error);
+    });
+
+    return customer;
+  },
+
+  async createSubscription(customerId) {},
+
+  async addSubscription(subscriptionId) {},
+
+  async updateSubscription(subscriptionId) {},
+
+  async createSource(source) {},
+
+  async addSource(customerId) {},
+
 };

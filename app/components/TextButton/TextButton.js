@@ -7,12 +7,13 @@ import styles from './styles';
 import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
 
-export default TextButton = ({font, press, text, size, disable}) => {
+export default TextButton = ({color, font, press, text, size, disable}) => {
 
   // Set font size defaults to 14
   styles.size = {
     fontSize: size,
-    fontFamily: font
+    fontFamily: font,
+    color: color
   }
 
   return (
@@ -35,5 +36,6 @@ TextButton.propTypes = {
 TextButton.defaultProps = {
   text: 'Add Text',
   size: 14,
-  font: Fonts.content
+  font: Fonts.content,
+  color: Colors.primaryForeground,
 }

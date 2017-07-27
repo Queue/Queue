@@ -88,7 +88,7 @@ export default class SignIn extends Component {
           />
           <TextButton
             text = {'Dont have an account?'}
-            press = {Actions.SignUpRoute}
+            press = {Actions.InfoRoute}
             size = {16}
           />
           <TextButton

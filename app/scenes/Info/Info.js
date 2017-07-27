@@ -1,7 +1,7 @@
 // Info component
 
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, processColor } from 'react-native';
 import Colors from '../../lib/colors';
 import { Column as Col, Row } from 'react-native-responsive-grid';
 import { PrimaryButton, TextButton, Dropdown } from '../../components';
@@ -19,12 +19,25 @@ export default class Info extends Component {
 
   openTerms() {
     this.setState({seenTerms: true});
-    Browser.open('https://google.com/');
+    Browser.open('https://queue.github.io/terms/', {
+      showActionButton: false,
+      showDoneButton: true,
+      doneButtonTitle: 'Accept',
+      buttonTintColor: processColor(Colors.success),
+    });
+  }
+
+  openAbout() {
+    Browser.open('https://queue.github.io', {
+      showActionButton: false,
+      showDoneButton: true,
+      doneButtonTitle: 'Done',
+    });
   }
 
   goToDashboard() {
     if (this.state.seenTerms) {
-      Actions.DashboardRoute();
+      Actions.SignUpRoute();
     } else {
       this.dropdown.showDropdown('error', 'Error', 'View the terms and conditions by clicking the link.');
     }
@@ -34,7 +47,13 @@ export default class Info extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.info}>
-          <Text style={styles.text}>{'Thank you for signing up! You have created an account and started the 7 day trial. Here is some boring terms and conditions to go over prior to using the app. Fun stuff!'}</Text>
+          <Text style={styles.text}>{'Before you sign up I would like you to know what your getting into. Queue allows you to use the app for 7 days prior to starting a subscription. After 7 days you will be promted to start a subscription with us. The bill is $60 + NUMBER OF TEXTS SENT per month. This allows you to save money on slower evenings yet continue to get great service without extra costs for unused texts sent from this app.'}</Text>
+          <TextButton
+            text={'About the App'}
+            size = {16}
+            color = {Colors.blue0}
+            press={this.openAbout.bind(this)}
+          />
           <TextButton
             text={'Terms and Conditions'}
             size = {16}
@@ -46,7 +65,7 @@ export default class Info extends Component {
                 <PrimaryButton
                   name={'Decline'}
                   buttonColor={'grey'}
-                  press={this.props.text}
+                  press={Actions.SignInRoute}
                 />
               </View>
             </Col>
@@ -82,7 +101,6 @@ const styles = StyleSheet.create({
     width: 400,
   },
   text: {
-    textAlign: 'center',
     width: 400,
     fontSize: 20,
     color: 'grey',

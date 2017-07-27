@@ -6,7 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "sim": "react-native run-ios --simulator 'iPad Air 2'",
-    "log": "react-native log-ios"
+    "log": "yarn react-devtools"
   },
   "dependencies": {
     "base-64": "^0.1.0",

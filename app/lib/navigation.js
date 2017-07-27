@@ -19,6 +19,7 @@ export default class Navigation extends Component {
       <Router duration={0}>
         <Scene key={'Root'} animation={'fade'}>
           <Scene
+            initial = {true}
             key = {'SignInRoute'}
             component = {SignIn}
             hideNavBar = {true}
@@ -47,7 +48,6 @@ export default class Navigation extends Component {
             hideNavBar = {true}
           />
           <Scene
-            initial = {true}
             key = {'InfoRoute'}
             component = {Info}
             hideNavBar = {true}

@@ -15,6 +15,7 @@ import Data from '../../lib/data';
 import Colors from '../../lib/colors';
 import { Actions } from 'react-native-router-flux'
 import Common from '../../lib/common';
+import StripeApi from '../../lib/stripe';
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -35,11 +36,14 @@ export default class SignUp extends Component {
     if (Common.validateEmail(email)) {
       if (password !== '' || password.length >= 8) {
         Data.Auth.signUp(email, password).then(user => { // sign up the user
+          StripeApi.createAndSubscribe(user.email).then(customer => {
+            console.log(customer.customerId);
+          });
           Data.DB.ref(`users/${user.uid}`).set({
             texts: 0
           }).then(() => {
             Common.log('Success', 'User signed up.');
-            Actions.InfoRoute();
+            Actions.DashboardRoute();
             Common.dismissKeyboard();
           });
         }, (error) => {
