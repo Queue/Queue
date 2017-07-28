@@ -50,12 +50,16 @@ export default Common = {
     Reactotron.log(message);
   },
 
-  serialize(obj) {
-    let str = [];
-    for(let p in obj)
+  serialize(obj, prefix) {
+    let str = [], p;
+    for(p in obj) {
       if (obj.hasOwnProperty(p)) {
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        let k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+        str.push((v !== null && typeof v === "object") ?
+          this.serialize(v, k) :
+          encodeURIComponent(k) + "=" + encodeURIComponent(v));
       }
+    }
     return str.join("&");
   },
 

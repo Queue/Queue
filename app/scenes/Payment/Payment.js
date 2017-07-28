@@ -36,16 +36,6 @@ export default class Payment extends Component {
   }
 
   async submitCardInit() {
-    //let { number, expiry, cvc } = this.state.cardData.values;
-
-    let { customerId, cardId, subscriptionId } = await StripeApi.createAndSubscribe(
-      Creds.card.number,
-      Creds.card.month,
-      Creds.card.year,
-      Creds.card.cvc,
-      this.user.email,
-    );
-
     Data.DB.ref(`users/${this.user.uid}`).update({
       customerId,
       cardId,

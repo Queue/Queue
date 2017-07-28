@@ -36,11 +36,20 @@ export default class SignUp extends Component {
     if (Common.validateEmail(email)) {
       if (password !== '' || password.length >= 8) {
         Data.Auth.signUp(email, password).then(async (user) => { // sign up the user
+
           let customer = await StripeApi.createCustomer(user.email);
+          let plan = await StripeApi.createPlan(customer.id);
           let subscription = await StripeApi.createSubscription(customer.id);
+
           Data.DB.ref(`users/${user.uid}`).set({
             texts: 0,
+            amount: 0,
             customerId: customer.id,
+            subscriptionId: subscription.id,
+            subscriptionStatus: subscription.status,
+            subscriptionTrialStart: subscription.trial_start,
+            subscriptionTrialEnd: subscription.trial_end,
+            subscriptionQuantity: subscription.quantity,
           }).then(() => {
             Common.log('Success', 'User signed up.');
             Actions.DashboardRoute();

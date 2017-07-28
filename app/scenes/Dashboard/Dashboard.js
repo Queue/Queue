@@ -643,7 +643,7 @@ export default class Dashboard extends Component {
   // render the entire dashboard
   render() {
     return (
-      <Row fullHeight>
+      <Row fullHeight style={{backgroundColor: 'white'}}>
 
         <Spinner
           visible={this.state.spinner}
