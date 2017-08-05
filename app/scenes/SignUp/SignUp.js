@@ -43,7 +43,7 @@ export default class SignUp extends Component {
 
           Data.DB.ref(`users/${user.uid}`).set({
             texts: 0,
-            amount: 0,
+            amount: subscription.quantity,
             customerId: customer.id,
             subscriptionId: subscription.id,
             subscriptionStatus: subscription.status,

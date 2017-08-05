@@ -41,7 +41,19 @@ export default Data = {
     // Reset pass email method
     resetPassEmail(email) {
       return Firebase.auth().sendPasswordResetEmail(emailAddress);
-    }
+    },
+
+    deleteUser() {
+      return Firebase.auth().currentUser.delete();
+    },
+
+    reAuth(cred) {
+      return Firebase.auth().currentUser.reauthenticateWithCredential(cred);
+    },
+
+    authCred(email, password) {
+      return firebase.auth.EmailAuthProvider.credential(email, password);
+    },
 
   },
 

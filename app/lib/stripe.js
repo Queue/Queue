@@ -16,18 +16,6 @@ const headers = {
 
 export default StripeApi = {
 
-  async destroyCard(cardId, custId) {
-    return await fetch(`https://api.stripe.com/v1/customers/${custId}/sources/${cardId}`, {
-      method: 'DELETE',
-      headers,
-    }).then((card) => {
-      console.log('success - destroyed source')
-      return card.json();
-    }).catch(error => {
-      console.log(error);
-    });
-  },
-
   async createCustomer(email) {
     return await fetch('https://api.stripe.com/v1/customers', {
       method: 'POST',
@@ -37,7 +25,7 @@ export default StripeApi = {
       console.log('success - new cust');
       return customer.json();
     }).catch(error => {
-      console.log(error);
+      console.error(error);
     });
   },
 
@@ -49,7 +37,19 @@ export default StripeApi = {
       console.log(`success - GET customer`);
       return customer.json();
     }).catch(error => {
-      console.log(error);
+      console.error(error);
+    });
+  },
+
+  async destroyCustomer(customerId) {
+    return await fetch(`https://api.stripe.com/v1/customers/${customerId}`, {
+      method: 'DELETE',
+      headers,
+    }).then(customer => {
+      console.log('success - DESTROYED customer');
+      return customer.json();
+    }).catch(error => {
+      console.error(error);
     });
   },
 
@@ -67,10 +67,22 @@ export default StripeApi = {
       headers,
       body,
     }).then(plan => {
-      console.log('success - plan created');
+      console.log('success - CREATED plan');
       return plan.json();
     }).catch(error => {
-      console.log(error);
+      console.error(error);
+    });
+  },
+
+  async destroyPlan(customerId) {
+    return await fetch(`https://api.stripe.com/v1/plans/${customerId}_plan`, {
+      method: 'DELETE',
+      headers,
+    }).then(plan => {
+      console.log('success - DESTROYED plan')
+      return plan.json();
+    }).catch(error => {
+      console.error(error);
     });
   },
 
@@ -89,7 +101,7 @@ export default StripeApi = {
       console.log('success - new subscription');
       return subscription.json();
     }).catch(error => {
-      console.log(error);
+      console.error(error);
     });
   },
 
@@ -103,7 +115,7 @@ export default StripeApi = {
       console.log('success - UPDATED subscription');
       return subscription.json();
     }).catch(error => {
-      console.log(error);
+      console.error(error);
     });
   },
 
@@ -115,7 +127,19 @@ export default StripeApi = {
       console.log('success - GET subscription');
       return subscription.json();
     }).catch(error => {
-      console.log(error);
+      console.error(error);
+    });
+  },
+
+  async destroySubscription(subscriptionId) {
+    return await fetch(`https://api.stripe.com/v1/subscriptions/${subscriptionId}`, {
+      method: 'DELETE',
+      headers,
+    }).then(subscription => {
+      console.log('success - DESTOYED subscription');
+      return subscription.json();
+    }).catch(error => {
+      console.error(error);
     });
   },
 
@@ -129,7 +153,6 @@ export default StripeApi = {
         cvc,
       },
     });
-    console.log(body);
     return await fetch(`https://api.stripe.com/v1/customers/${customerId}/sources`, {
       method: 'POST',
       headers,
@@ -138,7 +161,19 @@ export default StripeApi = {
       console.log('success - CREATED card');
       return card.json();
     }).catch(error => {
-      console.log(error);
+      console.error(error);
+    });
+  },
+
+  async destroyCard(cardId, custId) {
+    return await fetch(`https://api.stripe.com/v1/customers/${custId}/sources/${cardId}`, {
+      method: 'DELETE',
+      headers,
+    }).then((card) => {
+      console.log('success - destroyed source')
+      return card.json();
+    }).catch(error => {
+      console.error(error);
     });
   },
 

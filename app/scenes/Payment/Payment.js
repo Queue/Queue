@@ -100,7 +100,7 @@ export default class Payment extends Component {
           <TextButton
             size = {16}
             text = {'Back↵ '}
-            press = {this.props.backPress}
+            press = {this.props.backPress || Actions.pop}
           />
         </View>
         <Spinner

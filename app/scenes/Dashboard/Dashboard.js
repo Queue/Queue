@@ -62,6 +62,7 @@ import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
 import styles from './styles';
 import Twilio from '../../lib/twilio';
+import moment from 'moment';
 // #}
 
 export default class Dashboard extends Component {
@@ -82,6 +83,7 @@ export default class Dashboard extends Component {
       selectedKey: '', // the selected queuers key
       loaded: false,
       textsSent: 0,
+      amountThisPeriod: 0,
 
       // fields
       nameInput: '', // name input
@@ -93,6 +95,7 @@ export default class Dashboard extends Component {
       editNotes: '', // editable notes for the queuer page text field
       emailInput: '', // email input
       orgInput: '', // organization input
+      passInput: '',
 
       // visual
       spinner: true, // determines loading spinner
@@ -107,7 +110,7 @@ export default class Dashboard extends Component {
     // wait for user data
     Data.Auth.authChange((user) => {
       if (user) {
-        this.user = Data.Auth.user();
+        this.user = user;
         this.queuerItemsRef = Data.DB.ref(`queuers/${Data.Auth.user().uid}`);
         this.queuerItemsRef.orderByChild('createdAt');
         this.listenForItems(this.queuerItemsRef);
@@ -116,8 +119,13 @@ export default class Dashboard extends Component {
           orgInput: Data.Auth.user().displayName,
           loaded: true
         });
-        Data.DB.ref(`users/${this.user.uid}`).once('value').then(snap => {
-          this.setState({textsSent: snap.val().texts});
+        Data.DB.ref(`users/${user.uid}`).once('value').then(snap => {
+          console.log(snap.val());
+          const texts = snap.val().texts ? snap.val().texts : 0;
+          const status = snap.val().status;
+          const trialEnd = snap.val().subscriptionTrialEnd;
+          const amount = status === 'active' ? Math.round((texts * 0.0075) + 60) : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
+          this.setState({textsSent: texts, amountThisPeriod: amount});
         });
       } else {
         console.log('Not logged in');
@@ -249,6 +257,21 @@ export default class Dashboard extends Component {
           </Text>
         );
 
+      case 'AUTH':
+        // re auth the user
+        return (
+          <InputModal
+            label={'Enter Password'}
+            autoCapitalize={'none'}
+            buttonText={'Delete Account'}
+            color={Colors.error}
+            onChangeText={(text) => this.setState({passInput: text})}
+            value={this.state.passInput}
+            onPress={this.deleteUser.bind(this)}
+            secureTextEntry={true}
+          />
+        );
+
       default:
         return (<Text>None</Text>);
         break;
@@ -315,11 +338,12 @@ export default class Dashboard extends Component {
             user={this.user}
             email={this.state.emailInput}
             organization={this.state.orgInput}
-            textsSent={this.state.textsSent}
+            amount={this.state.amountThisPeriod}
             onChangeEmail={(text) => this.setState({emailInput: text})}
             onChangeOrg={(text) => this.setState({orgInput: text})}
             savePress={this.saveProfile.bind(this)}
             paymentPress={() => this.setState({navVisible: "PAYMENT"})}
+            deletePress = {() => this.setState({modalItemVisible: 'AUTH', modalVisible: true})}
           />
         );
         break;
@@ -344,6 +368,37 @@ export default class Dashboard extends Component {
         return (<Text>No nav item</Text>)
         break;
     }
+  }
+
+  deleteUser() {
+    const cred = Data.Auth.authCred(this.user.email, this.state.passInput);
+    Data.Auth.reAuth(cred).then(async () => {
+      this.setState({modalVisible: false, spinner: true});
+      const customer = await Data.DB.ref(`users/${this.user.uid}`).once('value').then(snap => {
+        return {
+          customerId: snap.val().customerId,
+          subscriptionId: snap.val().subscriptionId,
+        };
+      });
+
+      // remove user and delete any trace of their existence
+      try {
+        await StripeApi.destroySubscription(customer.subscriptionId)
+        await StripeApi.destroyPlan(customer.customerId);
+        await StripeApi.destroyCustomer(customer.customerId);
+        await Data.DB.delete(`users/${this.user.uid}`);
+        await Data.DB.delete(`queuers/${this.user.uid}`);
+        await Data.Auth.deleteUser();
+        this.setState({modalVisible: false, spinner: false});
+        Actions.SignInRoute();
+      } catch (error) {
+        return this.dropdown.showDropdown('error', 'Error', error.message);
+      }
+
+    }).catch((error) => {
+      this.setState({passInput: '', modalVisible: false});
+      this.dropdown.showDropdown('error', 'Error', error.message);
+    });
   }
 
   // save user profile
@@ -545,8 +600,18 @@ export default class Dashboard extends Component {
 
   incrementTexts() {
     this.setState({textsSent: this.state.textsSent + 1});
-    Data.DB.ref(`users/${this.user.uid}`).set({
+    Data.DB.ref(`users/${this.user.uid}`).once('value').then(async snap => {
+      const subscriptionId = snap.val().subscriptionId;
+      const status = snap.val().status;
+      const texts = snap.val().texts;
+      const quantity = status === 'active' ? Math.round((texts * 0.0075) + 60) : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
+      const subscription = await StripeApi.updateSubscription(subscriptionId, { quantity });
+      this.setState({amountThisPeriod: quantity});
+    });
+    Data.DB.ref(`users/${this.user.uid}`).update({
       texts: this.state.textsSent
+    }).then(user => {
+      console.log(user);
     }).catch(error => {
       console.log(error)
     });

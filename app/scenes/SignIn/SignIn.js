@@ -16,6 +16,7 @@ import {
 } from '../../components';
 import Common from '../../lib/common';
 import Data from '../../lib/data';
+import StripeApi from '../../lib/stripe';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Actions } from 'react-native-router-flux';
 
@@ -49,10 +50,25 @@ export default class SignIn extends Component {
       });
 
      // sign in user
-      Data.Auth.signIn(email, password).then(() => {
-        Common.dismissKeyboard();
-        Actions.DashboardRoute();
-      }, (error) => {
+      Data.Auth.signIn(email, password).then(async user => {
+        const customerId = await Data.DB.ref(`users/${user.uid}`).once('value').then(snap => {
+          return snap.val().customerId;
+        }).catch(error => {
+          console.log(error);
+          this.dropdown.showDropdown('error', 'Error', error.message);
+        });
+        const customer = await StripeApi.getCustomer(customerId);
+        const status = customer.subscriptions.data[0].status;
+        const hasSource = customer.sources.total_count;
+        if (status === 'trialing' || (status === 'active' && hasSource)) {
+          Common.dismissKeyboard();
+          Actions.DashboardRoute();
+        } else {
+          Common.dismissKeyboard();
+          Actions.PaymentRoute();
+        }
+      }).catch(error => {
+        this.dropdown.showDropdown('error', 'Error', error.message);
       });
     } else {
       this.dropdown.showDropdown('error', 'Error', 'Check your email and password')

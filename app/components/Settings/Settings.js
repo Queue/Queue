@@ -28,7 +28,7 @@ export default class Settings extends Component {
           Settings
         </Text>
         <Text style={{fontSize: 16, fontFamily: Fonts.content}}>
-          Texts sent this month: {this.props.textsSent}
+          Amount due this period: ${this.props.amount}
         </Text>
         <View style={{marginTop: 10}}>
           <Field
@@ -56,6 +56,13 @@ export default class Settings extends Component {
                 name={'Update Payment'}
                 buttonColor={Colors.info}
                 press={this.props.paymentPress}
+              />
+            </View>
+            <View style={{width: '100%'}}>
+              <PrimaryButton
+                name={'Delete Account'}
+                buttonColor={Colors.error}
+                press={this.props.deletePress}
               />
             </View>
           </View>

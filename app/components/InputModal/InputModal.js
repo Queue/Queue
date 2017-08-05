@@ -33,13 +33,15 @@ export default class ModalExample extends Component {
         ref={component => this._root = component}>
         <Text style={styles.label}>{this.props.label}</Text>
         <TextInput
-          autoCapitalize={'words'}
+          {...this.props}
+          autoCapitalize={this.props.autoCapitalize || 'words'}
           autoFocus={true}
           style={styles.inputField}
           onChangeText={this.props.onChangeText}
-          value={this.props.value} />
+          value={this.props.value}
+        />
         <TouchableHighlight
-          style={styles.button}
+          style={[styles.button, {backgroundColor: this.props.color || Colors.info}]}
           underlayColor={Colors.blue0}
           onPress={this.props.onPress}>
           <Text style={styles.buttonText}>

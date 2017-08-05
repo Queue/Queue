@@ -17,7 +17,7 @@ export default class Navigation extends Component {
    render() {
     return (
       <Router duration={0}>
-        <Scene key={'Root'} animation={'fade'}>
+        <Scene key={'Root'} duration={0} animation={'fade'}>
           <Scene
             initial = {true}
             key = {'SignInRoute'}

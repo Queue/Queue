@@ -31,8 +31,6 @@ export default class PasswordField extends Component {
         textColor = this.props.textColor,
         hide = this.state.hide;
 
-    //<Text style={styles.showText()}>{eyeOfRa}</Text>
-
     return (
       <View>
         <TextInput
