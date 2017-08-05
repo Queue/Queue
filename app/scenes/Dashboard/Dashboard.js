@@ -114,18 +114,22 @@ export default class Dashboard extends Component {
         this.queuerItemsRef = Data.DB.ref(`queuers/${Data.Auth.user().uid}`);
         this.queuerItemsRef.orderByChild('createdAt');
         this.listenForItems(this.queuerItemsRef);
-        this.setState({
-          emailInput: Data.Auth.user().email,
-          orgInput: Data.Auth.user().displayName,
-          loaded: true
-        });
         Data.DB.ref(`users/${user.uid}`).once('value').then(snap => {
-          console.log(snap.val());
-          const texts = snap.val().texts ? snap.val().texts : 0;
-          const status = snap.val().status;
-          const trialEnd = snap.val().subscriptionTrialEnd;
-          const amount = status === 'active' ? Math.round((texts * 0.0075) + 60) : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
-          this.setState({textsSent: texts, amountThisPeriod: amount});
+          if (snap) {
+            const texts = snap.val().texts;
+            const status = snap.val().status;
+            const trialEnd = snap.val().subscriptionTrialEnd;
+            const amount = status === 'active' ? Math.round((texts * 0.0075) + 60) : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
+            this.setState({
+              textsSent: texts,
+              amountThisPeriod: amount,
+              emailInput: Data.Auth.user().email,
+              orgInput: Data.Auth.user().displayName,
+              loaded: true,
+            });
+          } else {
+            console.warn('wtf');
+          }
         });
       } else {
         console.log('Not logged in');

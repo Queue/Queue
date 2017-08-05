@@ -52,8 +52,8 @@ export default class SignUp extends Component {
             subscriptionQuantity: subscription.quantity,
           }).then(() => {
             Common.log('Success', 'User signed up.');
-            Actions.DashboardRoute();
             Common.dismissKeyboard();
+            Actions.DashboardRoute();
           });
         }, (error) => {
           Common.error(error.code, error.message);
