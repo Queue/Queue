@@ -3,8 +3,8 @@
 
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableHighlight } from 'react-native';
-import { TextButton, PrimaryButton } from '../../components';
-import { CreditCardInput, LiteCreditCardInput } from 'react-native-credit-card-input-fullpage';
+import { TextButton, PrimaryButton, Dropdown } from '../../components';
+import { CreditCardInput } from 'react-native-credit-card-input-fullpage';
 import Spinner from 'react-native-loading-spinner-overlay';
 import moment from 'moment';
 
@@ -35,37 +35,68 @@ export default class Payment extends Component {
     });
   }
 
-  async submitCardInit() {
-    Data.DB.ref(`users/${this.user.uid}`).update({
-      customerId,
-      cardId,
-      subscriptionId,
-    });
+  componentWillUnmount() {
+    if (this.props.locked) {
+      Data.Auth.signOut();
+    }
   }
 
   async submitCard() {
-    let { cardId, customerId } = await Data
-      .DB
-      .ref(`users/${this.user.uid}`)
-      .once('value')
-      .then(snapshot => {
-        return snapshot.val();
-      }).catch(error => {
-        console.log(error);
+    if (this.state.cardData.valid) {
+
+      const { number, expiry, cvc } = this.state.cardData.values;
+      const year = expiry.split('/').pop();
+      const month = expiry.split('/').shift();
+
+      const { cardId, customerId } = await Data.DB
+        .ref(`users/${this.user.uid}`)
+        .once('value')
+        .then(snapshot => {
+          return snapshot.val();
+        }).catch(error => {
+          console.log(error);
+        });
+
+      console.log(cardId);
+
+      if (typeof cardId === 'string') {
+        await StripeApi.destroyCard(cardId, customerId);
+      }
+
+      const { id } = await StripeApi.createCard(customerId, number, month, year, cvc);
+
+      Data.DB.ref(`users/${this.user.uid}`).update({
+        cardId: id,
+      }).then(() => {
+        this.ccinput.setValues({
+          number: '',
+          expiry: '',
+          cvc: '',
+        });
+        if (this.props.locked) {
+          this.dropdown.showDropdown('success', 'Success', 'Added card to account');
+          Actions.DashboardRoute();
+        } else {
+          this.props.dropdown.showDropdown('success', 'Success', 'Added card to account');
+        }
       });
 
-    let { newCardId } = await StripeApi.updateAndSubscribe(
-      Creds.card.number,
-      Creds.card.month,
-      Creds.card.year,
-      Creds.card.cvc,
-      cardId,
-      customerId,
-    );
+    } else {
+      if (this.props.locked) {
+        this.dropdown.showDropdown('error', 'Error', 'Card is invalid');
+      } else {
+        this.props.dropdown.showDropdown('error', 'Error', 'Card is invalid');
+      }
+    }
+  }
 
-    Data.DB.ref(`users/${this.user.uid}`).update({
-      cardId: newCardId,
-    });
+  backPress() {
+    if (this.props.locked) {
+      Data.Auth.signOut();
+      Actions.SignInRoute({locked: true});
+    } else {
+      this.props.backPress();
+    }
   }
 
   render() {
@@ -88,6 +119,7 @@ export default class Payment extends Component {
         >
           <View style={{maxWidth: 310}}>
             <CreditCardInput
+              ref={ccinput => {this.ccinput = ccinput}}
               inputStyle={{fontFamily: Fonts.content}}
               onChange={form => {this.setState({cardData: form})}}
             />
@@ -100,12 +132,19 @@ export default class Payment extends Component {
           <TextButton
             size = {16}
             text = {'Back↵ '}
-            press = {this.props.backPress || Actions.pop}
+            press = {this.backPress.bind(this)}
           />
         </View>
+
         <Spinner
           visible={this.state.spinner}
         />
+
+        <Dropdown
+          ref={ref => this.dropdown = ref}
+          speed={500}
+        />
+
       </View>
     );
   }
@@ -119,7 +158,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: -100,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

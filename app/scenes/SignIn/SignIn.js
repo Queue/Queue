@@ -26,14 +26,23 @@ export default class SignIn extends Component {
 
     this.state = {
       emailText: '',
-      passwordText: ''
+      passwordText: '',
+      locked: false,
     };
   }
 
   componentDidMount() {
     Data.Auth.authChange((user) => {
       if (user) {
-        Actions.DashboardRoute();
+        Data.DB.ref(`users/${user.uid}`).once('value').then(snap => {
+          const status = snap.val().status
+          const hasSource = snap.val().hasSource;
+          if (status === 'trialing' || (status === 'active' && hasSource)) {
+            Actions.DashboardRoute();
+          } else {
+            Actions.PaymentRoute({locked: true});
+          }
+        });
       }
     });
   }
@@ -65,7 +74,12 @@ export default class SignIn extends Component {
           Actions.DashboardRoute();
         } else {
           Common.dismissKeyboard();
-          Actions.PaymentRoute();
+          Data.DB.ref(`users/${user.uid}`).update({status, hasSource}).then(() => {
+            console.log('updated');
+            Actions.PaymentRoute({locked: true});
+          }).catch(error => {
+            console.log(error.message);
+          });
         }
       }).catch(error => {
         this.dropdown.showDropdown('error', 'Error', error.message);

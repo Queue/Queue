@@ -43,6 +43,8 @@ export default class SignUp extends Component {
 
           Data.DB.ref(`users/${user.uid}`).set({
             texts: 0,
+            hasSource: 0,
+            status: 'trialing',
             amount: subscription.quantity,
             customerId: customer.id,
             subscriptionId: subscription.id,

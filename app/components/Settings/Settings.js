@@ -34,6 +34,7 @@ export default class Settings extends Component {
           <Field
             type={'text'}
             label={'Email'}
+            autoCapitalize={'none'}
             onChangeText={this.props.onChangeEmail}
             value={this.props.email}
           />

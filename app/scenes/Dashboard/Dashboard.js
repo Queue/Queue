@@ -115,11 +115,12 @@ export default class Dashboard extends Component {
         this.queuerItemsRef.orderByChild('createdAt');
         this.listenForItems(this.queuerItemsRef);
         Data.DB.ref(`users/${user.uid}`).once('value').then(snap => {
-          if (snap) {
+          console.log(snap.val());
+          if (snap.exists()) {
             const texts = snap.val().texts;
             const status = snap.val().status;
             const trialEnd = snap.val().subscriptionTrialEnd;
-            const amount = status === 'active' ? Math.round((texts * 0.0075) + 60) : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
+            const amount = status === 'active' ? Math.round((texts * 0.0075)) + 60 : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
             this.setState({
               textsSent: texts,
               amountThisPeriod: amount,
@@ -128,7 +129,16 @@ export default class Dashboard extends Component {
               loaded: true,
             });
           } else {
-            console.warn('wtf');
+            Actions.DashboardRoute();
+            const texts = 0;
+            const amount = `0 (trialing)`;
+            this.setState({
+              textsSent: texts,
+              amountThisPeriod: amount,
+              emailInput: Data.Auth.user().email,
+              orgInput: Data.Auth.user().displayName,
+              loaded: true,
+            });
           }
         });
       } else {
@@ -276,6 +286,21 @@ export default class Dashboard extends Component {
           />
         );
 
+      case 'UPDATE':
+        // re auth the user
+        return (
+          <InputModal
+            label={'Enter Password'}
+            autoCapitalize={'none'}
+            buttonText={'Update Email'}
+            color={Colors.error}
+            onChangeText={(text) => this.setState({passInput: text})}
+            value={this.state.passInput}
+            onPress={this.updateProfile.bind(this)}
+            secureTextEntry={true}
+          />
+        );
+
       default:
         return (<Text>None</Text>);
         break;
@@ -364,6 +389,7 @@ export default class Dashboard extends Component {
       case 'PAYMENT':
         return (
           <Payment
+            dropdown = {this.dropdown}
             backPress = {() => this.setState({navVisible: "SETTINGS"})}
           />
         );
@@ -405,18 +431,65 @@ export default class Dashboard extends Component {
     });
   }
 
+  updateProfile() {
+    this.setState({
+      passInput: '',
+      modalVisible: false,
+      spinner: true,
+    });
+    const cred = Data.Auth.authCred(this.user.email, this.state.passInput);
+    const email = this.state.emailInput;
+    Data.Auth.reAuth(cred).then(async () => {
+      if (Common.validateEmail(email)) {
+        this.user.updateEmail(email).then(() => {
+          Common.dismissKeyboard();
+          this.setState({spinner: false});
+          this.dropdown.showDropdown('success', 'Success', 'Email Updated');
+        }).catch(error => {
+          Common.dismissKeyboard();
+          this.setState({spinner: false});
+          this.dropdown.showDropdown('error', 'Error', error.message);
+        });
+      } else {
+        Common.dismissKeyboard();
+        this.setState({emailInput: this.user.email, spinner: false});
+        this.dropdown.showDropdown('error', 'Error', 'Invalid Email');
+      }
+    }).catch(error => {
+      Common.dismissKeyboard();
+      this.setState({spinner: false});
+      this.dropdown.showDropdown('error', 'Error', error.message);
+    });
+    this.setState({spinner: false});
+  }
+
   // save user profile
   saveProfile() {
-    this.user.updateProfile({
-      displayName: this.state.orgInput
-    }).then(() => {
-      Common.dismissKeyboard();
-      this.dropdown.showDropdown('success', 'Success', 'Profile has been updated');
-      console.log('Profile Updated');
-    }, (error) => {
-      this.dropdown.showDropdown('error', 'Error', `Error on updating profile: ${error}`);
-      console.log('Profile Update ERROR');
-    });
+    if (this.state.emailInput !== this.user.email) {
+      if (Common.validateEmail(this.state.emailInput)) {
+        this.setState({modalVisible: true, modalItemVisible: 'UPDATE'});
+        this.user.updateProfile({
+          displayName: this.state.orgInput
+        });
+      } else {
+        this.dropdown.showDropdown('error', 'Error', 'Invalid Email');
+        this.user.updateProfile({
+          displayName: this.state.orgInput
+        });
+      }
+    } else {
+      this.user.updateProfile({
+        displayName: this.state.orgInput
+      }).then(() => {
+        Common.dismissKeyboard();
+        this.dropdown.showDropdown('success', 'Success', 'Profile has been updated');
+        console.log('Profile Updated');
+      }, (error) => {
+        this.dropdown.showDropdown('error', 'Error', `Error on updating profile: ${error}`);
+        console.log('Profile Update ERROR');
+      });
+    }
+
   }
 
   // sign out
@@ -608,7 +681,8 @@ export default class Dashboard extends Component {
       const subscriptionId = snap.val().subscriptionId;
       const status = snap.val().status;
       const texts = snap.val().texts;
-      const quantity = status === 'active' ? Math.round((texts * 0.0075) + 60) : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
+      const trialEnd = snap.val().subscriptionTrialEnd;
+      const quantity = status === 'active' ? Math.round((texts * 0.0075)) + 60 : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
       const subscription = await StripeApi.updateSubscription(subscriptionId, { quantity });
       this.setState({amountThisPeriod: quantity});
     });
