@@ -33,7 +33,7 @@ export default class History extends Component {
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
           this.props.dropdown.showDropdown('success', 'Success', `${item.name} removed from database`)
-          Data.DB.ref(`queuers/${this.props.uid}/${item.key}`).remove();
+          Data.DB.removeQueuer(this.props.uid, item.key);
         }}
       ]
     );
@@ -48,7 +48,11 @@ export default class History extends Component {
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
           this.props.dropdown.showDropdown('success', 'Success', `${item.name} moved back to queue`)
-          Data.DB.ref(`queuers/${this.props.uid}/${item.key}`).update({
+          Data.DB.ref(`queuers/private/${this.props.uid}/${item.key}`).update({
+            seated: false,
+            removed: false
+          });
+          Data.DB.ref(`queuers/public/${this.props.uid}/${item.key}`).update({
             seated: false,
             removed: false
           });
@@ -69,7 +73,7 @@ export default class History extends Component {
             let data = this.props.data;
             for (let i = 0; i < data.length; i++) {
               let key = data[i].key;
-              Data.DB.ref(`queuers/${this.props.uid}/${key}`).remove();
+              Data.DB.removeQueuer(this.props.uid, key);
             }
             this.props.dropdown.showDropdown('success', 'Success', 'All queuers removed from database')
           }}

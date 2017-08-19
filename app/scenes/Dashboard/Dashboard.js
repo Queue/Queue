@@ -12,31 +12,13 @@ import {
   ListView,
   TouchableHighlight,
   Alert,
-  FlatList
+  FlatList,
 } from 'react-native';
-
-// custom components
-import {
-  TextButton,
-  Queuer,
-  HiddenRow,
-  InputModal,
-  ModalWrap,
-  QueuerPage,
-  NavButton,
-  Settings,
-  Dropdown,
-} from '../../components';
-
-// scenes
-import History from '../History';
-import Payment from '../Payment';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // grid system
-//import { Grid, Col } from 'react-native-easy-grid';
-import {Column as Col, Row} from 'react-native-responsive-grid';
+import { Column as Col, Row } from 'react-native-responsive-grid';
 
 // swipe list view
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
@@ -52,7 +34,9 @@ import Timer from 'react-native-timer';
 import BackgroundTimer from 'react-native-background-timer';
 
 // router actions
-import { Actions } from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux';
+
+import moment from 'moment';
 
 // Lib and common functions
 import Data from '../../lib/data';
@@ -62,7 +46,23 @@ import Colors from '../../lib/colors';
 import Fonts from '../../lib/fonts';
 import styles from './styles';
 import Twilio from '../../lib/twilio';
-import moment from 'moment';
+
+// scenes
+import History from '../History';
+import Payment from '../Payment';
+
+// custom components
+import {
+  TextButton,
+  Queuer,
+  HiddenRow,
+  InputModal,
+  ModalWrap,
+  QueuerPage,
+  NavButton,
+  Settings,
+  Dropdown,
+} from '../../components';
 // #}
 
 export default class Dashboard extends Component {
@@ -101,7 +101,7 @@ export default class Dashboard extends Component {
       spinner: true, // determines loading spinner
       modalVisible: false, // determines visibility of modal
       modalItemVisible: 'NAME', // determines visibility of name field
-      navVisible: 'HOME' // change nav menu
+      navVisible: 'HOME', // change nav menu
     };
   }
 
@@ -111,11 +111,16 @@ export default class Dashboard extends Component {
     Data.Auth.authChange((user) => {
       if (user) {
         this.user = user;
-        this.queuerItemsRef = Data.DB.ref(`queuers/${Data.Auth.user().uid}`);
+
+        // private data
+        this.queuerItemsRef = Data.DB.ref(`queuers/private/${Data.Auth.user().uid}`);
         this.queuerItemsRef.orderByChild('createdAt');
+
+        // only listen for private items
         this.listenForItems(this.queuerItemsRef);
+
+        // calculate some defaults
         Data.DB.ref(`users/${user.uid}`).once('value').then(snap => {
-          console.log(snap.val());
           if (snap.exists()) {
             const texts = snap.val().texts;
             const status = snap.val().status;
@@ -167,7 +172,7 @@ export default class Dashboard extends Component {
             let hoursDiff = Math.floor(now - seatedAt) / 36e5;
 
             if (hoursDiff >= 8) {
-              Data.DB.ref(`queuers/${this.user.uid}/${child.key}`).remove();
+              Data.DB.removeQueuer(this.user.uid, child.key);
             }
           }
           // remove queuer if its been seated for 8+ hours
@@ -177,7 +182,7 @@ export default class Dashboard extends Component {
             let hoursDiff = Math.floor(now - removedAt) / 36e5;
 
             if (hoursDiff >= 8) {
-              Data.DB.ref(`queuers/${this.user.uid}/${child.key}`).remove();
+              Data.DB.removeQueuer(this.user.uid, child.key);
             }
           }
           filteredQueuerItems.push({
@@ -417,7 +422,8 @@ export default class Dashboard extends Component {
         await StripeApi.destroyPlan(customer.customerId);
         await StripeApi.destroyCustomer(customer.customerId);
         await Data.DB.delete(`users/${this.user.uid}`);
-        await Data.DB.delete(`queuers/${this.user.uid}`);
+        await Data.DB.delete(`queuers/private/${this.user.uid}`);
+        await Data.DB.delete(`queuers/public/${this.user.uid}`);
         await Data.Auth.deleteUser();
         this.setState({modalVisible: false, spinner: false});
         Actions.SignInRoute();
@@ -517,11 +523,11 @@ export default class Dashboard extends Component {
     for (let i = 0; i < data.length; i++) {
       let key = data[i].key;
       if (key === item.key) {
-        Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
+        Data.DB.ref(`queuers/private/${this.user.uid}/${key}`).update({
           selected: true
         });
       } else {
-        Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
+        Data.DB.ref(`queuers/private/${this.user.uid}/${key}`).update({
           selected: false
         });
       }
@@ -540,7 +546,6 @@ export default class Dashboard extends Component {
 
   // individual row function
   row({item, index}) {
-
     // place in queue
     let place = index + 1;
 
@@ -597,12 +602,12 @@ export default class Dashboard extends Component {
     for (let i = 0; i < queuers.length; i++) {
       let queuerKey = queuers[i].key;
       if (queuerKey === item.key) {
-        Data.DB.ref(`queuers/${this.user.uid}/${queuerKey}`).update({
+        Data.DB.ref(`queuers/private/${this.user.uid}/${queuerKey}`).update({
           selected: queuers[i].selected,
           opened: true
         });
       } else {
-        Data.DB.ref(`queuers/${this.user.uid}/${queuerKey}`).update({
+        Data.DB.ref(`queuers/private/${this.user.uid}/${queuerKey}`).update({
           selected: queuers[i].selected,
           opened: false
         });
@@ -621,13 +626,17 @@ export default class Dashboard extends Component {
       [
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
-          Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
+          // do for both private and public
+          Data.DB.ref(`queuers/private/${this.user.uid}/${key}`).update({
             removed: true,
             selected: false,
             removedAt: Date(),
           });
+          Data.DB.ref(`queuers/public/${this.user.uid}/${key}`).update({
+            removed: true,
+          });
           BackgroundTimer.setTimeout(() => {
-            Data.DB.ref(`queuers/${this.user.uid}/${key}`).remove();
+            Data.DB.removeQueuer(this.user.uid, key);
           }, (3600000 * 8));
           if (key === this.state.selectedKey) {
             this.dropdown.showDropdown('warning', 'Warning', `${name} was removed from queue`);
@@ -655,10 +664,13 @@ export default class Dashboard extends Component {
       [
         {text: 'Cancel', style: 'cancel'},
         {text: 'OK', onPress: () => {
-          Data.DB.ref(`queuers/${this.user.uid}/${key}`).update({
+          Data.DB.ref(`queuers/private/${this.user.uid}/${key}`).update({
             seated: true,
             selected: false,
             seatedAt: Date(),
+          });
+          Data.DB.ref(`queuers/public/${this.user.uid}/${key}`).update({
+            seated: true,
           });
           if (key === this.state.selectedKey) {
             this.dropdown.showDropdown('success', 'Success', `${name} has been seated`);
@@ -696,11 +708,18 @@ export default class Dashboard extends Component {
   }
 
   // compute when submitting a queuer and check phone input
-  addQueuer() {
+  async addQueuer() {
     // init text to customer
     if (this.state.phoneInput !== '') {
       if (Common.validatePhoneNumber(this.state.phoneInput)) {
-        let message = `Thanks ${this.state.nameInput}, your table will be ready soon.\n\nText 'Cancel' to remove yourself from Queue.`;
+        const key = Data.DB.addQueuer(
+          this.queuerItemsRef,
+          this.state.nameInput,
+          this.state.partyInput,
+          this.state.phoneInput
+        );
+        const { id } = await Common.shorten(`https://queue-web.herokuapp.com/queue/${this.user.uid}?key=${key}`);
+        const message = `Thanks ${this.state.nameInput}, your table will be ready soon.\n\nCheck your place in Queue at ${id}\n\nText 'Cancel' to remove yourself from Queue.`;
         Twilio.text(this.state.phoneInput, message).then(response => {
           this.incrementTexts();
           console.log(response);
@@ -710,15 +729,17 @@ export default class Dashboard extends Component {
       } else {
         return this.dropdown.showDropdown('error', 'Error', 'Invalid phone number');
       }
+    } else {
+      Data.DB.addQueuer(
+        this.queuerItemsRef,
+        this.state.nameInput,
+        this.state.partyInput,
+        this.state.phoneInput
+      );
     }
+
     // show dropdown
     this.dropdown.showDropdown('success', 'Queuer Added', `${this.state.nameInput} has been added to Queue`);
-    // add the queuer
-    Data.DB.addQueuer(this.queuerItemsRef,
-      this.state.nameInput,
-      this.state.partyInput,
-      this.state.phoneInput
-    );
     this.setState({
       modalVisible: false,
       modalItemVisible: 'NAME',
@@ -730,29 +751,34 @@ export default class Dashboard extends Component {
 
   // save queuer on its edit page
   saveQueuer() {
-    Data.DB.ref(`queuers/${this.state.selectedKey}`).update({
+    Data.DB.ref(`queuers/private/${this.state.selectedKey}`).update({
       name: this.state.editName,
       partySize: this.state.editParty,
       phoneNumber: this.state.editPhone,
       notes: this.state.editNotes
     });
+    Data.DB.ref(`queuers/public/${this.state.selectedKey}`).update({
+      name: this.state.editName,
+    });
   }
 
   // edits and saves to the databse as typeing for NAME
   changeAndSaveName(text) {
-    let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
+    let privateRef = `queuers/private/${this.user.uid}/${this.state.selectedKey}`;
+    let publicRef = `queuers/public/${this.user.uid}/${this.state.selectedKey}`;
     this.setState({editName: text});
-    Data.DB.ref(ref).update({
+    Data.DB.ref(privateRef).update({
+      name: text
+    });
+    Data.DB.ref(publicRef).update({
       name: text
     });
   }
 
   // edits and saves to the databse as typeing for PARTY SIZE
   changeAndSaveParty(text) {
-    if (isNaN(text)) {
-      return;
-    }
-    let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
+    if (isNaN(text)) return;
+    let ref = `queuers/private/${this.user.uid}/${this.state.selectedKey}`;
     this.setState({editParty: text});
     Data.DB.ref(ref).update({
       partySize: text
@@ -768,7 +794,7 @@ export default class Dashboard extends Component {
 
     this.setState({editPhone: newNum});
 
-    let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
+    let ref = `queuers/private/${this.user.uid}/${this.state.selectedKey}`;
     Data.DB.ref(ref).update({
       phoneNumber: newNum,
     });
@@ -776,7 +802,7 @@ export default class Dashboard extends Component {
 
   // edits and saves to the databse as typeing for NAME
   changeAndSaveNotes(text) {
-    let ref = `queuers/${this.user.uid}/${this.state.selectedKey}`;
+    let ref = `queuers/private/${this.user.uid}/${this.state.selectedKey}`;
     this.setState({editNotes: text});
     Data.DB.ref(ref).update({
       notes: text

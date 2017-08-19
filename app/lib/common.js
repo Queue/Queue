@@ -63,4 +63,16 @@ export default Common = {
     return str.join("&");
   },
 
+  async shorten(url) {
+    return fetch(`https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyAXk9E5mxxUR0JMZyW3HxM8B9wSAMcjhrU`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: `{\"longUrl\": \"${url}\"}`,
+      })
+      .then(res => res.json())
+      .catch(error => console.log(error.message));
+  },
+
 };

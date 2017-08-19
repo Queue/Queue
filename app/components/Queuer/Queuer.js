@@ -53,8 +53,9 @@ export default class Queuer extends Component {
 
       let diff = Math.abs(now - createdAt);
       let min = Math.floor((diff/1000)/60);
+      let maxMin = min >= 999 ? 999 : min;
 
-      this.setState({waitTime: min});
+      this.setState({waitTime: maxMin});
     } else {
       // clear timer if above 999
       this.setState({waitTime: 999});

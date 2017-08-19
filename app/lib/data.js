@@ -70,10 +70,16 @@ export default Data = {
       return Firebase.database().ref(reference).remove();
     },
 
+    // remove queuer
+    removeQueuer(uid, qid) {
+      Firebase.database().ref(`queuers/public/${uid}/${qid}`).remove();
+      return Firebase.database().ref(`queuers/private/${uid}/${qid}`).remove();
+    },
+
     // Add a queuer
     addQueuer(reference, name, partySize, phoneNumber) {
-      reference.push({
-        name: name,
+      const { key } = reference.push({
+        name,
         partySize: partySize,
         phoneNumber: phoneNumber,
         notes: '',
@@ -87,9 +93,32 @@ export default Data = {
         cancelled: false,
         old: false,
         selected: false,
-        opened: false
+        opened: false,
       });
-    }
 
+      const uid = Firebase.auth().currentUser.uid;
+
+      // create copy for public use only without private data
+      Firebase.database().ref(`queuers/public/${uid}`).child(key).set({
+        name,
+        seated: false,
+        removed: false,
+        cancelled: false,
+        createdAt: Date(),
+      });
+
+      return key;
+    },
+
+    // Add a queuer
+    addQueuerPublic(reference, name, key) {
+      reference.child(key).set({
+        name,
+        seated: false,
+        removed: false,
+        cancelled: false,
+        createdAt: Date(),
+      });
+    },
   }
 };
