@@ -32,6 +32,21 @@ export default class Payment extends Component {
       this.setState({
         spinner: false
       });
+
+      // check status
+      Data.DB.ref(`users/${user.uid}`).on('value', async snap => {
+        const data = snap.val();
+
+        if (data === null) return;
+
+        if (data.status === 'trialing' || (data.status === 'active' && data.hasSource)) {
+          Actions.DashboardRoute();
+        } else {
+          console.log('locked');
+        }
+      }, error => {
+        console.log(error);
+      });
     });
   }
 
@@ -67,6 +82,7 @@ export default class Payment extends Component {
 
       Data.DB.ref(`users/${this.user.uid}`).update({
         cardId: id,
+        hasSource: 1,
       }).then(() => {
         this.ccinput.setValues({
           number: '',
@@ -78,6 +94,7 @@ export default class Payment extends Component {
           Actions.DashboardRoute();
         } else {
           this.props.dropdown.showDropdown('success', 'Success', 'Added card to account');
+          Actions.DashboardRoute();
         }
       });
 

@@ -95,7 +95,7 @@ export default class Dashboard extends Component {
       editNotes: '', // editable notes for the queuer page text field
       emailInput: '', // email input
       orgInput: '', // organization input
-      passInput: '',
+      passInput: '', // reauth pass
 
       // visual
       spinner: true, // determines loading spinner
@@ -156,8 +156,24 @@ export default class Dashboard extends Component {
   // Listen for all queuers in the database
   // Triggers a rerender when new data is added
   listenForItems(itemsRef) {
+
+    // check for user data ie any serer related events
+    Data.DB.ref(`users/${this.user.uid}`).on('value', async snap => {
+      const data = snap.val();
+
+      if (data === null) return;
+
+      if (data.status === 'trialing' || (data.status === 'active' && data.hasSource)) {
+        console.log('they ok');
+      } else {
+        Actions.PaymentRoute({locked: true});
+      }
+    }, error => {
+      console.log(error);
+    });
+
+    // check queuers on value and rerender
     itemsRef.on('value', (snap) => {
-      // Get children as an array
       let queuerItems = [],
           filteredQueuerItems = [];
 
@@ -345,6 +361,7 @@ export default class Dashboard extends Component {
     switch (this.state.navVisible) {
 
       case 'HOME':
+        let phone = Common.formatPhoneNumber(this.state.editPhone);
         // return home
         return (
           <QueuerPage
@@ -352,7 +369,7 @@ export default class Dashboard extends Component {
             queuer={this.state.selectedQueuer}
             name={this.state.editName}
             partySize={this.state.editParty}
-            phoneNumber={this.state.editPhone}
+            phoneNumber={phone}
             notes={this.state.editNotes}
             nameChange={this.changeAndSaveName.bind(this)}
             partyChange={this.changeAndSaveParty.bind(this)}
@@ -416,14 +433,17 @@ export default class Dashboard extends Component {
         };
       });
 
+      Data.DB.ref(`users/${this.user.uid}`).off();
+      Data.DB.ref(`queuers/private/${this.user.uid}`).off();
+
       // remove user and delete any trace of their existence
       try {
         await StripeApi.destroySubscription(customer.subscriptionId)
         await StripeApi.destroyPlan(customer.customerId);
         await StripeApi.destroyCustomer(customer.customerId);
-        await Data.DB.delete(`users/${this.user.uid}`);
         await Data.DB.delete(`queuers/private/${this.user.uid}`);
         await Data.DB.delete(`queuers/public/${this.user.uid}`);
+        await Data.DB.delete(`users/${this.user.uid}`);
         await Data.Auth.deleteUser();
         this.setState({modalVisible: false, spinner: false});
         Actions.SignInRoute();
@@ -558,6 +578,7 @@ export default class Dashboard extends Component {
         isOpen={item.opened}
         createdAt={item.createdAt}
         partySize={item.partySize}
+        cancelled={item.cancelled}
         onPress={this.setSelectedQueuer.bind(this, item)}
         onOpen={this.setOpenQueuer.bind(this, item)}
         onRemovePress={this.removeQueuer.bind(this, item)}
@@ -689,21 +710,24 @@ export default class Dashboard extends Component {
 
   incrementTexts() {
     this.setState({textsSent: this.state.textsSent + 1});
+
     Data.DB.ref(`users/${this.user.uid}`).once('value').then(async snap => {
       const subscriptionId = snap.val().subscriptionId;
       const status = snap.val().status;
       const texts = snap.val().texts;
       const trialEnd = snap.val().subscriptionTrialEnd;
-      const quantity = status === 'active' ? Math.round((texts * 0.0075)) + 60 : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
+      const quantityText = status === 'active' ? Math.round((texts * 0.0075)) + 60 : `0 (trial ends ${moment.unix(trialEnd).format('MMM Do')})`;
+      const quantity = status === 'active' ? Math.round((texts * 0.0075)) + 60 : 0;
       const subscription = await StripeApi.updateSubscription(subscriptionId, { quantity });
-      this.setState({amountThisPeriod: quantity});
+      this.setState({amountThisPeriod: quantityText});
     });
+
     Data.DB.ref(`users/${this.user.uid}`).update({
       texts: this.state.textsSent
     }).then(user => {
       console.log(user);
     }).catch(error => {
-      console.log(error)
+      console.log(error);
     });
   }
 
@@ -716,9 +740,9 @@ export default class Dashboard extends Component {
           this.queuerItemsRef,
           this.state.nameInput,
           this.state.partyInput,
-          this.state.phoneInput
+          Common.stripPhoneNum(this.state.phoneInput)
         );
-        const { id } = await Common.shorten(`https://queue-web.herokuapp.com/queue/${this.user.uid}?key=${key}`);
+        const { id } = await Common.shorten(`https://www.queueup.site/queue/${this.user.uid}?key=${key}`);
         const message = `Thanks ${this.state.nameInput}, your table will be ready soon.\n\nCheck your place in Queue at ${id}\n\nText 'Cancel' to remove yourself from Queue.`;
         Twilio.text(this.state.phoneInput, message).then(response => {
           this.incrementTexts();
@@ -734,7 +758,7 @@ export default class Dashboard extends Component {
         this.queuerItemsRef,
         this.state.nameInput,
         this.state.partyInput,
-        this.state.phoneInput
+        Common.stripPhoneNum(this.state.phoneInput)
       );
     }
 
@@ -754,7 +778,7 @@ export default class Dashboard extends Component {
     Data.DB.ref(`queuers/private/${this.state.selectedKey}`).update({
       name: this.state.editName,
       partySize: this.state.editParty,
-      phoneNumber: this.state.editPhone,
+      phoneNumber: Common.stripPhoneNum(this.state.editPhone),
       notes: this.state.editNotes
     });
     Data.DB.ref(`queuers/public/${this.state.selectedKey}`).update({
@@ -796,7 +820,7 @@ export default class Dashboard extends Component {
 
     let ref = `queuers/private/${this.user.uid}/${this.state.selectedKey}`;
     Data.DB.ref(ref).update({
-      phoneNumber: newNum,
+      phoneNumber: Common.stripPhoneNum(newNum),
     });
   }
 

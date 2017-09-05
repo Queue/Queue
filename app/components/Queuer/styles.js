@@ -8,7 +8,6 @@ import Fonts from '../../lib/fonts';
 export default styles = StyleSheet.create({
   rowFront: {
     width: '100%',
-    backgroundColor: 'white',
     marginBottom: 1,
     paddingLeft: 20,
     height: 64

@@ -41,6 +41,8 @@ export default class SignUp extends Component {
           let plan = await StripeApi.createPlan(customer.id);
           let subscription = await StripeApi.createSubscription(customer.id);
 
+          console.warn(JSON.stringify(subscription));
+
           Data.DB.ref(`users/${user.uid}`).set({
             texts: 0,
             hasSource: 0,
@@ -48,7 +50,6 @@ export default class SignUp extends Component {
             amount: subscription.quantity,
             customerId: customer.id,
             subscriptionId: subscription.id,
-            subscriptionStatus: subscription.status,
             subscriptionTrialStart: subscription.trial_start,
             subscriptionTrialEnd: subscription.trial_end,
             subscriptionQuantity: subscription.quantity,

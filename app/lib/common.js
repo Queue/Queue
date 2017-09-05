@@ -17,12 +17,18 @@ export default Common = {
     return re.test(phoneNumber);
   },
 
+  formatPhoneNumber(s) {
+    let s2 = (""+s).replace(/\D/g, '');
+    s2 = s2.substring(1);
+    let m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+    return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+  },
+
   dismissKeyboard() {
     dismissKeyboard();
   },
 
   warn(title, message, cancel, ok) {
-    //Reactotron.log(`Warning\nCode: ${title}\nMessage: ${message}`);
     Alert.alert(
       title,
       message,
@@ -73,6 +79,11 @@ export default Common = {
       })
       .then(res => res.json())
       .catch(error => console.log(error.message));
+  },
+
+  stripPhoneNum(phoneNum) {
+    let stripedNum = phoneNum.replace(/\D/g,'');
+    return `+1${stripedNum}`;
   },
 
 };

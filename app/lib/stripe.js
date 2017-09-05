@@ -91,7 +91,7 @@ export default StripeApi = {
       customer: customerId,
       plan: `${customerId}_plan`,
       quantity: 60,
-      trial_period_days: 7,
+      trial_period_days: 1,
     });
     return await fetch('https://api.stripe.com/v1/subscriptions', {
       method: 'POST',

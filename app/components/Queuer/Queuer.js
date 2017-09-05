@@ -67,6 +67,8 @@ export default class Queuer extends Component {
     let isSelected = () => {
       if (this.props.isSelected) {
         return Colors.info;
+      } else if (this.props.cancelled) {
+        return 'rgba(0, 0, 0, .0)';
       } else {
         return 'white';
       }
@@ -109,7 +111,7 @@ export default class Queuer extends Component {
         <View>
           <TouchableHighlight
             onPress = {this.props.onPress}
-            style = {styles.rowFront}
+            style = {[styles.rowFront, {backgroundColor: this.props.cancelled ? 'rgba(234, 70, 54, 0.10)' : 'white'}]}
             underlayColor = {'white'}>
             <Row>
               <Col size={2}>
